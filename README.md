@@ -1,1 +1,1 @@
-.# Application Migration Workshop
+# Application Migration Workshop
