@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\HOL"
+    "\\HOL",
+    "\\HOL\\HOL-Assets",
+    "\\HOL\\HOL-Assets\\SourceApps"
   ],
   "SelectedNode": "\\HOL\\HOL-Assets",
   "PreviewInSolutionExplorer": false
