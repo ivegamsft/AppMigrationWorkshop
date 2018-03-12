@@ -1,0 +1,194 @@
+<VSTemplate Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>Classifieds Web Site Starter Kit</Name>
+    <Description>Starter kit for creating a classifieds Web site</Description>
+    <ProjectType>Web</ProjectType>
+    <ProjectSubType>CSharp</ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>Classifieds</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <Icon>__TemplateIcon.ico</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="ProjectName.webproj" File="ProjectName.webproj" ReplaceParameters="true">
+      <Folder Name="Admin" TargetFolderName="Admin">
+        <ProjectItem ReplaceParameters="true" TargetFileName="Activations.aspx">Activations.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Activations.aspx.cs">Activations.aspx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Ads.aspx">Ads.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Ads.aspx.cs">Ads.aspx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Categories.aspx">Categories.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Categories.aspx.cs">Categories.aspx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Default.aspx">Default.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Default.aspx.cs">Default.aspx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Locations.aspx">Locations.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Locations.aspx.cs">Locations.aspx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Settings.aspx">Settings.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Settings.aspx.cs">Settings.aspx.cs</ProjectItem>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="AdvancedSearch.aspx">AdvancedSearch.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="AdvancedSearch.aspx.cs">AdvancedSearch.aspx.cs</ProjectItem>
+      <Folder Name="App_Code" TargetFolderName="App_Code">
+        <Folder Name="BLL" TargetFolderName="BLL">
+          <ProjectItem ReplaceParameters="true" TargetFileName="Ads.cs">Ads.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="Categories.cs">Categories.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="DefaultValues.cs">DefaultValues.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="Locations.cs">Locations.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="Maintenance.cs">Maintenance.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="Members.cs">Members.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="Photos.cs">Photos.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="SiteSettings.cs">SiteSettings.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="Stats.cs">Stats.cs</ProjectItem>
+        </Folder>
+        <Folder Name="DAL" TargetFolderName="DAL">
+          <ProjectItem ReplaceParameters="true" TargetFileName="Ads.xsd">Ads.xsd</ProjectItem>
+          <ProjectItem ReplaceParameters="false" TargetFileName="Ads.xss">Ads.xss</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="Categories.xsd">Categories.xsd</ProjectItem>
+          <ProjectItem ReplaceParameters="false" TargetFileName="Categories.xss">Categories.xss</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="Locations.xsd">Locations.xsd</ProjectItem>
+          <ProjectItem ReplaceParameters="false" TargetFileName="Locations.xss">Locations.xss</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="Members.xsd">Members.xsd</ProjectItem>
+          <ProjectItem ReplaceParameters="false" TargetFileName="Members.xss">Members.xss</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="Stats.xsd">Stats.xsd</ProjectItem>
+          <ProjectItem ReplaceParameters="false" TargetFileName="Stats.xss">Stats.xss</ProjectItem>
+        </Folder>
+        <Folder Name="Web" TargetFolderName="Web">
+          <ProjectItem ReplaceParameters="true" TargetFileName="CategoryCache.cs">CategoryCache.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="CategoryControls.cs">CategoryControls.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="ClassifiedsHttpApplication.cs">ClassifiedsHttpApplication.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="FeatureCache.cs">FeatureCache.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="LocationCache.cs">LocationCache.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="OutputFormatting.cs">OutputFormatting.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="StatsCache.cs">StatsCache.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="Util.cs">Util.cs</ProjectItem>
+        </Folder>
+      </Folder>
+      <Folder Name="App_Data" TargetFolderName="App_Data">
+        <ProjectItem ReplaceParameters="true" TargetFileName="classifieds-add.sql">classifieds-add.sql</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="classifieds-categories.sql">classifieds-categories.sql</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="classifieds-remove.sql">classifieds-remove.sql</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="CLASSIFIEDSDB.mdf">CLASSIFIEDSDB.mdf</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="site-config.xml">site-config.xml</ProjectItem>
+      </Folder>
+      <Folder Name="App_Themes" TargetFolderName="App_Themes">
+        <Folder Name="Blue" TargetFolderName="Blue">
+          <ProjectItem ReplaceParameters="true" TargetFileName="Default.css">Default.css</ProjectItem>
+          <Folder Name="Images" TargetFolderName="Images">
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_browse.jpg">background_browse.jpg</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_crumbs.jpg">background_crumbs.jpg</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_feature.jpg">background_feature.jpg</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_main.jpg">background_main.jpg</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_nav_footer.jpg">background_nav_footer.jpg</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_nav_top.gif">background_nav_top.gif</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_search.jpg">background_search.jpg</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_table_row.gif">background_table_row.gif</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_title.jpg">background_title.jpg</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_user_assist.jpg">background_user_assist.jpg</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="nav_top_filler.gif">nav_top_filler.gif</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="nav_top_left.gif">nav_top_left.gif</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="nav_top_right.gif">nav_top_right.gif</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="nav_top_spacer.gif">nav_top_spacer.gif</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="sort_arrow.gif">sort_arrow.gif</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="ul_arrow.gif">ul_arrow.gif</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="ul_bullet.gif">ul_bullet.gif</ProjectItem>
+          </Folder>
+        </Folder>
+        <Folder Name="Green" TargetFolderName="Green">
+          <ProjectItem ReplaceParameters="true" TargetFileName="Default.css">Default.css</ProjectItem>
+          <Folder Name="Images" TargetFolderName="Images">
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_browse.jpg">background_browse.jpg</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_crumbs.jpg">background_crumbs.jpg</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_feature.jpg">background_feature.jpg</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_main.jpg">background_main.jpg</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_nav_footer.jpg">background_nav_footer.jpg</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_nav_top.gif">background_nav_top.gif</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_search.jpg">background_search.jpg</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_table_row.gif">background_table_row.gif</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_title.jpg">background_title.jpg</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_user_assist.jpg">background_user_assist.jpg</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="nav_top_filler.gif">nav_top_filler.gif</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="nav_top_left.gif">nav_top_left.gif</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="nav_top_right.gif">nav_top_right.gif</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="nav_top_spacer.gif">nav_top_spacer.gif</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="sort_arrow.gif">sort_arrow.gif</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="ul_arrow.gif">ul_arrow.gif</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="ul_bullet.gif">ul_bullet.gif</ProjectItem>
+          </Folder>
+        </Folder>
+        <Folder Name="Red" TargetFolderName="Red">
+          <ProjectItem ReplaceParameters="true" TargetFileName="Default.css">Default.css</ProjectItem>
+          <Folder Name="Images" TargetFolderName="Images">
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_browse.jpg">background_browse.jpg</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_crumbs.jpg">background_crumbs.jpg</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_feature.jpg">background_feature.jpg</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_main.jpg">background_main.jpg</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_nav_footer.jpg">background_nav_footer.jpg</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_nav_top.gif">background_nav_top.gif</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_search.jpg">background_search.jpg</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_table_row.gif">background_table_row.gif</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_title.jpg">background_title.jpg</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="background_user_assist.jpg">background_user_assist.jpg</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="nav_top_filler.gif">nav_top_filler.gif</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="nav_top_left.gif">nav_top_left.gif</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="nav_top_right.gif">nav_top_right.gif</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="nav_top_spacer.gif">nav_top_spacer.gif</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="sort_arrow.gif">sort_arrow.gif</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="ul_arrow.gif">ul_arrow.gif</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="ul_bullet.gif">ul_bullet.gif</ProjectItem>
+          </Folder>
+        </Folder>
+      </Folder>
+      <Folder Name="Controls" TargetFolderName="Controls">
+        <ProjectItem ReplaceParameters="true" TargetFileName="AdvancedSearch.ascx">AdvancedSearch.ascx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="AdvancedSearch.ascx.cs">AdvancedSearch.ascx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="CategoryBrowse.ascx">CategoryBrowse.ascx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="CategoryBrowse.ascx.cs">CategoryBrowse.ascx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="CategoryDropDown.ascx">CategoryDropDown.ascx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="CategoryDropDown.ascx.cs">CategoryDropDown.ascx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="CategoryPath.ascx">CategoryPath.ascx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="CategoryPath.ascx.cs">CategoryPath.ascx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="FeaturedAd.ascx">FeaturedAd.ascx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="FeaturedAd.ascx.cs">FeaturedAd.ascx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="LocationDropDown.ascx">LocationDropDown.ascx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="LocationDropDown.ascx.cs">LocationDropDown.ascx.cs</ProjectItem>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Default.aspx">Default.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Default.aspx.cs">Default.aspx.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="EditAd.aspx">EditAd.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="EditAd.aspx.cs">EditAd.aspx.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Error.aspx">Error.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Error.aspx.cs">Error.aspx.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="Eula.txt">Eula.txt</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Global.asax">Global.asax</ProjectItem>
+      <Folder Name="Images" TargetFolderName="Images">
+        <ProjectItem ReplaceParameters="false" TargetFileName="non-preview-photo.gif">non-preview-photo.gif</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="preview-photo.gif">preview-photo.gif</ProjectItem>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Login.aspx">Login.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Login.aspx.cs">Login.aspx.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="ManagePhotos.aspx">ManagePhotos.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="ManagePhotos.aspx.cs">ManagePhotos.aspx.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="MasterPage.master">MasterPage.master</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="MasterPage.master.cs">MasterPage.master.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="MyAds.aspx">MyAds.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="MyAds.aspx.cs">MyAds.aspx.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="MyProfile.aspx">MyProfile.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="MyProfile.aspx.cs">MyProfile.aspx.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="PhotoDisplay.ashx">PhotoDisplay.ashx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="PostAd.aspx">PostAd.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="PostAd.aspx.cs">PostAd.aspx.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Register.aspx">Register.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Register.aspx.cs">Register.aspx.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Search.aspx">Search.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Search.aspx.cs">Search.aspx.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="ShowAd.aspx">ShowAd.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="ShowAd.aspx.cs">ShowAd.aspx.cs</ProjectItem>
+      <Folder Name="Upload" TargetFolderName="Upload" />
+      <ProjectItem ReplaceParameters="true" TargetFileName="Web.config">Web.config</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="Web.sitemap">Web.sitemap</ProjectItem>
+      <ProjectItem ReplaceParameters="true" OpenInWebBrowser="true" OpenOrder="1" TargetFileName="Welcome.html">Welcome.html</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

@@ -1,0 +1,236 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Untitled Page</title>
+</head>
+<body topmargin="10" leftmargin="20" rightmargin="20" bottommargin="10">
+    <h2>
+        <font face="Arial">Jobs Site Starter Kit (JSSK)</font></h2>
+    <h3>
+        <font face="Arial">Introduction</font></h3>
+    <p>
+        <font face="Arial" size="2">Jobs Site Starter Kit is a web application that provides a platform for candidates
+        seeking job and the employers to share their needs.
+    </font>
+    </p>
+    <p>
+        <font face="Arial" size="2">The candidates seeking job (referred as job seekers now onwards) can perform following
+        operations:
+    </font>
+    </p>
+    <ul>
+        <li><font face="Arial" size="2">Register with the web site. </font> </li>
+        <li><font face="Arial" size="2">Post their resume. </font> </li>
+        <li><font face="Arial" size="2">Modify their resume. </font> </li>
+        <li><font face="Arial" size="2">Search for job postings. </font> </li>
+        <li><font face="Arial" size="2">Browse searched job postings. </font> </li>
+        <li><font face="Arial" size="2">Add job posting to their favorites list. 
+		</font> </li>
+        <li><font face="Arial" size="2">Add frequently used searches to their favorites list. 
+		</font> </li>
+    </ul>
+    <p>
+        <font face="Arial" size="2">The employers can perform following operations:
+    	</font>
+    </p>
+    <ul>
+        <li><font face="Arial" size="2">Register with the web site.&nbsp;</font></li>
+        <li><font face="Arial" size="2">Enter profile of their company.&nbsp;</font></li>
+        <li><font face="Arial" size="2">Post one or more job postings.&nbsp;</font></li>
+        <li><font face="Arial" size="2">Modify the job postings.&nbsp;</font></li>
+        <li><font face="Arial" size="2">Search the resume database.&nbsp;</font></li>
+        <li><font face="Arial" size="2">Browse searched resumes.&nbsp;</font></li>
+        <li><font face="Arial" size="2">Add resumes to their favorites list. 
+		</font> </li>
+    </ul>
+    <h3>
+        <font face="Arial">ASP.NET 2.0 Feature utilization in JSSK</font></h3>
+    <p>
+        <font face="Arial" size="2">JSSK is developed using ASP.NET 2.0 and uses following features:
+		</font>
+    </p>
+    <ul>
+        <li><font face="Arial" size="2">Completely based on n-tier architecture&nbsp;</font></li>
+        <li><font face="Arial" size="2">Forms based authentication&nbsp;</font></li>
+        <li><font face="Arial" size="2">User management via Membership providers&nbsp;</font></li>
+        <li><font face="Arial" size="2">Role based security&nbsp;</font></li>
+        <li><font face="Arial" size="2">Profiles&nbsp;</font></li>
+        <li><font face="Arial" size="2">Themes&nbsp;</font></li>
+        <li><font face="Arial" size="2">Master pages&nbsp;</font></li>
+        <li><font face="Arial" size="2">New data source controls - ObjectDataSource&nbsp;</font></li>
+        <li><font face="Arial" size="2">New data bound controls – GridView and DetailsView</font></li>
+        <li><font face="Arial" size="2">New navigational controls – TreeView&nbsp;</font></li>
+        <li><font face="Arial" size="2">New login controls – Login, PasswordRecovery, LoginName and LoginStatus&nbsp;</font></li>
+        <li><font face="Arial" size="2">Web parts for customization&nbsp;</font></li>
+        <li><font face="Arial" size="2">User controls for reusing code and markup</font></li>
+    </ul>
+    <h3>
+        <font face="Arial">User and Roles</font></h3>
+    <p>
+        <font face="Arial" size="2">By default there are three roles in the system:</font></p>
+    <ul>
+        <li><font face="Arial" size="2">admin</font></li>
+        <li><font face="Arial" size="2">jobseeker</font></li>
+        <li><font face="Arial" size="2">employer</font></li>
+    </ul>
+    <p>
+        <font face="Arial" size="2">Following are the users and their roles that are already defined in the system for testing purpose.</font></p>
+    <p>
+        <font face="Arial" size="2">
+            <table width="90%" border="1">
+                <tr>
+                    <td style="width: 100px; height: 18px">
+                        <strong>User ID</strong></td>
+                    <td style="width: 100px; height: 18px">
+                        <strong>Password</strong></td>
+                    <td style="width: 100px; height: 18px">
+                        <strong>Role</strong></td>
+                    <td style="width: 100px; height: 18px">
+                        <strong>Purpose</strong></td>
+                </tr>
+                <tr>
+                    <td style="width: 100px; height: 18px">
+                        ravi</td>
+                    <td style="width: 100px; height: 18px">
+                        pass$word</td>
+                    <td style="width: 100px; height: 18px">
+                        employer</td>
+                    <td style="width: 100px; height: 18px">
+                        This user is an employer. Can post job openings and search resumes.</td>
+                </tr>
+                <tr>
+                    <td style="width: 100px">
+                        alok</td>
+                    <td style="width: 100px">
+                        pass$word</td>
+                    <td style="width: 100px">
+                        jobseeker</td>
+                    <td style="width: 100px">
+                        This user is a job seeker. Can post resume and search job openings.</td>
+                </tr>
+                <tr>
+                    <td style="width: 100px">
+                        admin</td>
+                    <td style="width: 100px">
+                        admin</td>
+                    <td style="width: 100px">
+                        admin</td>
+                    <td style="width: 100px">
+                        This is an administrative user. Can add system parameters such as Experience and
+                        Educational Levels.</td>
+                </tr>
+            </table>
+        </font>
+    </p>
+    <h3>
+        <font face="Arial">Registering as a Job Seeker</font></h3>
+    <p>
+        <font face="Arial" size="2">In order to register as a Job Seeker follow these steps:</font></p>
+    <ul>
+        <li><font face="Arial" size="2">Start the web site</font></li>
+        <li><font face="Arial" size="2">Select <strong>Register</strong> option from left hand TreeView</font></li>
+        <li><font face="Arial" size="2">User registration wizard will appear</font></li>
+        <li><font face="Arial" size="2">Enter registration details such as First Name, Last Name, User ID and so on</font></li>
+        <li><font face="Arial" size="2">On the last step register as <strong>Job Seeker</strong></font></li>
+    </ul>
+    <h3>
+        <font face="Arial">Registering as an Employer</font></h3>
+    <ul>
+    <li><font face="Arial" size="2">Start the web site</font></li>
+    <li><font face="Arial" size="2">Select <strong>Register</strong> option from left hand TreeView</font></li>
+    <li><font face="Arial" size="2">User registration wizard will appear</font></li>
+    <li><font face="Arial" size="2">Enter registration details such as First Name, Last Name, User ID and so on</font></li>
+    <li><font face="Arial" size="2">On the last step register as <strong>Employer</strong></font></li></ul>
+    <h3>
+        <font face="Arial">Using TreeView Options</font></h3>
+    <p>
+        <font face="Arial" size="2">Once you sign in to the system as a Job Seeker or Employer, you can access respective
+        options from the TreeView. You can access only the options belonging to your role
+        (jobseeker or employer)</font></p>
+    <h4>
+        <font face="Arial">Job Seeker Options</font></h4>
+    <h4>
+    </h4>
+    <h5>
+        <font face="Arial">Post Resumes</font></h5>
+    <p>
+        <font face="Arial" size="2">This option allows job seekers to post their resumes. One candidate can store only
+        one resume in the database.&nbsp;</font></p>
+    <h5>
+        <font face="Arial">Search Jobs</font></h5>
+    <p>
+        <font face="Arial" size="2">Using Search Jobs option job seekers can search for available job opportunities
+        from the database.</font></p>
+    <h4>
+    </h4>
+    <h5>
+        <font face="Arial">My Favorites</font></h5>
+    <p>
+        <font face="Arial" size="2">When you search for jobs the results can be stored as your favorites jobs in the
+        database. In addition you can also save the search criteria as your favorite search
+        criteria.</font></p>
+    <h3>
+    </h3>
+    <h4>
+        <font face="Arial">Employer Options</font></h4>
+    <h5>
+        <font face="Arial">Post Jobs</font></h5>
+    <p>
+        <font face="Arial" size="2">Using this option employers can post job opportunities in the database. These opportunities
+        can be searched by the job seekers.</font></p>
+    <h5>
+        <font face="Arial">Search Resumes</font></h5>
+    <p>
+        <font face="Arial" size="2">Employers can search available resume database through this option.</font></p>
+    <h5>
+        <font face="Arial">Company Profile</font></h5>
+    <p>
+        <font face="Arial" size="2">Employers can also specify the profile on the company.</font></p>
+    <h5>
+        <font face="Arial">My Favorites</font></h5>
+    <p>
+        <font face="Arial" size="2">When you search for resumes the search results can be saved as your favorites in
+        the database.</font></p>
+	<h4>
+        <font face="Arial">Administrative Options</font></h4>
+	<h5>
+        <font face="Arial">Education Levels</font></h5>
+	<p>
+        <font face="Arial" size="2">Using this option administrator can 
+		add/edit/delete education levels.</font></p>
+	<h5>
+        <font face="Arial">Experience Levels</font></h5>
+	<p>
+        <font face="Arial" size="2">Using this option administrator can 
+		add/edit/delete experience levels.</font></p>
+	<h3><font face="Arial">Publishing your Site</font></h3>
+	<p><font face="Arial" size="2">When you are ready to share your Web site 
+	with others, you can copy it to your Web server. You need to know the File 
+	Transfer Protocol (FTP) address of your server, and if required, the user 
+	name and password you use.</font></p>
+	<ol>
+		<li><font face="Arial" size="2">In the <b>Website</b> menu, click <b>
+		Copy Web Site</b>. The Copy Web Site tool displays the files from your 
+		Web site under <b>Source Web Site</b>. </font></li>
+		<li><font face="Arial" size="2">In the <b>Connect to</b> box, click <b>
+		Connect to</b> .... </font></li>
+		<li><font face="Arial" size="2">In the <b>Open Web Site</b> dialog box, 
+		click the <b>FTP Sites</b> tab. </font></li>
+		<li><font face="Arial" size="2">Type the FTP address of your server, and 
+		if required, the user name and password that your hosting site has 
+		provided. The FTP URL usually has a format like this: </font>
+		<pre><font face="Arial">ftp://ftp.servername/foldername</font></pre>
+		</li>
+		<li><font face="Arial" size="2">Click <b>Open</b>. The files on the Web 
+		server are displayed under <b>Remote Web Site</b>.<br>
+		<b>Note:</b> If you have trouble connecting to the server, contact the 
+		server administrator. </font></li>
+		<li><font face="Arial" size="2">In the <b>Move Files</b> list, click <b>
+		All source files to remote Web site</b>. </font></li>
+		<li><font face="Arial" size="2">Click the <b>Copy Web Site</b> button. 
+		The files from your Personal Web Site are copied to the server. </font>
+		</li>
+	</ol>
+	<p>&nbsp;</p>
+</body>
+</html>

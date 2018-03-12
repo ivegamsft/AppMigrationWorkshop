@@ -1,0 +1,96 @@
+<VSTemplate Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>Time Tracker Starter Kit</Name>
+    <Description>Starter kit for creating a time tracking application</Description>
+    <Icon>__TemplateIcon.ico</Icon>
+    <ProjectType>Web</ProjectType>
+    <ProjectSubType>CSharp</ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>TimeTracker</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="ProjectName.webproj" File="ProjectName.webproj" ReplaceParameters="true">
+      <Folder Name="App_Code" TargetFolderName="App_Code">
+        <Folder Name="BLL" TargetFolderName="BLL">
+          <ProjectItem ReplaceParameters="true" TargetFileName="Category.cs">Category.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="Project.cs">Project.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="ProjectComparation.cs">ProjectComparation.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="TimeEntry.cs">TimeEntry.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="UserReport.cs">UserReport.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="UserTotalDurationReport.cs">UserTotalDurationReport.cs</ProjectItem>
+        </Folder>
+        <Folder Name="DAL" TargetFolderName="DAL">
+          <ProjectItem ReplaceParameters="true" TargetFileName="DataAccessHelper.cs">DataAccessHelper.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="DataAcess.cs">DataAcess.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="SQLDataAccessLayer.cs">SQLDataAccessLayer.cs</ProjectItem>
+        </Folder>
+        <ProjectItem ReplaceParameters="true" TargetFileName="DefaultValue.cs">DefaultValue.cs</ProjectItem>
+      </Folder>
+      <Folder Name="App_Data" TargetFolderName="App_Data">
+        <ProjectItem ReplaceParameters="false" TargetFileName="timetracker-add.sql">timetracker-add.sql</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="TimeTracker.mdf">TimeTracker.mdf</ProjectItem>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Default.aspx">Default.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Default.aspx.cs">Default.aspx.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="EULA.txt">EULA.txt</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Global.asax">Global.asax</ProjectItem>
+      <Folder Name="TimeTracker" TargetFolderName="TimeTracker">
+        <ProjectItem ReplaceParameters="true" TargetFileName="Calendar.aspx">Calendar.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Calendar.aspx.cs">Calendar.aspx.cs</ProjectItem>
+        <Folder Name="images" TargetFolderName="images">
+          <ProjectItem ReplaceParameters="false" TargetFileName="background_addhours.jpg">background_addhours.jpg</ProjectItem>
+          <ProjectItem ReplaceParameters="false" TargetFileName="background_body.gif">background_body.gif</ProjectItem>
+          <ProjectItem ReplaceParameters="false" TargetFileName="background_calendar.gif">background_calendar.gif</ProjectItem>
+          <ProjectItem ReplaceParameters="false" TargetFileName="background_drop_menu.jpg">background_drop_menu.jpg</ProjectItem>
+          <ProjectItem ReplaceParameters="false" TargetFileName="background_formsection.gif">background_formsection.gif</ProjectItem>
+          <ProjectItem ReplaceParameters="false" TargetFileName="background_main.jpg">background_main.jpg</ProjectItem>
+          <ProjectItem ReplaceParameters="false" TargetFileName="icon-calendar.gif">icon-calendar.gif</ProjectItem>
+          <ProjectItem ReplaceParameters="false" TargetFileName="icon-cancel.gif">icon-cancel.gif</ProjectItem>
+          <ProjectItem ReplaceParameters="false" TargetFileName="icon-delete.gif">icon-delete.gif</ProjectItem>
+          <ProjectItem ReplaceParameters="false" TargetFileName="icon-edit.gif">icon-edit.gif</ProjectItem>
+          <ProjectItem ReplaceParameters="false" TargetFileName="icon-save.gif">icon-save.gif</ProjectItem>
+          <ProjectItem ReplaceParameters="false" TargetFileName="icon_left_white_arrow.gif">icon_left_white_arrow.gif</ProjectItem>
+          <ProjectItem ReplaceParameters="false" TargetFileName="tab.gif">tab.gif</ProjectItem>
+          <ProjectItem ReplaceParameters="false" TargetFileName="tab_bg.gif">tab_bg.gif</ProjectItem>
+          <ProjectItem ReplaceParameters="false" TargetFileName="tab_dim.gif">tab_dim.gif</ProjectItem>
+          <ProjectItem ReplaceParameters="false" TargetFileName="time_tracker_logo.gif">time_tracker_logo.gif</ProjectItem>
+          <ProjectItem ReplaceParameters="false" TargetFileName="timesheet_data_bg.gif">timesheet_data_bg.gif</ProjectItem>
+        </Folder>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Login.aspx">Login.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Login.aspx.cs">Login.aspx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="MasterPage.master">MasterPage.master</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="MasterPage.master.cs">MasterPage.master.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Project_Details.aspx">Project_Details.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Project_Details.aspx.cs">Project_Details.aspx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Project_List.aspx">Project_List.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Project_List.aspx.cs">Project_List.aspx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Report_Project.aspx">Report_Project.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Report_Project.aspx.cs">Report_Project.aspx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Report_Project_Result.aspx">Report_Project_Result.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Report_Project_Result.aspx.cs">Report_Project_Result.aspx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Report_Resources.aspx">Report_Resources.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Report_Resources.aspx.cs">Report_Resources.aspx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Report_Resources_Result.aspx">Report_Resources_Result.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Report_Resources_Result.aspx.cs">Report_Resources_Result.aspx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="script.js">script.js</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="TimeEntry.aspx">TimeEntry.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="TimeEntry.aspx.cs">TimeEntry.aspx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="timetracker.css">timetracker.css</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="User_Create.aspx">User_Create.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="User_Create.aspx.cs">User_Create.aspx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="User_Edit.aspx">User_Edit.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="User_List.aspx">User_List.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="User_List.aspx.cs">User_List.aspx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="User_test.aspx.cs">User_test.aspx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Web.config">Web.config</ProjectItem>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="web.config">web.config</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="web.sitemap">web.sitemap</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Welcome.html" OpenInWebBrowser="true" OpenOrder="1">Welcome.html</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

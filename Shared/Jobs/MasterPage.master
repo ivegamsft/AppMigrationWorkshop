@@ -1,0 +1,60 @@
+<%@ Master Language="C#" CodeFile="MasterPage.master.cs" Inherits="MasterPage_master" %>
+<%@ Register TagPrefix="uc3" TagName="LatestJobs" Src="UserControls/LatestJobs.ascx" %>
+<%@ Register TagPrefix="uc2" TagName="Statistics" Src="UserControls/Statistics.ascx" %>
+<%@ Register TagPrefix="uc1" TagName="NavigationTree" Src="UserControls/NavigationTree.ascx" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+    <title>Untitled Page</title>
+</head>
+<body>
+    <form id="form1" runat="server">
+    
+    <table width="100%" border=0 cellpadding=0 cellspacing=0>
+    <tr>
+    <td colspan=3 class="pagetop">
+        <table width=100% border=0>
+        <tr>
+        <td><asp:HyperLink ID="HyperLink1" Runat="server" ImageUrl="~/Images/logo.gif" NavigateUrl="~/default.aspx"></asp:HyperLink></td>
+        <td valign="bottom" align="right">
+            &nbsp;<asp:LoginName ID="LoginName1" Runat="server" SkinID="FormLabel" FormatString="Welcome {0} !" /> 
+            [
+             <asp:LoginStatus ID="LoginStatus1" Runat="server" LogoutPageUrl="~/default.aspx" LogoutAction="Redirect" />
+            ]
+        </td>
+        </tr>
+        </table>
+        
+    </td>
+    </tr>
+    <tr>
+    <td valign="top" width="20%" class="pageleft" height="600px">
+        <uc1:NavigationTree ID="NavigationTree1" Runat="server" />
+    </td>
+    <td valign="top" width="60%">
+    <asp:contentplaceholder id="ContentPlaceHolder1" runat="server"><br />
+        </asp:contentplaceholder>
+    </td>
+    <td valign="top" width="20%" class="pageright">&nbsp;<uc2:statistics id="Statistics1" runat="server"></uc2:statistics>
+        <br />
+        <uc3:LatestJobs ID="LatestJobs1" Runat="server" />
+    </td>
+    </tr>
+    <tr>
+    <td colspan=3 class="pagebottom" align="center">
+        &nbsp;<br />
+        Copyright (C) your copyright here.<br />
+        <br />
+        <asp:HyperLink ID="lnkAds" Runat="server">Want to advertise with us?</asp:HyperLink>
+        |
+        <asp:HyperLink ID="lnkWebmaster" Runat="server">Problems with the site?</asp:HyperLink>
+        <br />
+        <br />
+    </td>
+    </tr>
+    </table>
+        
+    </form>
+</body>
+</html>

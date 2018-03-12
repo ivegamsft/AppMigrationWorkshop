@@ -1,0 +1,159 @@
+A:link
+{
+	font-weight: bold;
+	font-size: 9pt;
+	color: mediumblue;
+	font-family: Verdana;
+	text-decoration: none;
+}	
+
+A:visited
+{
+	font-weight: bold;
+	font-size: 9pt;
+	color: mediumblue;
+	font-family: Verdana;
+	text-decoration: none;
+}	
+			
+A:hover
+{
+	font-weight: bold;
+	font-size: 9pt;
+	color: dodgerblue;
+	font-family: Verdana;
+	text-decoration: underline;
+}
+
+p
+{
+    font-size: 9pt;
+    color: darkslateblue;
+    font-family: Verdana;
+}
+
+body
+{
+    font-size: 9pt;
+    color: darkslateblue;
+    font-family: Verdana, Arial;
+    margin: 0px;
+}
+
+.dataentryformlabel
+{
+    font-weight: bold;
+    font-size: 9pt;
+    color: darkgoldenrod;
+    font-family: Verdana;
+}
+
+.dataentryformerrormsg
+{
+    font-weight: bold;
+    font-size: 9pt;
+    color: darkorange;
+    font-family: Verdana;
+}
+
+.dataentryformtextbox
+{
+    border-right: peru 1px solid;
+    border-top: peru 1px solid;
+    border-left: peru 1px solid;
+    border-bottom: peru 1px solid;
+}
+
+.dataentryformbutton
+{
+    font-weight: bold;
+    font-size: 9pt;
+    color: ivory;
+    font-family: Verdana;
+    background-color: goldenrod;
+}
+
+.pagetop
+{
+    background-color: lightyellow;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    border-bottom: gold thin solid;
+}
+
+.pageleft
+{
+    background-color: lemonchiffon;
+    padding-right: 5px;
+}
+
+.pageright
+{
+    background-color: ivory;
+}
+
+.pagebottom
+{
+    background-color: lightyellow;
+    border-top: gold thin solid;
+    padding-top: 5px;
+}
+
+.dataentryformheading
+{
+    padding-right: 2px;
+    padding-left: 2px;
+    font-weight: bold;
+    font-size: 11pt;
+    padding-bottom: 2px;
+    vertical-align: middle;
+    color: sienna;
+    padding-top: 2px;
+    font-family: Verdana;
+    background-color: khaki;
+    text-align: center;
+}
+
+.biglabel
+{
+    padding-right: 2px;
+    padding-left: 2px;
+    font-weight: bold;
+    font-size: 10pt;
+    padding-bottom: 2px;
+    vertical-align: middle;
+    color: darkorange;
+    padding-top: 2px;
+    font-family: Verdana;
+    text-align: center;
+    width: 100%;
+    font-style: italic;
+}
+
+.dataentryformlabelbig
+{
+    padding-right: 2px;
+    padding-left: 2px;
+    font-weight: bold;
+    font-size: 10pt;
+    padding-bottom: 2px;
+    vertical-align: middle;
+    color: sienna;
+    padding-top: 2px;
+    font-family: Verdana;
+    text-align: center;
+    width: 100%;
+    font-style: normal;
+    background-color: blanchedalmond;
+}
+
+.marketingtext
+{
+    padding-right: 2px;
+    padding-left: 2px;
+    font-size: 20px;
+    padding-bottom: 2px;
+    color: peru;
+    padding-top: 2px;
+    font-family: Arial;
+}

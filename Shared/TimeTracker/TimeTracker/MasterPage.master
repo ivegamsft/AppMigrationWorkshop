@@ -1,0 +1,62 @@
+<%@ Master Language="C#" CodeFile="MasterPage.master.cs" Inherits="MasterPage_master"  %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
+<head runat="server">
+    <title>My Company - Time Tracker - Log</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta name="generator" content="Microsoft Visual Studio, see http://msdn.microsoft.com/vstudio/" />
+    <meta name="Keywords" content="My Company, time tracker" />
+    <meta name="Description" content="Log your My Company hours" />
+    <meta name="copyright" content="Copyright (c) 2004 My Company. All rights reserved." />
+    <link href="timetracker.css" rel="stylesheet" type="text/css" />
+    <script language="javascript" src="script.js"> </script>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div id="header">
+            <div id="title">
+                <h1>		
+			<asp:HyperLink ID="HyperLink1" NavigateUrl="~/Default.aspx" runat="server">My Company</asp:HyperLink>
+		</h1>
+                <br />
+                <img src="images/time_tracker_logo.gif" alt="Time Tracker" width="140" height="24" />
+            </div>
+            <div id="login">
+                <asp:LoginStatus ID="LoginStatus1" runat="server" />
+                <!--
+                |
+                  <a href="#">Help</a>
+                  --></div>
+        </div>
+        <div class="none">
+            <a href="#content_start">Skip Repetitive Navigational Links</a></div>
+        <div id="navtop">
+            <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" ShowStartingNode="false" />
+            <asp:Menu ID="MainMenu" runat="server" Orientation="Horizontal" MaximumDynamicDisplayLevels="2"
+                DataSourceID="SiteMapDataSource1" DynamicEnableDefaultPopOutImage="False" StaticEnableDefaultPopOutImage="False">
+                <StaticMenuStyle CssClass="menu" />
+                <StaticMenuItemStyle CssClass="menuItem" />
+                <StaticSelectedStyle CssClass="menuSelectedItem" />
+                <DynamicMenuStyle CssClass="menuPopup" />
+                <DynamicMenuItemStyle CssClass="menuPopupItem" Font-Strikeout="False" />
+                <DynamicHoverStyle CssClass="menuPopupItem" />
+                <StaticHoverStyle CssClass="menuItemHover" />
+            </asp:Menu>
+        </div>
+        <div id=breadcrumb>
+            <asp:SiteMapPath ID="SiteMapPath1" runat="server" PathSeparator=" | ">
+                <RootNodeStyle Font-Bold="True" />
+            </asp:SiteMapPath>
+        
+        </div>
+        <div id="subnav">
+            <!-- sub navigation items can go in this div here -->
+        </div>
+        <div id="body">
+            <a name="content_start" id="content_start"></a>
+            <asp:ContentPlaceHolder ID="maincontent" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>

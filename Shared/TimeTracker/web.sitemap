@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+
+	<siteMapNode title="" url="" description="foo" roles="*" >
+    <siteMapNode title="Log"
+					 url="~/TimeTracker/TimeEntry.aspx"
+					 description="Log a time entry"
+					 roles="Consultant,ProjectManager,ProjectAdministrator" />
+
+    <siteMapNode title="Reports"
+                 url=""
+					 description="Get usage reports"
+					 roles="ProjectManager,ProjectAdministrator" >
+
+      <siteMapNode title="Project Reports"
+						 url="~/TimeTracker/Report_Project.aspx"
+						 description="Get project usage reports"
+						 roles="ProjectManager,ProjectAdministrator" />
+
+
+      <siteMapNode title="Resources Report"
+						 url="~/TimeTracker/Report_Resources.aspx"
+						 description="Get resource reports"
+						 roles="ProjectManager,ProjectAdministrator" />
+
+    </siteMapNode>
+
+    <siteMapNode title="Projects"
+                 url=""
+				 description="List of available projects"
+				 roles="ProjectManager,ProjectAdministrator" >
+
+
+      <siteMapNode title="Create New Project"
+				 url="~/TimeTracker/Project_Details.aspx"
+				 description="Create a new projects"
+				 roles="ProjectManager,ProjectAdministrator" />
+
+
+      <siteMapNode title="List Projects"
+				 url="~/TimeTracker/Project_List.aspx"
+				 description="List of available projects"
+				 roles="ProjectManager,ProjectAdministrator" />
+
+    </siteMapNode>
+
+    <siteMapNode title="Administration"
+                 url=""
+				 description="Adminitrattive tasks"
+				 roles="ProjectAdministrator" >
+
+
+      <siteMapNode  title="Create New User"
+						  url="~/TimeTracker/User_Create.aspx"
+						  description="List of current users"
+						  roles="ProjectAdministrator" />
+
+      <siteMapNode  title="List Users"
+						  url="~/TimeTracker/User_List.aspx"
+						  description="List of current users"
+						  roles="ProjectAdministrator" />
+
+
+    </siteMapNode>
+
+	</siteMapNode>
+</siteMap>

@@ -1,0 +1,262 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "applicationMigrationId": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    }
+  },
+  "variables": {
+    "apiStorageVersion": "2016-01-01",
+
+    "appmigrgid": "[parameters('applicationMigrationId')]",
+    "appmigSTG01Name": "[toLower(concat(variables('appmigrgid'), 'stg'))]",
+    "appmigSTG01type": "Standard_LRS",
+
+    "appmigAdminUserName": "appmigadmin",
+    "appmigAdminPassword": "@pp_M!gr@ti0n-2018",
+
+    "appmigAPPSvcName": "[concat(variables('appmigrgid'), '-appsvc')]",
+    "appmigAPPSvcSkuName": "S2",
+    "appmigClassWebAppName": "[concat(variables('appmigrgid'), '-class')]",
+    "appmigTimeTrackerWebAppName": "[concat(variables('appmigrgid'), '-timetracker')]",
+    "appmigJobsWebAppName": "[concat(variables('appmigrgid'), '-jobs')]",
+    "appmigAZSQLSvrName": "[concat(variables('appmigrgid'), '-sqlsvr')]",
+    "TIMETRACKERDBName": "TIMETRACKERDB",
+    "TIMETRACKERDBCollation": "SQL_Latin1_General_CP1_CI_AS",
+    "TIMETRACKERDBEdition": "Basic",
+    "TIMETRACKERDBRequestedServiceObjectiveName": "Basic",
+    "JOBSDBName": "JOBSDB",
+    "JOBSDBCollation": "SQL_Latin1_General_CP1_CI_AS",
+    "JOBSDBEdition": "Basic",
+    "JOBSDBRequestedServiceObjectiveName": "Basic",
+    "CLASSIFIEDSDBName": "CLASSIFIEDSDB",
+    "CLASSIFIEDSDBCollation": "SQL_Latin1_General_CP1_CI_AS",
+    "CLASSIFIEDSDBEdition": "Basic",
+    "CLASSIFIEDSDBRequestedServiceObjectiveName": "Basic"
+  },
+  "resources": [
+    {
+      "condition": false,
+      "name": "[variables('appmigSTG01Name')]",
+      "type": "Microsoft.Storage/storageAccounts",
+      "location": "[parameters('location')]",
+      "apiVersion": "[variables('apiStorageVersion')]",
+      "sku": {
+        "name": "[variables('appmigSTG01type')]"
+      },
+      "dependsOn": [],
+      "tags": {
+        "displayName": "[variables('appmigSTG01type')]"
+      },
+      "kind": "Storage"
+    },
+
+    {
+      "name": "[variables('appmigAPPSvcName')]",
+      "type": "Microsoft.Web/serverfarms",
+      "location": "[parameters('location')]",
+      "apiVersion": "2015-08-01",
+      "sku": {
+        "name": "[variables('appmigAPPSvcSkuName')]"
+      },
+      "dependsOn": [],
+      "tags": {
+        "displayName": "appmigAPPSvc"
+      },
+      "properties": {
+        "name": "[variables('appmigAPPSvcName')]",
+        "numberOfWorkers": 1
+      }
+    },
+    {
+      "name": "[variables('appmigClassWebAppName')]",
+      "type": "Microsoft.Web/sites",
+      "location": "[parameters('location')]",
+      "apiVersion": "2015-08-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', variables('appmigAPPSvcName'))]"
+      ],
+      "tags": {
+        "[concat('hidden-related:', resourceId('Microsoft.Web/serverfarms', variables('appmigAPPSvcName')))]": "Resource",
+        "displayName": "appmigClass"
+      },
+      "properties": {
+        "name": "[variables('appmigClassWebAppName')]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appmigAPPSvcName'))]"
+      },
+      "resources": [
+        {
+          "name": "appsettings",
+          "type": "config",
+          "apiVersion": "2015-08-01",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', variables('appmigClassWebAppName'))]"
+          ],
+          "tags": {
+            "displayName": "appmigClassAppSettings"
+          },
+          "properties": {
+            "key1": "value1",
+            "key2": "value2"
+          }
+        }
+      ]
+    },
+    {
+      "name": "[variables('appmigTimeTrackerWebAppName')]",
+      "type": "Microsoft.Web/sites",
+      "location": "[parameters('location')]",
+      "apiVersion": "2015-08-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', variables('appmigAPPSvcName'))]"
+      ],
+      "tags": {
+        "[concat('hidden-related:', resourceId('Microsoft.Web/serverfarms', variables('appmigAPPSvcName')))]": "Resource",
+        "displayName": "appmigTimeTracker"
+      },
+      "properties": {
+        "name": "[variables('appmigTimeTrackerWebAppName')]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appmigAPPSvcName'))]"
+      },
+      "resources": [
+        {
+          "name": "appsettings",
+          "type": "config",
+          "apiVersion": "2015-08-01",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', variables('appmigTimeTrackerWebAppName'))]"
+          ],
+          "tags": {
+            "displayName": "appmigTimeTrackerAppSettings"
+          },
+          "properties": {
+            "key1": "value1",
+            "key2": "value2"
+          }
+        }
+      ]
+    },
+    {
+      "name": "[variables('appmigJobsWebAppName')]",
+      "type": "Microsoft.Web/sites",
+      "location": "[parameters('location')]",
+      "apiVersion": "2015-08-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', variables('appmigAPPSvcName'))]"
+      ],
+      "tags": {
+        "[concat('hidden-related:', resourceId('Microsoft.Web/serverfarms', variables('appmigAPPSvcName')))]": "Resource",
+        "displayName": "appmigJobs"
+      },
+      "properties": {
+        "name": "[variables('appmigJobsWebAppName')]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appmigAPPSvcName'))]"
+      },
+      "resources": [
+        {
+          "name": "appsettings",
+          "type": "config",
+          "apiVersion": "2015-08-01",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', variables('appmigJobsWebAppName'))]"
+          ],
+          "tags": {
+            "displayName": "appmigJobsAppSettings"
+          },
+          "properties": {
+            "key1": "value1",
+            "key2": "value2"
+          }
+        }
+      ]
+    },
+    {
+      "name": "[variables('appmigAZSQLSvrName')]",
+      "type": "Microsoft.Sql/servers",
+      "location": "[parameters('location')]",
+      "apiVersion": "2014-04-01-preview",
+      "dependsOn": [],
+      "tags": {
+        "displayName": "appmigsqlsvr"
+      },
+      "properties": {
+        "administratorLogin": "[variables('appmigAdminUserName')]",
+        "administratorLoginPassword": "[variables('appmigAdminPassword')]"
+      },
+      "resources": [
+        {
+          "name": "AllowAllWindowsAzureIps",
+          "type": "firewallrules",
+          "location": "[parameters('location')]",
+          "apiVersion": "2014-04-01-preview",
+          "dependsOn": [
+            "[resourceId('Microsoft.Sql/servers', variables('appmigAZSQLSvrName'))]"
+          ],
+          "properties": {
+            "startIpAddress": "0.0.0.0",
+            "endIpAddress": "0.0.0.0"
+          }
+        },
+        {
+          "name": "[variables('TIMETRACKERDBName')]",
+          "type": "databases",
+          "location": "[parameters('location')]",
+          "apiVersion": "2014-04-01-preview",
+          "dependsOn": [
+            "[resourceId('Microsoft.Sql/servers', variables('appmigAZSQLSvrName'))]"
+          ],
+          "tags": {
+            "displayName": "TIMETRACKERDB"
+          },
+          "properties": {
+            "collation": "[variables('TIMETRACKERDBCollation')]",
+            "edition": "[variables('TIMETRACKERDBEdition')]",
+            "maxSizeBytes": "1073741824",
+            "requestedServiceObjectiveName": "[variables('TIMETRACKERDBRequestedServiceObjectiveName')]"
+          }
+        },
+        {
+          "name": "[variables('JOBSDBName')]",
+          "type": "databases",
+          "location": "[parameters('location')]",
+          "apiVersion": "2014-04-01-preview",
+          "dependsOn": [
+            "[resourceId('Microsoft.Sql/servers', variables('appmigAZSQLSvrName'))]"
+          ],
+          "tags": {
+            "displayName": "JOBSDB"
+          },
+          "properties": {
+            "collation": "[variables('JOBSDBCollation')]",
+            "edition": "[variables('JOBSDBEdition')]",
+            "maxSizeBytes": "1073741824",
+            "requestedServiceObjectiveName": "[variables('JOBSDBRequestedServiceObjectiveName')]"
+          }
+        },
+        {
+          "name": "[variables('CLASSIFIEDSDBName')]",
+          "type": "databases",
+          "location": "[parameters('location')]",
+          "apiVersion": "2014-04-01-preview",
+          "dependsOn": [
+            "[resourceId('Microsoft.Sql/servers', variables('appmigAZSQLSvrName'))]"
+          ],
+          "tags": {
+            "displayName": "CLASSIFIEDSDB"
+          },
+          "properties": {
+            "collation": "[variables('CLASSIFIEDSDBCollation')]",
+            "edition": "[variables('CLASSIFIEDSDBEdition')]",
+            "maxSizeBytes": "1073741824",
+            "requestedServiceObjectiveName": "[variables('CLASSIFIEDSDBRequestedServiceObjectiveName')]"
+          }
+        }
+      ]
+    }
+  ],
+  "outputs": {}
+}
