@@ -110,7 +110,7 @@ This lab is done from the jump box
     ![image](./media/06-02-e.png)
 
 
-### Exercise 3: Create CI/CD Pipeline in VSTS<a name="ex2"></a>
+### Exercise 3: Create CI/CD Pipeline in VSTS<a name="ex3"></a>
 
 
 
