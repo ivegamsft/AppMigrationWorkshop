@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<SiteSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MaxPhotosPerAd>5</MaxPhotosPerAd>
+  <StorePhotosInDatabase>true</StorePhotosInDatabase>
+  <ServerPhotoUploadDirectory>Upload</ServerPhotoUploadDirectory>
+  <AdActivationRequired>false</AdActivationRequired>
+  <AllowUsersToEditAds>true</AllowUsersToEditAds>
+  <AllowUsersToDeleteAdsInDB>true</AllowUsersToDeleteAdsInDB>
+  <MaxAdRunningDays>21</MaxAdRunningDays>
+  <AdminNotification>None</AdminNotification>
+  <SiteName>ASP.NET Classifieds</SiteName>
+  <SiteEmailAddress>classifieds@yoursite.com</SiteEmailAddress>
+</SiteSettings>

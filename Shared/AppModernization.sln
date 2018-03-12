@@ -1,0 +1,177 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "ARM-Common", "ARM-Common\ARM-Common.deployproj", "{8E4251E8-3EA7-4583-9394-2F00AEA52806}"
+EndProject
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "ARM-CustomApp", "ARM-CustomApp\ARM-CustomApp.deployproj", "{7379BD73-2A3C-42E8-A96A-570BEC4B56D4}"
+EndProject
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "ARM-IBuySpy", "ARM-IBuySpy\ARM-IBuySpy.deployproj", "{73544A62-35BD-4868-8354-A38F344BDC5C}"
+EndProject
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "ARM-PetShop", "ARM-PetShop\ARM-PetShop.deployproj", "{7F9E4A91-F583-419F-B426-476BD148E6D0}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "TimeTracker", "TimeTracker\", "{D30E2F34-63CA-4A80-95B5-A7A9CEECBF01}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6.1"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_7795"
+		Debug.AspNetCompiler.PhysicalPath = "TimeTracker\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_7795\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_7795"
+		Release.AspNetCompiler.PhysicalPath = "TimeTracker\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_7795\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "7795"
+		SlnRelativePath = "TimeTracker\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Classifieds", "Classifieds\", "{43C5D078-3124-44A8-ABA8-17B7DDF20366}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6.1"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_7879"
+		Debug.AspNetCompiler.PhysicalPath = "Classifieds\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_7879\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_7879"
+		Release.AspNetCompiler.PhysicalPath = "Classifieds\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_7879\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "7879"
+		SlnRelativePath = "Classifieds\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Jobs", "Jobs\", "{A4783069-F3EE-475A-A2E6-7E1C77D279C3}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6.1"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_7903"
+		Debug.AspNetCompiler.PhysicalPath = "Jobs\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_7903\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_7903"
+		Release.AspNetCompiler.PhysicalPath = "Jobs\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_7903\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "7903"
+		SlnRelativePath = "Jobs\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "PetShop", "PetShop\", "{C93E13A6-ADAC-4012-850B-80C4B6506BE2}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6.1"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_7919"
+		Debug.AspNetCompiler.PhysicalPath = "PetShop\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_7919\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_7919"
+		Release.AspNetCompiler.PhysicalPath = "PetShop\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_7919\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "7919"
+		SlnRelativePath = "PetShop\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "JobsDB", "JobsDB\JobsDB.sqlproj", "{581FB619-911F-40BC-9E90-B36AF3F78568}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TimeTrackerDB", "TimeTrackerDB\TimeTrackerDB.sqlproj", "{06BA8E2A-36D7-4E41-9C88-6D4A91B549FE}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ClassifiedsDB", "ClassifiedsDB\ClassifiedsDB.sqlproj", "{A7D0C4B3-E09C-41E1-8649-8B1C37CD8B1C}"
+EndProject
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "ARM-NewIaaS", "ARM-NewIaaS\ARM-NewIaaS.deployproj", "{B22DEBD3-19EC-4F91-AB52-6D5844D6B713}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8E4251E8-3EA7-4583-9394-2F00AEA52806}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E4251E8-3EA7-4583-9394-2F00AEA52806}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E4251E8-3EA7-4583-9394-2F00AEA52806}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E4251E8-3EA7-4583-9394-2F00AEA52806}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7379BD73-2A3C-42E8-A96A-570BEC4B56D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7379BD73-2A3C-42E8-A96A-570BEC4B56D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7379BD73-2A3C-42E8-A96A-570BEC4B56D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7379BD73-2A3C-42E8-A96A-570BEC4B56D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73544A62-35BD-4868-8354-A38F344BDC5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73544A62-35BD-4868-8354-A38F344BDC5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73544A62-35BD-4868-8354-A38F344BDC5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73544A62-35BD-4868-8354-A38F344BDC5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F9E4A91-F583-419F-B426-476BD148E6D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F9E4A91-F583-419F-B426-476BD148E6D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F9E4A91-F583-419F-B426-476BD148E6D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F9E4A91-F583-419F-B426-476BD148E6D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D30E2F34-63CA-4A80-95B5-A7A9CEECBF01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D30E2F34-63CA-4A80-95B5-A7A9CEECBF01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D30E2F34-63CA-4A80-95B5-A7A9CEECBF01}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{D30E2F34-63CA-4A80-95B5-A7A9CEECBF01}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{43C5D078-3124-44A8-ABA8-17B7DDF20366}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43C5D078-3124-44A8-ABA8-17B7DDF20366}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43C5D078-3124-44A8-ABA8-17B7DDF20366}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{43C5D078-3124-44A8-ABA8-17B7DDF20366}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{A4783069-F3EE-475A-A2E6-7E1C77D279C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4783069-F3EE-475A-A2E6-7E1C77D279C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4783069-F3EE-475A-A2E6-7E1C77D279C3}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4783069-F3EE-475A-A2E6-7E1C77D279C3}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{C93E13A6-ADAC-4012-850B-80C4B6506BE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C93E13A6-ADAC-4012-850B-80C4B6506BE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C93E13A6-ADAC-4012-850B-80C4B6506BE2}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{C93E13A6-ADAC-4012-850B-80C4B6506BE2}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{581FB619-911F-40BC-9E90-B36AF3F78568}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{581FB619-911F-40BC-9E90-B36AF3F78568}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{581FB619-911F-40BC-9E90-B36AF3F78568}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{581FB619-911F-40BC-9E90-B36AF3F78568}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{581FB619-911F-40BC-9E90-B36AF3F78568}.Release|Any CPU.Build.0 = Release|Any CPU
+		{581FB619-911F-40BC-9E90-B36AF3F78568}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{06BA8E2A-36D7-4E41-9C88-6D4A91B549FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06BA8E2A-36D7-4E41-9C88-6D4A91B549FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06BA8E2A-36D7-4E41-9C88-6D4A91B549FE}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{06BA8E2A-36D7-4E41-9C88-6D4A91B549FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06BA8E2A-36D7-4E41-9C88-6D4A91B549FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06BA8E2A-36D7-4E41-9C88-6D4A91B549FE}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{A7D0C4B3-E09C-41E1-8649-8B1C37CD8B1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7D0C4B3-E09C-41E1-8649-8B1C37CD8B1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7D0C4B3-E09C-41E1-8649-8B1C37CD8B1C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{A7D0C4B3-E09C-41E1-8649-8B1C37CD8B1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7D0C4B3-E09C-41E1-8649-8B1C37CD8B1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7D0C4B3-E09C-41E1-8649-8B1C37CD8B1C}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{B22DEBD3-19EC-4F91-AB52-6D5844D6B713}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B22DEBD3-19EC-4F91-AB52-6D5844D6B713}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B22DEBD3-19EC-4F91-AB52-6D5844D6B713}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B22DEBD3-19EC-4F91-AB52-6D5844D6B713}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AFF51254-6547-4003-A62C-D73D4C70EF34}
+	EndGlobalSection
+EndGlobal

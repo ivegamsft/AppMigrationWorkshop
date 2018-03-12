@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<siteMap>
+	<siteMapNode url="default.aspx" title="Home"  description="">
+		<siteMapNode url="~/" title="Home"  roles="*"/>
+		<siteMapNode url="PostAd.aspx" title="Post an Ad"  roles="*"/>
+		<siteMapNode url="MyAds.aspx" title="My Ads &amp; Profile" roles="*">
+			<siteMapNode url="MyProfile.aspx" title="My Profile" roles="*" />
+			<siteMapNode url="Login.aspx" title="Login" roles="*" />
+			<siteMapNode url="Register.aspx" title="Create an Account" roles="*" />
+		</siteMapNode>
+		<siteMapNode url="Admin/" title="Site Administration" roles="Administrators">
+			<siteMapNode url="Admin/Settings.aspx" title="My Profile" roles="Administrators" />
+			</siteMapNode>
+	</siteMapNode>
+</siteMap>

@@ -1,0 +1,60 @@
+<asp:GridView Runat="server" 
+			BorderStyle="Solid" BorderColor="DarkGoldenrod"	
+			BorderWidth="1px" BackColor="White"
+			GridLines="Vertical"
+            CellPadding="4" ForeColor="Black">
+            <FooterStyle BackColor="#CCCC99"></FooterStyle>
+            <PagerStyle ForeColor="Black" HorizontalAlign="Right" BackColor="#F7F7DE"></PagerStyle>
+            <HeaderStyle ForeColor="White" Font-Bold="True" BackColor="#6B696B"></HeaderStyle>
+            <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
+            <SelectedRowStyle ForeColor="White" Font-Bold="True" BackColor="#CE5D5A"></SelectedRowStyle>
+            <RowStyle BackColor="#F7F7DE"></RowStyle>
+        </asp:GridView>
+
+<asp:TextBox Runat="server" CssClass="dataentryformtextbox" BorderWidth="1px" BorderStyle="Solid" BorderColor="peru"></asp:TextBox>
+
+<asp:Login Runat="server" BorderWidth="1px" BackColor="#F7F7DE" BorderStyle="Solid"
+            BorderColor="#CCCC99" ForeColor="#333333" Font-Names="Verdana"
+            Font-Size="10pt">
+            <TextBoxStyle CssClass="dataentryformtextbox"></TextBoxStyle>
+            <TitleTextStyle Font-Bold="True" BackColor="#6B696B" ForeColor="#FFFFFF"></TitleTextStyle>
+ </asp:Login>
+
+<asp:PasswordRecovery Runat="server" BorderColor="#CCCC99"
+            BorderStyle="Solid" BackColor="#F7F7DE" BorderWidth="1px" Font-Size="10pt" Font-Names="Verdana">
+            <TitleTextStyle Font-Bold="True" BackColor="#6B696B" ForeColor="#FFFFFF"></TitleTextStyle>
+            <TextBoxStyle CssClass="dataentryformtextbox"></TextBoxStyle>
+</asp:PasswordRecovery>
+
+<asp:Label Runat="server" CssClass="dataentryformheading" SkinId="FormHeading"></asp:Label>
+
+<asp:Label Runat="server" CssClass="dataentryformlabel" Width="100%" SkinId="FormLabel"></asp:Label>
+
+<asp:Label Runat="server" CssClass="biglabel" Width="100%" SkinId="Slogan"></asp:Label>
+
+<asp:Label Runat="server" CssClass="dataentryformlabelbig" SkinId="FormGroupLabel"></asp:Label>
+
+<asp:Button Runat="server" CssClass="dataentryformbutton" />
+
+<asp:CreateUserWizard Runat="server" BorderColor="#CCCC99"
+            BorderStyle="Solid" BackColor="#F7F7DE" BorderWidth="1px" Font-Size="10pt" Font-Names="Verdana">
+             <StepStyle BorderColor="#CCCC99" Font-Names="Verdana" Font-Size="10pt" BackColor="#F7F7DE"
+                BorderStyle="Solid" BorderWidth="1px"></StepStyle>
+            <TitleTextStyle Font-Bold="True" BackColor="#6B696B" ForeColor="#FFFFFF"></TitleTextStyle>
+</asp:CreateUserWizard>
+
+<asp:ChangePassword Runat="server" BorderColor="#CCCC99" BorderStyle="Solid"
+            BackColor="#F7F7DE" BorderWidth="1px" Font-Size="10pt" Font-Names="Verdana">
+            <TitleTextStyle Font-Bold="True" BackColor="#6B696B" ForeColor="#FFFFFF"></TitleTextStyle>
+</asp:ChangePassword>
+
+<asp:DetailsView SkinID="AdminEntry" 
+	CellPadding="5" 
+	Runat="server" ForeColor="Black" BorderColor="Tan"
+            GridLines="None" 
+		BackColor="LightGoldenrodYellow" BorderWidth="1px">
+            <FooterStyle BackColor="Tan"></FooterStyle>
+            <PagerStyle ForeColor="DarkSlateBlue" HorizontalAlign="Center" BackColor="PaleGoldenrod"></PagerStyle>
+            <HeaderStyle Font-Bold="True" BackColor="Tan"></HeaderStyle>
+            <AlternatingRowStyle BackColor="PaleGoldenrod"></AlternatingRowStyle>
+</asp:DetailsView>

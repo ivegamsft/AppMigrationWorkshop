@@ -1,0 +1,80 @@
+<%@ Master Language="C#" CodeFile="MasterPage.master.cs" Inherits="MasterPage_master" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="HeadElement" runat="server">
+    <title></title>
+</head>
+<body>
+    <form id="MainForm" runat="server">
+        <div id="title">
+            <h1>
+                <asp:HyperLink ID="HeaderLink" Runat="server" NavigateUrl="~/">Classifieds Online</asp:HyperLink></h1>
+        </div>
+        <div class="none">
+            <a href="#content_start">Skip Repetitive Navigational Links</a></div>
+        <div id="nav_header">
+            <ul>
+                <asp:Repeater ID="TopMenuRepeater" Runat="server" DataSourceID="SiteMapDataSource">
+                    <ItemTemplate>
+                        <li>
+                        <asp:HyperLink Runat="server" ID="MenuLink" NavigateUrl='<%# Eval("Url") %>'><span><%# Eval("Title") %></span></asp:HyperLink></li>
+                    </ItemTemplate>
+                </asp:Repeater>
+
+            </ul>
+        </div>
+        <div id="color_bar">
+            <div id="nav_login">
+                <asp:LoginView ID="LoginView" Runat="server">
+                    <AnonymousTemplate>
+                        <asp:HyperLink ID="LoginLink" Runat="server" NavigateUrl="~/Login.aspx">Login</asp:HyperLink>
+                        |
+                        <asp:HyperLink ID="RegisterLink" Runat="server" NavigateUrl="~/Register.aspx">Register</asp:HyperLink>
+                    </AnonymousTemplate>
+                    <LoggedInTemplate>
+                        Welcome,
+                        <asp:LoginName ID="MemberName" Runat="server" />
+                        |
+                        <asp:LoginStatus ID="MemberLoginStatus" Runat="server" />
+                    </LoggedInTemplate>
+                </asp:LoginView>
+            </div>
+            <div id="nav_browse">
+                <asp:HyperLink ID="BrowseAllLink" Runat="server" NavigateUrl="~/Search.aspx">Browse all Categories</asp:HyperLink></div>
+        </div>
+        <div id="crumbs">
+            <asp:ContentPlaceHolder ID="SecondBar" Runat="server">
+                <div id="crumbs_text">
+                    <asp:SiteMapPath ID="SiteMapPath" Runat="server">
+                    </asp:SiteMapPath></div>
+            </asp:ContentPlaceHolder>
+        </div>
+        <asp:ContentPlaceHolder ID="Main" Runat="server">
+            <div id="col_main_left">
+                <div id="featured_item">
+                </div>
+                <div id="announcements">
+                </div>
+            </div>
+            <div id="col_main_right">
+                <h3 class="section">
+                    Browse Categories</h3>
+                <div class="content_right">
+                </div>
+            </div>
+        </asp:ContentPlaceHolder>
+        <div id="footer">
+            <div id="footer_nav">
+                <asp:Menu runat="server" id="FooterMenu" 
+                DataSourceID="SiteMapDataSource" StaticDisplayLevels="1" 
+                MaximumDynamicDisplayLevels="0" Orientation="Horizontal" ></asp:Menu>
+            </div>
+        </div>
+        <div id="disclaimer">
+            <a href="#">Disclaimer</a>. Lorem ipsum dolor sit amet, consectetuer adipiscing
+            elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat
+            volutpat.</div>
+        <asp:SiteMapDataSource ID="SiteMapDataSource" Runat="server" ShowStartingNode="False" />
+    </form>
+</body>
+</html>

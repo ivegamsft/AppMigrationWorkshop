@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<TopMenu>
+  <Login url="~/login.aspx"></Login>
+  <Register url="~/register.aspx"></Register>
+  <ChangePassword url="~/changepassword.aspx"></ChangePassword>
+  <JobSeekers>
+    <PostResume url="postresume.aspx"></PostResume>
+    <SearchJobs url="jobsearch.aspx"></SearchJobs>
+    <MyFavorites url="MyFavorites.aspx"></MyFavorites>
+  </JobSeekers>
+  <Employers>
+    <PostJobs url="jobpostings.aspx"></PostJobs>
+    <SearchResumes url="resumesearch.aspx"></SearchResumes>
+    <ModifyProfile url="companyprofile.aspx"></ModifyProfile>
+    <MyFavorites url="MyFavorites.aspx"></MyFavorites>
+  </Employers>
+  <Administration>
+    <EducationLevels url="educationlevelsmanager.aspx"></EducationLevels>
+    <ExperienceLevels url="experiencelevelmanager.aspx"></ExperienceLevels>
+  </Administration>
+</TopMenu>
+

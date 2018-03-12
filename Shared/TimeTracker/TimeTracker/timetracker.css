@@ -1,0 +1,363 @@
+body {
+	margin: 0px;
+	background: #C0C0C0 url(images/background_main.jpg) repeat-x left top;
+	font: 0.7em Verdana,Arial,Helvetica,sans-serif;
+}
+#login a:link, #login a:visited {
+	color: #FFFFFF;
+}
+#title h1 a:link, #title h1 a:visited {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+#reportresults h2 {
+	font-size: 1.1em;
+	font-weight: bold;
+}
+a:link {
+	color: #396EAA;
+}
+a:visited {
+	color: #396EAA;
+}
+a:hover {
+	text-decoration: none;
+}
+a:active {
+	text-decoration: none;
+}
+/*begin creating the tabs */
+.menu {
+	margin-left: 28px;
+	background: url(images/tab_bg.gif) repeat-x;
+	font-size: 10px;
+	font-weight: bold;
+}
+/* set tab1 as top level container table, then target TDs inside*/
+.menuItem td {
+	color: #FFFFFF;
+	height: 24px;
+	background: url(images/tab_dim.gif) no-repeat;
+	width: 100px;
+	text-align: center;
+}
+/* make current tab gray,set the background-color also in case images are not on*/
+.menuSelectedItem td {
+	background: url(images/tab.gif) no-repeat #919191;
+}
+/* make link and visited the same look,set the background-color also in case images are not on*/
+.menuItem a:link, .menuItem a:visited, .menuPopupItem a:link, .menuPopupItem a:visited {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+/* make hover by changing vertical position of background to -22px (the tab_dim2.gif is 44px high) */
+.menuItem a:hover {
+	text-decoration: underline;
+}
+
+/* make drop down menu container style */
+.menuPopup {
+	background: url(images/background_drop_menu.jpg) repeat #8C9FB4;
+	border: 1px solid #666666;
+	border-bottom: none;
+	color: #ffffff;
+}
+
+/* make drop down menu item style */
+.menuPopupItem {
+	color: #ffffff;
+	border-bottom: 1px solid #666666;
+	padding: 3px;
+}
+
+/* define the main layout divs */
+#header {
+	margin-right: auto;
+	height: 50px;
+	width: 100%;
+}
+#title {
+	padding-top: 5px;
+	padding-bottom: 0px;
+	padding-left: 28px;
+	float: left;
+	height: 20px;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+#login {
+	padding-top: 25px;
+	padding-right: 28px;
+	float: right;
+	clear: none;
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 10px;
+	height: 28px;
+	top: 0px;
+	text-align: right;
+}
+/* make crumbs after making new nav */
+#breadcrumb {
+	padding-top: 4px;
+	padding-left: 10px;
+	background: #919191;
+	color: #FFFFFF;
+	font-size: 10px;
+	font-weight: bold;
+	height: 20px;
+}
+#body {
+	padding: 0px 8px 10px 7px;
+	background: #C0C0C0 url(images/background_body.gif) repeat-x left top;
+}
+/* IE needs height:512px BUT this height:512px below must be removed to display correctly in Mozilla */
+#reportresults, #projectadministration, #adminedit, #timesheet, #addhours, #projectreport, #resourcereport {
+	height: 512px;
+}
+/* Mozilla needs min-height:512px (IE will ignore this min-height) */
+#reportresults, #projectadministration, #adminedit, #timesheet, #addhours, #projectreport, #resourcereport {
+	min-height: 512px;
+}
+#addhours {
+	padding: 10px;
+	border: 1px solid #000000;
+	float: left;
+	background: #DAE1E7 url(images/background_addhours.jpg) repeat-x left top;
+	color: #666666;
+	font-family: Tahoma,Verdana,Helvetica,Helvetica-Narrow,sans-serif;
+	width: 195px;
+	position: relative;
+}
+#reportresults, #projectadministration, #adminedit, #projectreport, #resourcereport {
+	padding: 10px;
+	border: 1px solid #000000;
+	background: #FFFFFF;
+	color: #666666;
+	font-family: Tahoma,Verdana,Helvetica,Helvetica-Narrow,sans-serif;
+}
+#timesheet {
+	padding: 10px;
+	border: 1px solid #000000;
+	margin-left: 218px;
+	background: #FFFFFF;
+	color: #666666;
+	font-family: Tahoma,Verdana,Helvetica,Helvetica-Narrow,sans-serif;
+}
+#timesheetdata, #projecttable {
+	width: 100%;
+	text-align: center;
+}
+#catlist {
+	width: 20%;
+}
+/* define other elements inside the main layout divs */
+#title h1 {
+	display: inline;
+	color: #FFFFFF;
+	font-size: 14px;
+	font-weight: bold;
+}
+/* can be removed if no images in breadcrumb area */
+#breadcrumb img {
+	border: none;
+	padding-right: 3px;
+	vertical-align: middle;
+}
+/* all the legend tags use this same style */
+legend {
+	padding: 0px 4px;
+	margin: 0px 0px 7px 0px;
+	color: #666666;
+	font-weight: bold;
+	font-size: 1em;
+	vertical-align: middle;
+}
+/* define sizes of the username field */
+.username {
+	font-size: 0.9em;
+	width: 150px;
+}
+/* all the fieldset tags use this same style */
+fieldset {
+	margin-bottom: 0px;
+	padding: 0px 12px 12px 12px;
+	display: block;
+}
+/* create hover effect for calendar icons */
+#addhours a:link img, #addhours a:visited img, #resourcereport a:link img, #resourcereport a:visited img {
+	padding: 2px;
+	border: 1px solid #DFE4EA;
+	background: #DFE4EA;
+}
+/* Put the admin edit calendar icon on a white background */
+#adminedit a:link img, #adminedit a:visited img {
+	padding: 2px;
+	border: 1px solid #FFFFFF;
+	background: #FFFFFF;
+}
+#addhours a:hover img, #resourcereport a:hover img, #adminedit a:hover img {
+	padding: 2px;
+	border: 1px solid #C1CFE0;
+	background: #E8ECF0;
+}
+#addhours a:active img, #resourcereport a:active img, #adminedit a:active img {
+	padding: 2px;
+	border: 1px solid #C1CFE0;
+	background: #C9D4E2;
+}
+/* add fade background and padding to all table rows */
+.row1 {
+	padding: 3px;
+	background: url(images/timesheet_data_bg.gif) repeat-x;
+	background: #F9FAFB;
+}
+.row1 img {
+	border: none;
+	text-align: center;
+}
+/* add hover effect to any a href images within the data tables */
+#timesheetdata a:link img, #timesheetdata a:visited img, #projecttable a:link img, #projecttable a:visited img {
+	padding: 2px;
+	border: 1px solid #EDF0F3;
+	background: #EDF0F3;
+}
+#timesheetdata a:hover img, #projecttable a:hover img {
+	padding: 2px;
+	border: 1px solid #C1CFE0;
+	background: #FBFBFC;
+}
+#timesheetdata a:active img, #projecttable a:active img {
+	padding: 2px;
+	border: 1px solid #C1CFE0;
+	background: #D9E2EC;
+}
+/* zero margin on all forms */
+form {
+	margin: 0px;
+}
+/* define the pop up calendar style */
+#calbg {
+	background: #ABBDD3 url(images/background_calendar.gif) repeat-x;
+	height: 1000px;
+}
+#calcontent {
+	margin: 5px;
+	padding: 5px 4px 9px 4px;
+	border: 1px solid #000000;
+	background: #FFFFFF;
+	font-size: 10px;
+	text-align: center;
+}
+#month {
+	margin-bottom: 6px;
+	font-size: 9px;
+	width: 80px;
+}
+#year {
+	margin-bottom: 6px;
+	font-size: 9px;
+	width: 50px;
+}
+#calcontent table td a:link, #calcontent table td a:visited {
+	padding: 0px 2px 3px;
+	display: block;
+}
+#calcontent table td a:hover, #calcontent table td a:active {
+	display: block;
+	background: #FFCC00;
+}
+#calcontent table td a:active {
+	display: block;
+	color: #FFFFFF;
+	background: #009900;
+}
+/* begin classes */
+input, select, textarea {
+	margin-bottom: 8px;
+}
+/* make the cal icon appear in line with the forms and text */
+#addhours img, #resourcereport img, #adminedit img {
+	border: 0px;
+	vertical-align: text-bottom;
+}
+/* make hours input field more prominent */
+#addhours .hours {
+	padding-top: 1px;
+	font-size: 1.5em;
+	font-weight: bold;
+	width: 35px;
+	height: 20px;
+	text-align: center;
+}
+.projectlist, .resourcelist {
+	border: 1px solid #00FF00;
+	margin-bottom: 4px;
+	width: 200px;
+}
+/* condense in mark up to be '.button' */
+.submit, .reset, .delete, .create, .add, .copy {
+	margin-top: 4px;
+	margin-bottom: 4px;
+	font-size: 0.9em;
+	height: 28px;
+}
+/* make submit button larger */
+.submit {
+	width: 108px;
+}
+/* define the look of the data tables (using colgroup in the source) 
+colcatlist1 and colcatlist1 are generic names since I'm not sure 
+what kind of date goes into these cells. More appropriate names can
+be added for these */
+.coldescription, .colcatlist1, .colcatlist2 {
+	text-align: left;
+}
+.colday, .colhours, .coledit, .coldelete {
+	width: 5%;
+}
+.colproject, .colcategory {
+	width: 15%;
+}
+.colhours {
+	font-weight: bold;
+}
+.coldescription {
+	width: 50%;
+}
+/* define pop up calendar look */
+.calmonday, .caltuesday, .calwednesday, .calthursday, .calfriday, .calsaturday, .calsunday {
+	text-align: center;
+}
+.calcurrentmonth {
+	background: #EEEEEE;
+}
+.calcurrentday {
+	border: 1px solid #000000;
+}
+.calothermonth a:link, .calothermonth a:visited {
+	color: #999999;
+}
+.calweekend {
+	background: #E2E2E2;
+}
+/* create section heading container to separate long forms */
+.formsection {
+	padding: 10px;
+	margin-top: 15px;
+	background: #D6DDE9 url(images/background_formsection.gif) repeat-x center;
+	font-weight: bold;
+	text-align: center;
+}
+/* sometimes we hide elements from display in visual browsers (but leave them in the source for non visual browsers and for accessibility). I've also hidden the table in the admin_create_projects.html page */
+.hidden {
+	visibility: hidden;
+}
+.none {
+	display: none;
+}
+
+img {
+	border: none;
+}

@@ -1,0 +1,123 @@
+<VSTemplate Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>Jobs Site Starter Kit</Name>
+    <Description>Jobs Site Starter Kit</Description>
+    <ProjectType>Web</ProjectType>
+    <ProjectSubType>CSharp</ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>Jobs Site Starter Kit</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <Icon>__TemplateIcon.ico</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="ProjectName.webproj" File="ProjectName.webproj" ReplaceParameters="true">
+      <Folder Name="Admin" TargetFolderName="Admin">
+        <ProjectItem ReplaceParameters="true" TargetFileName="EducationLevelsManager.aspx">EducationLevelsManager.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="EducationLevelsManager.aspx.cs">EducationLevelsManager.aspx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="ExperienceLevelManager.aspx">ExperienceLevelManager.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="ExperienceLevelManager.aspx.cs">ExperienceLevelManager.aspx.cs</ProjectItem>
+      </Folder>
+      <Folder Name="App_Code" TargetFolderName="App_Code">
+        <Folder Name="BOL" TargetFolderName="BOL">
+          <ProjectItem ReplaceParameters="true" TargetFileName="Company.cs">Company.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="Country.cs">Country.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="EducationLevel.cs">EducationLevel.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="ExperienceLevel.cs">ExperienceLevel.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="JobPosting.cs">JobPosting.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="JobType.cs">JobType.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="MyJob.cs">MyJob.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="MyResume.cs">MyResume.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="MySearch.cs">MySearch.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="Resume.cs">Resume.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="State.cs">State.cs</ProjectItem>
+        </Folder>
+        <Folder Name="DAL" TargetFolderName="DAL">
+          <ProjectItem ReplaceParameters="true" TargetFileName="DBAccess.cs">DBAccess.cs</ProjectItem>
+        </Folder>
+      </Folder>
+      <Folder Name="App_Data" TargetFolderName="App_Data">
+        <ProjectItem ReplaceParameters="false" TargetFileName="JsskDb.mdf">JsskDb.mdf</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="JsskDb_log.ldf">JsskDb_log.ldf</ProjectItem>
+      </Folder>
+      <Folder Name="App_Themes" TargetFolderName="App_Themes">
+        <Folder Name="YellowShades" TargetFolderName="YellowShades">
+          <ProjectItem ReplaceParameters="true" TargetFileName="yellowshades.css">yellowshades.css</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="yellowshades.skin">yellowshades.skin</ProjectItem>
+        </Folder>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="changepassword.aspx">changepassword.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="changepassword.aspx.cs">changepassword.aspx.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="customerrorpage.aspx">customerrorpage.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="customerrorpage.aspx.cs">customerrorpage.aspx.cs</ProjectItem>
+      <Folder Name="CustomErrorPages" TargetFolderName="CustomErrorPages">
+        <ProjectItem ReplaceParameters="true" TargetFileName="NotAuthorized.aspx">NotAuthorized.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="NotAuthorized.aspx.cs">NotAuthorized.aspx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="profilenotfound.aspx">profilenotfound.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="profilenotfound.aspx.cs">profilenotfound.aspx.cs</ProjectItem>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="default.aspx">default.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="default.aspx.cs">default.aspx.cs</ProjectItem>
+      <Folder Name="employer" TargetFolderName="employer">
+        <ProjectItem ReplaceParameters="true" TargetFileName="AddEditPosting.aspx">AddEditPosting.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="AddEditPosting.aspx.cs">AddEditPosting.aspx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="companyprofile.aspx">companyprofile.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="companyprofile.aspx.cs">companyprofile.aspx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="jobpostings.aspx">jobpostings.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="jobpostings.aspx.cs">jobpostings.aspx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="MyFavorites.aspx">MyFavorites.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="MyFavorites.aspx.cs">MyFavorites.aspx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="resumesearch.aspx">resumesearch.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="resumesearch.aspx.cs">resumesearch.aspx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="viewresume.aspx">viewresume.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="viewresume.aspx.cs">viewresume.aspx.cs</ProjectItem>
+      </Folder>
+      <ProjectItem ReplaceParameters="false" TargetFileName="EULA.rtf">EULA.rtf</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Global.asax">Global.asax</ProjectItem>
+      <Folder Name="Images" TargetFolderName="Images">
+        <ProjectItem ReplaceParameters="false" TargetFileName="logo.gif">logo.gif</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="logo.jpg">logo.jpg</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="logo.png">logo.png</ProjectItem>
+      </Folder>
+      <Folder Name="jobseeker" TargetFolderName="jobseeker">
+        <ProjectItem ReplaceParameters="true" TargetFileName="jobsearch.aspx">jobsearch.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="jobsearch.aspx.cs">jobsearch.aspx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="MyFavorites.aspx">MyFavorites.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="MyFavorites.aspx.cs">MyFavorites.aspx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="postresume.aspx">postresume.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="postresume.aspx.cs">postresume.aspx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="viewcompanyprofile.aspx">viewcompanyprofile.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="viewcompanyprofile.aspx.cs">viewcompanyprofile.aspx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="viewjobposting.aspx">viewjobposting.aspx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="viewjobposting.aspx.cs">viewjobposting.aspx.cs</ProjectItem>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="login.aspx">login.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="login.aspx.cs">login.aspx.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="MasterPage.master">MasterPage.master</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="MasterPage.master.cs">MasterPage.master.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="register.aspx">register.aspx</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="register.aspx.cs">register.aspx.cs</ProjectItem>
+      <Folder Name="UserControls" TargetFolderName="UserControls">
+        <ProjectItem ReplaceParameters="true" TargetFileName="DisplayModeController.ascx">DisplayModeController.ascx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="DisplayModeController.ascx.cs">DisplayModeController.ascx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="LatestJobs.ascx">LatestJobs.ascx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="LatestJobs.ascx.cs">LatestJobs.ascx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="MyJobs.ascx">MyJobs.ascx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="MyJobs.ascx.cs">MyJobs.ascx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="MyResumes.ascx">MyResumes.ascx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="MyResumes.ascx.cs">MyResumes.ascx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="MySearches.ascx">MySearches.ascx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="MySearches.ascx.cs">MySearches.ascx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="NavigationTree.ascx">NavigationTree.ascx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="NavigationTree.ascx.cs">NavigationTree.ascx.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="NavigationTree.xml">NavigationTree.xml</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Statistics.ascx">Statistics.ascx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Statistics.ascx.cs">Statistics.ascx.cs</ProjectItem>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="web.config">web.config</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Welcome.htm" OpenInWebBrowser="true">Welcome.htm</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>
