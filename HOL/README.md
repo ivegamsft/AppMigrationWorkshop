@@ -13,7 +13,7 @@ In this lab you will create the environment that will be used as the source for 
 * Deploy the source environemnt to Azure
 * Inspect the source system
 
-### View instructions for [HOL 1](../HOL/01-setup/)
+### View instructions for [HOL 1](01-setup/README.MD)
 
 ---
 
@@ -25,7 +25,7 @@ This lab will introduce you to ...
 * OBJECTIVE 2
 * OBJECTIVE 2
 
-### View instructions for [HOL 2](../HOL/02-configure-source/)
+### View instructions for [HOL 2](02-configure-source-apps/README.MD)
 
 ---
 
@@ -37,7 +37,7 @@ This lab will introduce you to ...
 * OBJECTIVE 2
 * OBJECTIVE 2
 
-### View instructions for [HOL 3](../HOL/03-inventory/)
+### View instructions for [HOL 3](HOL/03-inventory/README.MD)
 
 ---
 
@@ -49,7 +49,7 @@ This lab will introduce you to ...
 * OBJECTIVE 2
 * OBJECTIVE 2
 
-### View instructions for [HOL 4](../HOL/04-treatment/)
+### View instructions for [HOL 4](HOL/04-treatment/README.MD)
 
 ---
 
@@ -61,7 +61,7 @@ This lab will introduce you to ...
 * OBJECTIVE 2
 * OBJECTIVE 2
 
-### View instructions for [HOL 5](../HOL/05-devops/)
+### View instructions for [HOL 5](HOL/05-devops/)
 
 ---
 
@@ -73,7 +73,7 @@ This lab will introduce you to ...
 * OBJECTIVE 2
 * OBJECTIVE 2
 
-### View instructions for [HOL 6](../HOL/06-migrate/)
+### View instructions for [HOL 6](HOL/06-migrate/README.MD)
 
 ---
 
@@ -85,7 +85,7 @@ This lab will introduce you to ...
 * OBJECTIVE 2
 * OBJECTIVE 2
 
-### View instructions for [HOL 7](../HOL/07-monitor/)
+### View instructions for [HOL 7](HOL/07-monitor/README.MD)
 
 ---
 
