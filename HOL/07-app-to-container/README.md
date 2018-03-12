@@ -73,7 +73,7 @@ The `Image2docker` tool for IIS and ASP.NET sites has 3 different Source Types t
 
 1. RDP into your IIS Source ASP.NET Web App Host. In this case, the server is named `aw-webapp.contoso.com` and open the IIS Manager, you should see all the source apps deployed.
     
-    ![image](./media/08-a-1.PNG)
+    ![image](./media/07-a-1.PNG)
 
 1. Navigate to each of the sites to make sure they are up and running
 
@@ -168,7 +168,7 @@ The `Image2docker` tool for IIS and ASP.NET sites has 3 different Source Types t
   
 1. Now open a browser and navigate to http://172.19.249.182. You should now see the `IBuySpy` Web site running inside the container.
     
-    ![image](./media/08-a-2.PNG)
+    ![image](./media/07-a-2.PNG)
     
 ### Exercise 3:  Cut over/Finalize Migration<a name="ex3"></a>
 
@@ -178,21 +178,21 @@ Now that we have an application up and running in a container on our Container h
 
 1. Update the DNS records by RDP-ing into the DNS/AD Server, in this case the server is 'dc1.contoso.com' and open DNS. Here we can see that the ibusyspy dns record is a cname pointing to 'aw-webapp.contoso.com'
 
-    ![image](./media/08-a-3.PNG)
+    ![image](./media/07-a-3.PNG)
 
 1. Update the record to point to the Windows Container host, in this case 'host1.contoso.com'
     
-    ![image](./media/08-a-4.PNG)
+    ![image](./media/07-a-4.PNG)
 
 1. Open a browser to verify that you can indeed get to the site.
     
-    ![image](./media/08-a-5.PNG)
+    ![image](./media/07-a-5.PNG)
 
 ### Exercise 4: Add Docker support to an existing application<a name="ex4"></a>
 
 ---
 
-In this HOL we will go through upgrading the Visual Studio solutions with Visual Studio 2017 and add support for Docker Containers. In this lab we will focus on the Jobs source application, but the treatment will be similar for each source application
+In this HOL we will go through pulling the solution into Visual Studio 2017 and add support for Docker Containers. In this lab we will focus on the Jobs source application, but the treatment will be similar for each source application
 
 #### Assumptions
 
@@ -200,51 +200,52 @@ In this HOL we will go through upgrading the Visual Studio solutions with Visual
 * You have the source solution downloaded from the Repo
 * You have .NET 3.5 Installed
 
-1. Make sure you have the Jobs Source Application on 
+1. Open Visual Studio 2017
+1. Create an Empty Web Site by File > New > Project > Visual C# > Web > Web Site > ASP.NET Empty Web Site. Name the project JobWebSite.
+![image](./media/hol7-4-a.PNG)
+1. Open Windows Explorer and copy the Jobs Web Site Files
+![image](./media/hol7-4-b.PNG)
+1. Paste the files into the JobWebSite project in Visual Studio 2017
+![image](./media/hol7-4-c.PNG)
+1. All the files should now be in the solution/project. 
+![image](./media/hol7-4-d.PNG)
+1. You can remove the uneeded files "ProjectName.webproj" and "MyTemplate.vstemplate"
+1. Add a blank text file to the Solition, Not the Web Site and rename it to Dockerfile, make sure to remove the ".txt" extension.
+![image](./media/hol7-4-e.PNG)
+![image](./media/hol7-4-f.PNG)
 
-1. ((Add Docker Support and Compile the application))
+1. Add the following to the Dockerfile
+    ```Docker
+    # escape=`
+    FROM microsoft/aspnet:3.5-windowsservercore-10.0.14393.1715
+    SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
-1. Make sure you can connect to the Windows Container Host
+    RUN Remove-Website 'Default Web Site';
 
-    ```docker
-    docker --host tcp://10.0.1.5 images
+    # Set up website: Jobs
+    RUN New-Item -Path 'C:\inetpub\wwwroot\Jobs' -Type Directory -Force; 
+
+    RUN New-Website -Name 'JobsWebSite' -PhysicalPath 'C:\inetpub\wwwroot\Jobs' -Port 80 -ApplicationPool '.NET v2.0' -Force; 
+
+    EXPOSE 80
+
+    COPY ["JobsWebSite", "/inetpub/wwwroot/Jobs"]
+
+    RUN $path='C:\inetpub\wwwroot\Jobs'; `
+        $acl = Get-Acl $path; `
+        $newOwner = [System.Security.Principal.NTAccount]('BUILTIN\IIS_IUSRS'); `
+        $acl.SetOwner($newOwner); `
+        dir -r $path | Set-Acl -aclobject  $acl
+
     ```
-
-1. Run docker compose against the Windows Container Host
-
-    ```docker
-    docker-compose -H tcp://10.0.1.5 -f .\docker-compose.yml -f .\docker-compose.override.yml up
-    ## Or
-    docker-compose -H tcp://10.0.1.5:2375 -f .\docker-compose.yml -f .\docker-compose.override.yml up
+1. Copy the solution from your Dev VM to the Windows Container Host. In this case it has been copied to 'C:\upgrades\JobsWebSite'. Open a command prompt or Powershell and run the following command:
+    ```powershell
+    docker build -t jobswebsite ./
     ```
-
-1. Run a build of the image against the Windows Container host from your dev machine
-
-    ```docker
-    #docker --host tcp://<windows container host> build -t <appname> <dockerfile>
-    # e.g.
-    docker --host tcp://10.0.1.5 build -t webapplication1 .
+1. Now run a container using the image
+    ```powershell
+        docker run -d -p 80:80 jobswebsite
     ```
-
-1. From the windows container host start the container with the appropriate ports mapped
-    
-    ```docker
-    # docker run -d -p 80:80 -p 4022:4022 -p 4023:4023 <imagename>
-    # e.g.
-    docker run -d -p 80:80 -p 4022:4022 -p 4023:4023 webapplication1
-    ```
-
-1. From the Windows Container host start the remote debugger
-
-    ```docker
-    #docker exec -it <container name> "C:\Program Files\Microsoft Visual Studio 15.0\Common7\IDE\Remote Debugger\x64\msvsmon.exe" /nostatus /silent /noauth /anyuser /nosecuritywarn
-
-    #e.g.
-    docker exec -it thirsty_clarke "C:\Program Files\Microsoft Visual Studio 15.0\Common7\IDE\Remote Debugger\x64\msvsmon.exe" /nostatus /silent /noauth /anyuser /nosecuritywarn
-    ```
-
-1. From the development machine in Visual Studio 2017 will now connect to the remote debugger, load the symbols and enjoy debugging at its finest
-
 ## References
 * [Image2Docker](https://github.com/docker/communitytools-image2docker-win)
 * [Image2Docker IIS and ASP.NET](https://github.com/docker/communitytools-image2docker-win/blob/master/docs/IIS.md)

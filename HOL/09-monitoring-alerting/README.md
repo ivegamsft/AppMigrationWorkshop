@@ -11,7 +11,7 @@ Ensure you have completed the previous HOLs
 ## Excercies
 
 1. [Exercise 1: Monitoring IaaS and the App](#ex1)
-1. [Exercise 2: Monitoring Dns](#ex2)
+1. [Exercise 2: Monitoring DNS](#ex2)
 1. [Exercise 3: Monitoring Application Gateway](#ex3)
 1. [Exercise 4: Monitoring Traffic manager](#ex4)
 

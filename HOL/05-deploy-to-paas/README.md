@@ -44,35 +44,35 @@ This lab is done from the jump box
 
 1. Click on the + Migration and name the Project `JobsDB`. Click `Create`
     
-    ![image](./media/06-01-a.PNG)
+    ![image](./media/06-01-a.png)
 
 1. Select the Source by entering your SQL server name `Server Name > Windows Authentication > Uncheck Encrypt connection` 
 
 1. Select the `JSSKDB`
 
-    ![image](./media/06-01-b.PNG)
+    ![image](./media/06-01-b.png)
 
 1. Select `Target > Enter Authentication Credentials` and select the `jobsappsql[YOUR UNIQUE SUFFIX]` DB in the Azure subscription and resource group you have deployed the template from HOL 1.
     
-    ![image](./media/06-01-c.PNG)
+    ![image](./media/06-01-c.png)
 
 1. Select `objects`.  Make note of any blocking issues and non-blocking issues that will need to be addressed 
 
 1. Click `Generate SQL script`
 
-   ![image](./media/06-01-d.PNG)
+   ![image](./media/06-01-d.png)
 
 1. To script & deploy the Schema, click `Deploy schema`. 
 
-   ![image](./media/06-01-e.PNG)
+   ![image](./media/06-01-e.png)
 
 1. Once the schema has been deployed click `Migrate Data > Start data migration`
 
-   ![image](./media/06-01-f.PNG)
+   ![image](./media/06-01-f.png)
 
 1. Wait for the migration to complete
 
-   ![image](./media/06-01-g.PNG)
+   ![image](./media/06-01-g.png)
 
 
 ### Exercise 2: Create a Visual Studio Solution and Import the Source Apps<a name="ex2"></a>
@@ -81,13 +81,13 @@ This lab is done from the jump box
 
 1. Make sure you have the Jobs Source Apps downloaded on your Dev VM. In this example they are located in the `c:\SourceApps\JSSKCS` folder
 
-    ![image](./media/06-02-a.PNG)
+    ![image](./media/06-02-a.png)
 
 1. Open Visual Studio 2017. Select `File > New Project > Visual C# > Web > Web Site` and choose `ASP.NET Empty Web Site` as the template. 
  
 1. Name the project `JobsSite`.
 
-    ![image](./media/06-02-b.PNG)
+    ![image](./media/06-02-b.png)
 
 1. You should now have an empty web site solution as a target to copy the Jobs source files. 
 
@@ -95,22 +95,22 @@ This lab is done from the jump box
 
 1.  Select all and copy all the files to the clipboard.
 
-    ![image](./media/06-02-c.PNG)
+    ![image](./media/06-02-c.png)
 
 1. Paste them into the Empty Visual Studio 2017 Solution
 
-    ![image](./media/06-02-d.PNG)
+    ![image](./media/06-02-d.png)
 
 1. Delete the `MyTemplate.vstemplate` and `ProjectName.webproj` files
 
-    ![image](./media/06-02-f.PNG)
+    ![image](./media/06-02-f.png)
 
 1. You now have a Visual Studio 2017 Web Site project that we can publish to Azure
 
-    ![image](./media/06-02-e.PNG)
+    ![image](./media/06-02-e.png)
 
 
-### Exercise 3: Create CI/CD Pipeline in VSTS<a name="ex2"></a>
+### Exercise 3: Create CI/CD Pipeline in VSTS<a name="ex3"></a>
 
 
 
@@ -136,11 +136,11 @@ This lab is done from the jump box
 
 1. Click `Create New Project`
 
-    ![image](./media/06-03-a.PNG)
+    ![image](./media/06-03-a.png)
 
 1. Name the project `MyJobsApp123`. For the version control type, choose `Git`. For the `Work item process` choose `Agile`
 
-    ![image](./media/06-03-b.PNG)
+    ![image](./media/06-03-b.png)
 
 1. We now need to push the web site code to remote repo. On your DEV VM open `PowerShell` and navigate to your folder that has the Web Site Project
 
@@ -153,77 +153,77 @@ This lab is done from the jump box
 
 1. Browse to the VSTS Portal and click `Code` in the navigation, you should see the files in the repo
     
-    ![image](./media/06-03-c.PNG)
+    ![image](./media/06-03-c.png)
 
 1. Now that we have our source files in VSTS, we can create a Build Definition. Click on `Build and Release` > `New definition`
 
-    ![image](./media/06-03-d.PNG)
+    ![image](./media/06-03-d.png)
 
 1. Click `Empty Process`
 
-    ![image](./media/06-03-e.PNG)
+    ![image](./media/06-03-e.png)
 
 1. In the Tasks menu click the `+` symbol. Enter `archive` in the search > select the `Archive Files` task
 
-    ![image](./media/06-03-f.PNG)
+    ![image](./media/06-03-f.png)
 
 1. In the Tasks click the `+` symbol > enter `publish artifact` > select the `Publish Build Artifacts` task
 
-    ![image](./media/06-03-h.PNG)
+    ![image](./media/06-03-h.png)
 
 1. Select the `Publish Artifact` task
 
 1. In the `Path to publish`, enter `$(build.artifactsstagingdirectory)` in the ' and Artifact name `drop` > the Artifact publish location `Visual Studio Team Service/TFS`
 
-    ![image](./media/06-03-i.PNG)
+    ![image](./media/06-03-i.png)
 
 1. Click on `Triggers` and enable continuous integration
 
-    ![image](./media/06-03-j.PNG)
+    ![image](./media/06-03-j.png)
 
 1. Click `Save and Queue` and you should see a new Build
 
-    ![image](./media/06-03-k.PNG)
+    ![image](./media/06-03-k.png)
 
 1. Click on the Build # and you can verify in the Log that the Archive of the job site did indeed happen
 
-    ![image](./media/06-03-l.PNG)
+    ![image](./media/06-03-l.png)
 
 1. Now that we have our source files, we can create a Release Definition to deploy our site
 
 1. In the VSTS Portal now click `Releases > + New definition`
 
-    ![image](./media/06-04-a.PNG)
+    ![image](./media/06-04-a.png)
 
 1. Choose `Azure App Service` Deployment
 
-    ![image](./media/06-04-b.PNG)
+    ![image](./media/06-04-b.png)
 
 1. Choose and authorize VSTS to access your subscription
 
 1.  Set the App type to `Web App` > Choose the 'myjobsapp123' > Validate that the Package or folder is set to $(System.DefaultWorkingDirectory/**/*.zip) and click 'Save'
 
-    ![image](./media/06-04-c.PNG)
+    ![image](./media/06-04-c.png)
 
 1. On the Release Pipeline click on `+ Add` next Artifacts
 
-    ![image](./media/06-04-d.PNG)
+    ![image](./media/06-04-d.png)
 
 1. Select the Build definition from the previous steps
 
-    ![image](./media/06-04-e.PNG)
+    ![image](./media/06-04-e.png)
 
 1. Click on Create Release > Create
 
-    ![image](./media/06-04-f.PNG)
+    ![image](./media/06-04-f.png)
 
 1. You should now see the release 'IN PROGRESS'
 
-    ![image](./media/06-04-g.PNG)
+    ![image](./media/06-04-g.png)
 
 1. Click on Log to verify the release was successful
 
-    ![image](./media/06-04-h.PNG)
+    ![image](./media/06-04-h.png)
 
 
 ---
