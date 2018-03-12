@@ -4,7 +4,7 @@
 
 This document outlines the format for an Open Hack version of the App modernization workshop.
 
-## Deploy Azure Infra
+## Deploy Azure Infrastructure
 
 * [ARM Template](../../Shared/ARM-NewIaaS)
 

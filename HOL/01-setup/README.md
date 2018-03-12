@@ -87,7 +87,7 @@ In the automated deployment, we are using PowerShell Desired State Configuration
 1. Change the current folder to the location of cloned files
 
     ```powershell
-    cd C:\Users\ContainerAdministrator\CloudDrive\AppMigrationWorkshopRepo\AppMigrationWorkshop\HOL\ARM-NewIaaS\dsc
+    cd C:\Users\ContainerAdministrator\CloudDrive\AppMigrationWorkshopRepo\AppMigrationWorkshop\Shared\ARM-NewIaaS\dsc
     ```
     
 1. Copy the following folders to the Cloud Shell PowerShell modules folder 

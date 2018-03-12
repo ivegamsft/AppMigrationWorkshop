@@ -98,7 +98,7 @@ This hands-on-lab has the following excercises:
     ```
 1. Extracting each app
     ```powershell
-    Get-ChildItem "C:\AppMigrationWorkshop-master\HOL\HOL-Assets\SourceApps\Apps\" -Exclude "*.msi" `
+    Get-ChildItem "C:\AppMigrationWorkshop-master\Shared\SourceApps\Apps\" -Exclude "*.msi" `
                              | % {  $dest = Join-Path $_.directoryname ([system.io.path]::GetFileNameWithoutExtension($_.name)); `
 									    mkdir $dest -force; `
 									    [System.IO.Compression.ZipFile]::ExtractToDirectory($_.fullname, $dest); `
@@ -106,12 +106,12 @@ This hands-on-lab has the following excercises:
     ```
 1. Copying databases to the SQL server
     ```powershell
-    copy-item "C:\AppMigrationWorkshop-master\HOL\HOL-Assets\SourceApps\Databases\" \\10.0.1.100\c$ -Recurse
+    copy-item "C:\AppMigrationWorkshop-master\Shared\SourceApps\Databases\" \\10.0.1.100\c$ -Recurse
     ```
 
 1. Copying applications to the IIS server
     ```powershell
-    copy-item "C:\AppMigrationWorkshop-master\HOL\HOL-Assets\SourceApps\Apps\" \\10.0.0.4\c$ -Recurse
+    copy-item "C:\AppMigrationWorkshop-master\Shared\SourceApps\Apps\" \\10.0.0.4\c$ -Recurse
     ```
 
 

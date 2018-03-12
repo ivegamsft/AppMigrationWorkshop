@@ -2,7 +2,7 @@
 
 ---
 
-Now that you have the source applications configured, enable it to be cloud DevOps ready.
+Now that you have the source applications configured, create a cloud DevOps ready pipleline with CI/CD.
 
 ## Create a New App
 
