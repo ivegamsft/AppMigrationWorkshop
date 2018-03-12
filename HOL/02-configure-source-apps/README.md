@@ -115,9 +115,7 @@ This hands-on-lab has the following excercises:
     ```
 
 
-
-
-On SQL Server
+### Exercise 2: Configuration Steps on SQL Server<a name="ex2"></a>
 
     ```
     # Restoring DBs
@@ -141,6 +139,7 @@ On SQL Server
     SQLCMD -E -S $($ENV:COMPUTERNAME) -Q "USE jobs; EXEC sp_addrolemember 'db_owner', 'APPMIG\AppsSvcAcct'"
     ```
 
+### Exercise 3: Configuration Steps on Web Server<a name="ex3"></a>
 On IIS Server
     
     ```
