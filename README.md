@@ -30,7 +30,7 @@ In this session, we will provide a brief overview of the workshop and provide an
 
 [View PowerPoint](Presentation/Module00-DigitalTransformation.pptx?raw=true)
 
-### HOL 1: [Setting up the Azure environment](HOL/01-setup/README.MD)
+### HOL 1: [Setting up the Azure environment](HOL/01-setup/README.md)
 
 In this lab you will create the environment that is needed for the workshop.
 
@@ -44,7 +44,7 @@ In this session, we will understand how to inventory applications, assess depend
 
 [View PowerPoint](Presentation/Module01-Inventory.pptx?raw=true)
 
-### HOL 2 - [Configure legacy Applications](HOL/02-configure-source-apps/README.MD): 
+### HOL 2 - [Configure legacy Applications](HOL/02-configure-source-apps/README.md): 
 
 In this lab you will inventory the sample applications.
 
@@ -59,7 +59,7 @@ In this session, we will understand the different patterns and identify the prop
 
 [View PowerPoint](Presentation/Module02-Migration-patterns-and-approaches.pptx?raw=true)
 
-### HOL 3 - [Choose Migration Path](HOL/03-choose-migration-path/README.MD): 
+### HOL 3 - [Choose Migration Path](HOL/03-choose-migration-path/README.md): 
 
 In this lab you will review the legacy application, align the requirements to the different Azure offerings and provide a path for migration.
 
@@ -73,11 +73,11 @@ In this session, we will understand how Ci and CD can be used to help with the a
 
 [View PowerPoint](Presentation/Module04-Devops.pptx?raw=true)
 
-### HOL 4 -[DevOps with App Service](HOL/04-devops-w-app-service/README.MD)
+### HOL 4 -[DevOps with App Service](HOL/04-devops-w-app-service/README.md)
 
 In this lab you will setup CI and CD with a simple application
 
-### HOL 5 - [Migrate Source Apps to PaaS](HOL/05-deploy-to-paas/README.MD)
+### HOL 5 - [Migrate Source Apps to PaaS](HOL/05-deploy-to-paas/README.md)
 
 In this lab you will use CI/CD with the sample legacy applications
 
@@ -90,7 +90,7 @@ In this session, we will understand how Windows Containers can help with legacy 
 [View PowerPoint](Presentation/Module05-Authentication.pptx?raw=true)
 [View PowerPoint](Presentation/Module06-Windows-Containers.pptx?raw=true)
 
-### HOL 6 - [Windows Containers](HOL/06-windows-containers/README.MD)
+### HOL 6 - [Windows Containers](HOL/06-windows-containers/README.md)
 
 In this lab you will learn how to set up Windows containers
 
@@ -106,7 +106,7 @@ In this session, we will learn techniques for migrating applications and databas
 
 [View PowerPoint](Presentation/Module07-Database-Migrations.pptx?raw=true)
 
-### HOL 7 - [Migrate Source Apps to Windows Containers](HOL/07-app-to-container/README.MD): 
+### HOL 7 - [Migrate Source Apps to Windows Containers](HOL/07-app-to-container/README.md): 
 
 In this lab you will learn how to containerize legacy applications
 
@@ -116,7 +116,7 @@ In this lab you will learn how to containerize legacy applications
 
 In this session, we will learn how to create a CI/CD pipeline with Windows Containers.
 
-### HOL 8 - [DevOps with Containers](HOL/08-devops-w-containers/README.MD): 
+### HOL 8 - [DevOps with Containers](HOL/08-devops-w-containers/README.md): 
 
 In this lab you will learn how to use CI/CD piplelines with Windows Containers
 
@@ -128,7 +128,7 @@ In this session, we will learn about monitoring and mangement of Azure resources
 
 [View PowerPoint](Presentation/Module09-Monitoring-and-Alerting.pptx?raw=true)
 
-### HOL 9 - [Monitoring](HOL/09-monitoring-alerting/README.MD): 
+### HOL 9 - [Monitoring](HOL/09-monitoring-alerting/README.md): 
 
 In this lab you will enable monitoring for the legacy applications
 
@@ -140,7 +140,7 @@ In this session, we will learn how to plan for transistioning the legacy applica
 
 [View PowerPoint](Presentation/Module10-Going-Live.pptx?raw=true)
 
-### HOL 10 - [Going Live](HOL/10-going-live/README.MD): 
+### HOL 10 - [Going Live](HOL/10-going-live/README.md): 
 
 In this lab, you will use some Azure services to help with going live
 
