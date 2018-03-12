@@ -73,7 +73,7 @@ The `Image2docker` tool for IIS and ASP.NET sites has 3 different Source Types t
 
 1. RDP into your IIS Source ASP.NET Web App Host. In this case, the server is named `aw-webapp.contoso.com` and open the IIS Manager, you should see all the source apps deployed.
     
-    ![image](./media/07-a-1.png)
+    ![image](./media/07-a-1.PNG)
 
 1. Navigate to each of the sites to make sure they are up and running
 
@@ -168,7 +168,7 @@ The `Image2docker` tool for IIS and ASP.NET sites has 3 different Source Types t
   
 1. Now open a browser and navigate to http://172.19.249.182. You should now see the `IBuySpy` Web site running inside the container.
     
-    ![image](./media/08-a-2.png)
+    ![image](./media/07-a-2.PNG)
     
 ### Exercise 3:  Cut over/Finalize Migration<a name="ex3"></a>
 
@@ -178,15 +178,15 @@ Now that we have an application up and running in a container on our Container h
 
 1. Update the DNS records by RDP-ing into the DNS/AD Server, in this case the server is 'dc1.contoso.com' and open DNS. Here we can see that the ibusyspy dns record is a cname pointing to 'aw-webapp.contoso.com'
 
-    ![image](./media/07-a-3.png)
+    ![image](./media/07-a-3.PNG)
 
 1. Update the record to point to the Windows Container host, in this case 'host1.contoso.com'
     
-    ![image](./media/07-a-4.png)
+    ![image](./media/07-a-4.PNG)
 
 1. Open a browser to verify that you can indeed get to the site.
     
-    ![image](./media/07-a-5.png)
+    ![image](./media/07-a-5.PNG)
 
 ### Exercise 4: Add Docker support to an existing application<a name="ex4"></a>
 
@@ -202,17 +202,17 @@ In this HOL we will go through pulling the solution into Visual Studio 2017 and 
 
 1. Open Visual Studio 2017
 1. Create an Empty Web Site by File > New > Project > Visual C# > Web > Web Site > ASP.NET Empty Web Site. Name the project JobWebSite.
-![image](./media/hol7-4-a.png)
+![image](./media/hol7-4-a.PNG)
 1. Open Windows Explorer and copy the Jobs Web Site Files
-![image](./media/hol7-4-b.png)
+![image](./media/hol7-4-b.PNG)
 1. Paste the files into the JobWebSite project in Visual Studio 2017
-![image](./media/hol7-4-c.png)
+![image](./media/hol7-4-c.PNG)
 1. All the files should now be in the solution/project. 
-![image](./media/hol7-4-d.png)
+![image](./media/hol7-4-d.PNG)
 1. You can remove the uneeded files "ProjectName.webproj" and "MyTemplate.vstemplate"
 1. Add a blank text file to the Solition, Not the Web Site and rename it to Dockerfile, make sure to remove the ".txt" extension.
-![image](./media/hol7-4-e.png)
-![image](./media/hol7-4-f.png)
+![image](./media/hol7-4-e.PNG)
+![image](./media/hol7-4-f.PNG)
 
 1. Add the following to the Dockerfile
     ```Docker
