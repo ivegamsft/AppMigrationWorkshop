@@ -1,24 +1,15 @@
 ## (WORK IN PROGRESS - VERY DRAFT, PLACEHOLDER ONLY FOR THE POWERSHELL/OTHER COMMANDS AT THIS MOMENT)
 
-Outline for lab
-
-* Create IIS app pool account
-* Download source apps
-* Install IIS web apps
-* Restore SQL dbs
-* Add DNS
-* Run and test apps
-
 # Setting up the source applications
 
 ## Overview
 ---
-In this lab, you will install three source applications, acting as they are the intended applications to migrate to Azure using one the presented options in the next labs.
+In this lab, you will install three source applications. The sample legacy applications will be used as the source for migrating to Azure.
 
 Applications
-- Timetracker
-- Classifieds
-- Jobs
+* Timetracker
+* Classifieds
+* Jobs
 
 ## Prerequisites
 ---
@@ -44,20 +35,34 @@ This hands-on-lab has the following excercises:
 
     ![image](./media/02-01-b.png)
 
-1. In the portal, in the left navigation pane, click on "Resource Groups" 
+1. In the portal, in the left navigation pane, click `Resource Groups` 
 
     ![image](./media/02-01-c.png)
  
-1. From the Resource Group list that will show, please click the one you just deployed for the workshop (e.g. AppModernization)
+1. From the Resource Group list, select the one deployed in HOL 1 (e.g. AppModernization-RG)
 
     ![image](./media/02-01-d.png)
+
+1. Locate the `Jumpbox` Virtual Machine by searching for `jmp` in the resource name field. The Jumpbox will be suffixed with **-jmp** (i.e apmqy63-jmp)
+
+    ![image](./media/02-01-e.png)
+
+1. Click on the JumpBox VM and click `Connect`
+
+    ![image](./media/02-01-f.png)
+
+1. when prompted, select `Use Alternate Credentials`
+
+1. Enter the adminstrator credentials as follows:
 
 #### Install Required PowerShell Modules
 
 1. Open a PowerShell command prompt
-1. Install Active Directory remote administration tools
+
+1. Install Active Directory and DNS remote administration tools
     ```
     Add-WindowsFeature -Name RSAT-AD-PowerShell
+    Add-WindowsFeature -Name RSAT-DNS-Server
     ```
 
 #### Creating Service Account (used in the application pools later)

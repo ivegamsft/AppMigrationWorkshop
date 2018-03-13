@@ -60,6 +60,11 @@ This hands-on-lab has the following exercises:
     ```powershell
     cd C:\Users\ContainerAdministrator\CloudDrive
     ```
+    > If you need to delete the directory and start over run the following:
+    ```powershell
+    Remove-Item -Recurse -Force .\AppMigrationWorkshopRepo\
+    ```
+
 1. Create a folder called `AppMigrationWorkshopRepo`
 
     ```powershell
@@ -99,6 +104,13 @@ In the automated deployment, we are using PowerShell Desired State Configuration
     copy-item xDisk -Destination C:\users\ContainerAdministrator\CloudDrive\.pscloudshell\WindowsPowerShell\Modules -Recurse -Force
     copy-item xNetworking -Destination C:\users\ContainerAdministrator\CloudDrive\.pscloudshell\WindowsPowerShell\Modules -Recurse -Force
     ```
+
+1. Change directories to the location of the ARM deployment script
+
+    ````powershell
+    cd ..
+    ````
+
 
 1. This solution was created using Visual Studio 2017 and it provides automatically a deployment script, please execute it by replacing some of the values as follows:
 
