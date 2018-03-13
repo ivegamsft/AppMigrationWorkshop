@@ -65,9 +65,9 @@ This hands-on-lab has the following excercises:
 
 1. Enter the adminstrator credentials as follows:
 
-    > User name: appmig\appmigadmin
+    > User name: **appmig\appmigadmin**
     >
-    > Password: @pp_M!gr@ti0n-2018
+    > Password: **@pp_M!gr@ti0n-2018**
 
     ![image](./media/2018-03-12_22-46-56.png)
 
@@ -143,12 +143,13 @@ This hands-on-lab has the following excercises:
 1. Copying the database backup files to the SQL server
 
     ```powershell
-    copy-item "C:\AppMigrationWorkshop-master\Shared\SourceApps\Databases\" \\10.0.1.100\c$ -Recurse
+    copy-item "C:\AppMigrationWorkshop\Shared\SourceApps\Databases\" \\10.0.1.100\c$ -Recurse
     ```
 
 1. Copying the application source files to the IIS server
+
     ```powershell
-    copy-item "C:\AppMigrationWorkshop-master\Shared\SourceApps\Apps\" \\10.0.0.4\c$ -Recurse
+    copy-item "C:\AppMigrationWorkshop\Shared\SourceApps\Apps\" \\10.0.0.4\c$ -Recurse
     ```
 
 ### Exercise 2: Configuration Steps on SQL Server<a name="ex2"></a>
