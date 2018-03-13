@@ -1,10 +1,8 @@
-## (WORK IN PROGRESS - VERY DRAFT, PLACEHOLDER ONLY FOR THE POWERSHELL/OTHER COMMANDS AT THIS MOMENT)
-
 # Setting up the source applications
 
 ## Overview
 ---
-In this lab, you will install three source applications. The sample legacy applications will be used as the source for migrating to Azure.
+In this lab, you will install three sample legacy applications. The sample legacy applications will be used as the source for migrating to Azure.
 
 Applications
 * Timetracker
@@ -22,14 +20,19 @@ This hands-on-lab has the following excercises:
 1. [Exercise 1: Configuration Steps on Jumpbox VM](#ex1)
 1. [Exercise 2: Configuration Steps on SQL Server](#ex2)
 1. [Exercise 3: Configuration Steps on Web Server](#ex3)
+1. [Exercise 4: Test the web applications](#ex4)
 
 ### Exercise 1: Configuration Steps on Jumpbox VM<a name="ex1"></a>
----
+
+----
+
+These configuration steps will be performed from the Jumpbox.
 
 #### Sign on to Jump Box VM from Azure Portal
 
 1. Go to the Azure Portal (http://portal.azure.com)
-1. Sign on with "Microsoft Account" or "Work or School Account"
+
+1. Sign on with `Microsoft Account` or `Work or School Account` associated with your Azure subscription
 
     ![image](./media/02-01-a.png)
 
@@ -51,11 +54,11 @@ This hands-on-lab has the following excercises:
 
     ![image](./media/02-01-f.png)
 
-1. When prompted, choose `Open`
+1. When prompted to Save or Open, choose `Open`
 
     ![image](./media/02-01-h.png)
 
-1. When prompted, choose `Connect`
+1. When prompted to connect to remote session, choose `Connect`
 
     ![image](./media/2018-03-12_22-42-59.png)
 
@@ -71,7 +74,7 @@ This hands-on-lab has the following excercises:
 
     ![image](./media/2018-03-12_22-46-56.png)
 
-1. When prompted, choose `Yes`
+1. When prompted to accept the certificate, choose `Yes`
 
     ![image](./media/2018-03-12_22-47-12.png)
 
@@ -83,9 +86,11 @@ This hands-on-lab has the following excercises:
 
     ![image](./media/2018-03-12_23-09-24.png)
 
-#### Install Required PowerShell Modules
+##### Install Required PowerShell Modules
 
-1. Open a PowerShell command prompt
+----
+
+1. Open a PowerShell session
 
     ![image](./media/2018-03-12_22-51-28.png)
 
@@ -95,7 +100,7 @@ This hands-on-lab has the following excercises:
     Add-WindowsFeature -Name RSAT-DNS-Server
     ```
 
-#### Creating Service Account (used in the application pools later)
+##### Creating Service Account (used in the application pools later)
 
 1. Create the service account that will be assigned to the application pools later
 
@@ -103,7 +108,7 @@ This hands-on-lab has the following excercises:
     New-ADUser -SamAccountName AppsSvcAcct -Name "AppsSvcAcct" -UserPrincipalName AppsSvcAcct@appmig.local -AccountPassword (ConvertTo-SecureString -AsPlainText "@pp_M!gr@ti0n-2018" -Force) -Enabled $true -PasswordNeverExpires $true
     ```
 
-#### Adding DNS records for each application
+##### Add DNS records for each application
 
 1. Create DNS entries (A record) for each web site
    ```powershell
@@ -119,9 +124,9 @@ This hands-on-lab has the following excercises:
     
     ```
 
-#### Downloading, extracting and copying locally workshop materials
+##### Download, extract and copy workshop materials locally
 
-1. Download the Workshop materials to the JumpBox. Open a `PowerShell window`
+1. If not already in a sesssion, open a `PowerShell window`
 
 1. Clone the GitHub repository to the root
 
@@ -152,13 +157,25 @@ This hands-on-lab has the following excercises:
     copy-item "C:\AppMigrationWorkshop\Shared\SourceApps\Apps\" \\10.0.0.4\c$ -Recurse
     ```
 
+-----
+
 ### Exercise 2: Configuration Steps on SQL Server<a name="ex2"></a>
 
-1. Begin a remote sesion to the `SQL Server` machine
+These configuration steps will be performed from the SQL server. You can access this machine from the JumpBox as the servers are not publically accessible.
 
-1. Open a command line
+1. In the Azure Portal, locate the machine name of the SQL server. The machine will suffixed with `-sql`. Copy the machine name to the clipboard.
 
-1. Issue the following commands to restore the databases
+    ![image](./media/2018-03-13_8-20-02.png)
+
+1. From the JumpBox, start a remote desktop connection to the `SQL Server` machine
+
+    ![image](./media/2018-03-13_8-15-41.png)
+
+1. Enter the SQL server VM name and click `Connect`. Enter the Administrator credentials and click `Ok`
+
+    ![image](./media/2018-03-13_8-26-05.png)
+
+1. Once on the SQL server, open a PowerShell session and Issue the following commands to restore the databases
     
     ````powershell
     SQLCMD -E -S $($ENV:COMPUTERNAME) -Q "RESTORE DATABASE [TimeTracker] FROM DISK='C:\Databases\timetracker.bak' WITH MOVE 'tempname' TO 'C:\Databases\timetracker.mdf', MOVE 'TimeTracker_Log' TO 'C:\Databases\timetracker_log.ldf'"
@@ -188,6 +205,8 @@ This hands-on-lab has the following excercises:
     SQLCMD -E -S $($ENV:COMPUTERNAME) -Q "USE classifieds; EXEC sp_addrolemember 'db_owner', 'APPMIG\AppsSvcAcct'"
     SQLCMD -E -S $($ENV:COMPUTERNAME) -Q "USE jobs; EXEC sp_addrolemember 'db_owner', 'APPMIG\AppsSvcAcct'"
     ````
+
+----
 
 ### Exercise 3: Configuration Steps on Web Server<a name="ex3"></a>
 
