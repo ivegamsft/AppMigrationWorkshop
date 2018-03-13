@@ -51,13 +51,43 @@ This hands-on-lab has the following excercises:
 
     ![image](./media/02-01-f.png)
 
-1. when prompted, select `Use Alternate Credentials`
+1. When prompted, choose `Open`
+
+    ![image](./media/02-01-h.png)
+
+1. When prompted, choose `Connect`
+
+    ![image](./media/2018-03-12_22-42-59.png)
+
+1. When Prompted, choose `More Choices > Use a Different Account`
+
+    ![image](./media/2018-03-12_22-44-04.png)
 
 1. Enter the adminstrator credentials as follows:
+
+    > User name: appmig\appmigadmin
+    >
+    > Password: @pp_M!gr@ti0n-2018
+
+    ![image](./media/2018-03-12_22-46-56.png)
+
+1. When prompted, choose `Yes`
+
+    ![image](./media/2018-03-12_22-47-12.png)
+
+1. Open Server Manager and disable the Internet Explorer Enhanced Security Configuration
+
+    ![image](./media/2018-03-12_23-08-18.png)
+
+1. Choose `Off` for Administrators and click `Ok`
+
+    ![image](./media/2018-03-12_23-09-24.png)
 
 #### Install Required PowerShell Modules
 
 1. Open a PowerShell command prompt
+
+    ![image](./media/2018-03-12_22-51-28.png)
 
 1. Install Active Directory and DNS remote administration tools
     ```
@@ -68,6 +98,7 @@ This hands-on-lab has the following excercises:
 #### Creating Service Account (used in the application pools later)
 
 1. Create the service account that will be assigned to the application pools later
+
     ```powershell
     New-ADUser -SamAccountName AppsSvcAcct -Name "AppsSvcAcct" -UserPrincipalName AppsSvcAcct@appmig.local -AccountPassword (ConvertTo-SecureString -AsPlainText "@pp_M!gr@ti0n-2018" -Force) -Enabled $true -PasswordNeverExpires $true
     ```
@@ -90,85 +121,112 @@ This hands-on-lab has the following excercises:
 
 #### Downloading, extracting and copying locally workshop materials
 
-1. Download Workshop materials
+1. Download the Workshop materials to the JumpBox. Open a `PowerShell window`
 
-    ```powershell
-    (New-Object System.Net.WebClient).DownloadFile("https://github.com/AzureCAT-GSI/AppMigrationWorkshop/archive/master.zip",".\master.zip")
-    ```
+1. Clone the GitHub repository to the root
 
-1. Extract materials to the root of c: drive
-    ```powershell
+    ````powershell
+    cd\
+    git clone https://github.com/AzureCAT-GSI/AppMigrationWorkshop.git
+    ````
+
+1. Extract each application
+
+    ````powershell
     [System.Reflection.Assembly]::LoadWithPartialName('System.IO.Compression.FileSystem')
-    [System.IO.Compression.ZipFile]::ExtractToDirectory(".\master.zip", "c:\")
-    ```
-1. Extracting each app
-    ```powershell
-    Get-ChildItem "C:\AppMigrationWorkshop-master\Shared\SourceApps\Apps\" -Exclude "*.msi" `
-                             | % {  $dest = Join-Path $_.directoryname ([system.io.path]::GetFileNameWithoutExtension($_.name)); `
-									    mkdir $dest -force; `
-									    [System.IO.Compression.ZipFile]::ExtractToDirectory($_.fullname, $dest); `
-									    del $_.fullname -force }
-    ```
-1. Copying databases to the SQL server
+    Get-ChildItem "C:\AppMigrationWorkshop\Shared\SourceApps\Apps\" -Exclude "*.msi" `
+        | % {  $dest = Join-Path $_.directoryname ([system.io.path]::GetFileNameWithoutExtension($_.name)); `
+		mkdir $dest -force; `[System.IO.Compression.ZipFile::ExtractToDirectory($_.fullname, $dest); `
+		del $_.fullname -force }
+    ````
+
+1. Copying the database backup files to the SQL server
+
     ```powershell
     copy-item "C:\AppMigrationWorkshop-master\Shared\SourceApps\Databases\" \\10.0.1.100\c$ -Recurse
     ```
 
-1. Copying applications to the IIS server
+1. Copying the application source files to the IIS server
     ```powershell
     copy-item "C:\AppMigrationWorkshop-master\Shared\SourceApps\Apps\" \\10.0.0.4\c$ -Recurse
     ```
 
-
 ### Exercise 2: Configuration Steps on SQL Server<a name="ex2"></a>
 
-    ```
-    # Restoring DBs
+1. Begin a remote sesion to the `SQL Server` machine
 
+1. Open a command line
+
+1. Issue the following commands to restore the databases
+    
+    ````powershell
     SQLCMD -E -S $($ENV:COMPUTERNAME) -Q "RESTORE DATABASE [TimeTracker] FROM DISK='C:\Databases\timetracker.bak' WITH MOVE 'tempname' TO 'C:\Databases\timetracker.mdf', MOVE 'TimeTracker_Log' TO 'C:\Databases\timetracker_log.ldf'"
     SQLCMD -E -S $($ENV:COMPUTERNAME) -Q "RESTORE DATABASE [Classifieds] FROM DISK='C:\Databases\classifieds.bak' WITH MOVE 'Database' TO 'C:\Databases\classifieds.mdf', MOVE 'Database_log' TO 'C:\Databases\classifieds_log.ldf'"
     SQLCMD -E -S $($ENV:COMPUTERNAME) -Q "RESTORE DATABASE [Jobs] FROM DISK='C:\Databases\jobs.bak' WITH MOVE 'EmptyDatabase' TO 'C:\Databases\jobs.mdf', MOVE 'EmptyDatabase_log' TO 'C:\Databases\jobs_log.ldf'"
+    ````
 
-    # Creating login
+1. Creating the SQL logins
+
+    ````powershell
     SQLCMD -E -S $($ENV:COMPUTERNAME) -Q "CREATE LOGIN [APPMIG\AppsSvcAcct] FROM WINDOWS"
+    ````
 
-    # Creating users in the database
+1. Create users in the database
 
+    ````powershell
     SQLCMD -E -S $($ENV:COMPUTERNAME) -Q "USE timetracker; CREATE USER [APPMIG\AppsSvcAcct];"
     SQLCMD -E -S $($ENV:COMPUTERNAME) -Q "USE classifieds; CREATE USER [APPMIG\AppsSvcAcct];"
     SQLCMD -E -S $($ENV:COMPUTERNAME) -Q "USE jobs; CREATE USER [APPMIG\AppsSvcAcct];"
+    ````
 
-    # Adding user to db_owner
+
+ 1. Configure the user as db_owner
+
+    ````powershell
     SQLCMD -E -S $($ENV:COMPUTERNAME) -Q "USE timetracker; EXEC sp_addrolemember 'db_owner', 'APPMIG\AppsSvcAcct'"
     SQLCMD -E -S $($ENV:COMPUTERNAME) -Q "USE classifieds; EXEC sp_addrolemember 'db_owner', 'APPMIG\AppsSvcAcct'"
     SQLCMD -E -S $($ENV:COMPUTERNAME) -Q "USE jobs; EXEC sp_addrolemember 'db_owner', 'APPMIG\AppsSvcAcct'"
-    ```
+    ````
 
 ### Exercise 3: Configuration Steps on Web Server<a name="ex3"></a>
-On IIS Server
-    
-    ```
 
-    # Application Pool
+1. Begin a remote session to the IIS Server
+
+1. Open a command prompt
+
+1. Issue the following commands to configure the IIS Application Pools
+
+
+    ````powershell
     c:\windows\system32\inetsrv\appcmd.exe add apppool /name:"TimeTrackerAppPool" /managedPipelineMode:"Integrated"
     c:\windows\system32\inetsrv\appcmd.exe add apppool /name:"ClassifiedsAppPool" /managedPipelineMode:"Classic"
     c:\windows\system32\inetsrv\appcmd.exe add apppool /name:"JobsAppPool" /managedPipelineMode:"Integrated"
+    ````
 
-    # Give necessary permissions for the service account
+
+1. Grane the necessary permissions for the service account
+
+    ````powershell
     c:\Windows\Microsoft.NET\Framework\v2.0.50727\aspnet_regiis.exe -ga appmig\AppsSvcAcct
+    ````
 
-    # Configure Application Pools to use the service account
+1. Configure Application Pools to use the service account
 
+    ````powershell
     c:\windows\system32\inetsrv\appcmd set config /section:applicationPools /[name='TimeTrackerAppPool'].processModel.identityType:SpecificUser /[name='TimeTrackerAppPool'].processModel.userName:AppsSvcAcct /[name='TimeTrackerAppPool'].processModel.password:@pp_M!gr@ti0n-2018
     c:\windows\system32\inetsrv\appcmd set config /section:applicationPools /[name='ClassifiedsAppPool'].processModel.identityType:SpecificUser /[name='ClassifiedsAppPool'].processModel.userName:AppsSvcAcct /[name='ClassifiedsAppPool'].processModel.password:@pp_M!gr@ti0n-2018
     c:\windows\system32\inetsrv\appcmd set config /section:applicationPools /[name='JobsAppPool'].processModel.identityType:SpecificUser /[name='JobsAppPool'].processModel.userName:AppsSvcAcct /[name='JobsAppPool'].processModel.password:@pp_M!gr@ti0n-2018
+    ````
 
-    # Deleting default web site
+1. Delete the default web site to avoid conflicts
 
+    ````powershell
     c:\windows\system32\inetsrv\appcmd delete site "Default Web Site"
+    `````
 
-    # Creating web sites
+1. Create the IIS web sites
 
+    ````powershell
     c:\windows\system32\inetsrv\APPCMD add site /name:TimeTracker /id:1 /bindings:http://timetracker:80: /physicalPath:C:\Apps\TimeTracker
     c:\windows\system32\inetsrv\APPCMD set site TimeTracker /[path='/'].applicationPool:"TimeTrackerAppPool"
 
@@ -177,4 +235,23 @@ On IIS Server
 
     c:\windows\system32\inetsrv\APPCMD add site /name:Jobs /id:3 /bindings:http://jobs:80: /physicalPath:C:\Apps\Jobs
     c:\windows\system32\inetsrv\APPCMD set site Jobs /[path='/'].applicationPool:"JobsAppPool"
-    ```
+    ````
+    
+### Exercise 4: Test the web applications<a name="ex4"></a>
+
+1. From the Jumpbox, open a browser
+
+1. Navigate to the following URLs:
+
+    * http://timetracker
+    * http://classifieds
+    * http://jobs
+
+## Summary
+
+In this hands-on lab, you learned how to:
+
+* Configure the legacy applications
+
+---
+Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
