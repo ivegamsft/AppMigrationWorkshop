@@ -141,8 +141,7 @@ These configuration steps will be performed from the Jumpbox.
     [System.Reflection.Assembly]::LoadWithPartialName('System.IO.Compression.FileSystem')
     Get-ChildItem "C:\AppMigrationWorkshop\Shared\SourceApps\Apps\" -Exclude "*.msi" `
         | % {  $dest = Join-Path $_.directoryname ([system.io.path]::GetFileNameWithoutExtension($_.name)); `
-		mkdir $dest -force; `[System.IO.Compression.ZipFile::ExtractToDirectory($_.fullname, $dest); `
-		del $_.fullname -force }
+		mkdir $dest -force; `[System.IO.Compression.ZipFile::ExtractToDirectory($_.fullname, $dest);}
     ````
 
 1. Copying the database backup files to the SQL server
@@ -210,8 +209,21 @@ These configuration steps will be performed from the SQL server. You can access 
 
 ### Exercise 3: Configuration Steps on Web Server<a name="ex3"></a>
 
-1. Begin a remote session to the IIS Server
+These configuration steps will be performed from the Web server. You can access this machine from the JumpBox as the servers are not publically accessible.
 
+1. In the Azure Portal, locate the machine name of the SQL server. The machine will suffixed with `-web`. Copy the machine name to the clipboard.
+
+    ![image](./media/2018-03-13_8-20-02.png)
+
+1. From the JumpBox, start a remote desktop connection to the `Web Server` machine
+
+    ![image](./media/2018-03-13_8-15-41.png)
+
+1. Enter the Web server VM name and click `Connect`. Enter the Administrator credentials and click `Ok`
+
+    ![image](./media/2018-03-13_8-26-05.png)
+
+1. Once on the SQL server, open a PowerShell session and Issue the following commands to restore the databases
 1. Open a command prompt
 
 1. Issue the following commands to configure the IIS Application Pools

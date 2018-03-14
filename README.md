@@ -1,16 +1,26 @@
 # Application Migration Workshop
 
-Contains content for conducting an Application Migration Workshop
+As customers move their enterprise applications to Azure, there are several decisions that need to be made. One of those decisions may be to move the application as-is, with as little change as possible. This may be due to several reasons such as economical, support, timelines, etc. In the move to the cloud, there are areas where you can reconsider the hosting environment away from physical, single host or multi-host to a hosting environment that is more cost effective, agile and provides higher density.
+
+In this workshop, you will learn how to discover, assess and re-host legacy applications. One of the challenges we were looking to address is the fact that legacy applications were built with legacy tooling and knowledge from the period. We chose to use older applications that were actually designed and developed in the period, rather than create new applications with present tooling, knowledge and access to learnings. We feel that this will lead to a better, more real-world experience overall. Some common patterns we were looking to address are:
+
+* Web/multi-tier applications
+* Older IIS/.NET versions (IIS 6.0 >, .>NET Framework 3.5)
+* Windows Authentication and domain Join of host/containers
+* Containerizing legacy web applications
+
+We know that we did not capture all of the scenarios, pitfalls and patterns. If you have a scenario that you encounter, please log an issue and we will try our best to incorporate it into the broader set of workshop materials.
 
 | Current Status   |
 | ---------------- |
 | _In Development_ |
 
-The workshop can be conducted in two different forms. Open Hack and Hand on Labs (HOLs).
+The workshop can be conducted in two different formats:
 
-In the OpenHack format, a set of challenges are issued and the participants can choose how to complete the effort. 
+* Open Hack - a set of challenges are issued and the participants can choose how to complete the effort. 
+* Hand on Labs (HOLs) - specific step-by-step instructions that detail how to complete the challenge.
 
-The HOLs on the other hand have specific step-by-step instructions that detail how to complete the challenge. Both can be used in combination if desired.
+Both can be used in combination if desired.
 
 ## Open Hack challenges
 
