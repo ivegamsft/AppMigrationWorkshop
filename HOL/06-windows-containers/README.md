@@ -123,7 +123,7 @@ This hands-on-lab has the following exercises:
     Get-AzureRmNetworkSecurityGroup -Name  $nsgName -ResourceGroupName $rgName | Add-AzureRmNetworkSecurityRuleConfig -Name docker-rule -Description "Docker Rule" -Access Allow -Protocol Tcp -Direction Inbound -Priority 200 -SourceAddressPrefix Internet -SourcePortRange * -DestinationAddressPrefix * -DestinationPortRange 2375 |  Set-AzureRmNetworkSecurityGroup
     ```
 
-1. Obtain the public IP address from your Azure VM. This can be done from the portal. Or you can run the following powershell
+1. Obtain the public IP address from your Azure VM. This can be done from the portal, or you can run the following powershell
 
     ```powershell
     $rgName = "<YOUR RESOURCE GROUP NAME>"
