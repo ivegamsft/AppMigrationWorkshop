@@ -145,8 +145,6 @@ This lab is done from the jump box
 
 ### Exercise 3: Create CI/CD Pipeline in VSTS<a name="ex3"></a>
 
-
-
 1. Create an Azure Web Application
 
     ````powershell
@@ -165,7 +163,7 @@ This lab is done from the jump box
     New-AzureRmWebApp -Name $webapp -Location $location -AppServicePlan $webapp -ResourceGroupName $rgName
     ````
 
-1. Open a browser and navigate to you VSTS Portal (https://<your tenant>.visualstudio.com/_projects)
+1. Open a browser and navigate to your VSTS Portal `(https://[YOUR VS  TENANT NAME].visualstudio.com/_projects)`
 
 1. Click `Create New Project`
 

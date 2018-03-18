@@ -1,6 +1,7 @@
 # Windows Containers
 
 ## Overview
+
 In this lab, you will learn how to:
 
 * Setup for Deployments and Windows Authentication and Delegation(Kerberos)
@@ -8,6 +9,7 @@ In this lab, you will learn how to:
 * Test Kerberos configuration with delegation
 
 ## Prerequisites
+
 Ensure you have the following:
 
   * You have an Azure Subscription
@@ -18,7 +20,6 @@ Ensure you have the following:
   * You have the Windows Container Host Deployed 
 
 ## Exercises
----
 
 This hands-on-lab has the following exercises:
 
@@ -29,29 +30,29 @@ This hands-on-lab has the following exercises:
 
 ### Exercise 1: Setup for Deployments<a name="ex1"></a>
 
----
+1. RDP into the `Windows Container Azure VM`. It is suffixed with `-cnt`
 
-1. RDP into the `Windows Container Azure VM`
+    ![image](./media/2018-03-18_6-20-25.png)
 
 1. Validate that `Docker` is installed by opening `PowerShell` and run the following command:
 
-    ```powershell
+    ````powershell
     docker info
-    ```
+    ````
+
+    ![image](./media/2018-03-18_6-23-51.png)
 
 1. Open `PowerShell` and run the following command:
     
-    ```powershell
+    ````powershell
     docker images
     #You should see the following results
     REPOSITORY                    TAG                 IMAGE ID            CREATED             SIZE
     microsoft/windowsservercore   ltsc2016            db8182d67b6c        6 weeks ago         10.4GB
     microsoft/nanoserver          sac2016             5a5dfd4deb23        6 weeks ago         1.1GB
-    ```
+    ````
 
-1. Configure the Docker daemon to open a tcp port. Open or create the daemon.json file in `C:\ProgramData\docker\config` folder.
-
-1. With the following :
+1. Configure the Docker daemon to open a tcp port. Open or create the daemon.json file in `C:\ProgramData\docker\config` folder with the following :
 
     > [!WARNING]
     > This is not a secure port. For a reference how how to use a secure port go to the [eShop Modernizing Repo](https://github.com/dotnet-architecture/eShopModernizing/wiki/03.-How-to-deploy-your-Windows-Containers-based-app-into-Azure-VMs-(Including-CI-CD))
@@ -60,30 +61,73 @@ This hands-on-lab has the following exercises:
     { "hosts": ["tcp://0.0.0.0:2375","npipe://"] }
     ```
 
+    ![image](./media/2018-03-18_6-27-42.png)
+
+    > Note: Ensure the JSON file has a .json extentsion. If you see the following, enable `File name extensions` and rename the `.txt` file to a `.json` file
+    >
+    > ![image](./media/2018-03-18_6-27-04.png)
+    >
+
 1. Restart the Docker service
 
-    ```powershell
+    ````powershell
     Restart-Service Docker
-    ```
+    ````
 
 1. Open the needed firewall ports on the Windows Container Host
-    
-    ```powershell
+
+    ````powershell
     netsh advfirewall firewall add rule name="Docker Rule" dir=in action=allow protocol=TCP localport=2375
-    ```
+    ````
+
+1. Disable the IE Enhanced Security Configuration setting
+
+    ![image](./media/2018-03-18_6-37-37.png)
+
+1. Install Azure PowerShell tools on the Docker host
+
+    ````powershell
+    Install-Module PowerShellGet -Force
+    Install-Module -Name AzureRM -AllowClobber
+    ````
+
+1. You will see the following output. Select Y or Yes to All
+
+    ````powershell
+    Untrusted repository
+
+    You are installing the modules from an untrusted repository. If you trust this repository, change
+    its InstallationPolicy value by running the Set-PSRepository cmdlet.
+
+    Are you sure you want to install the modules from 'PSGallery'?
+    [Y] Yes  [A] Yes to All  [N] No  [L] No to All  [S] Suspend  [?] Help (default is "N"): Y
+    ````
+
+1. Import the Azure RM Module
+
+    ````powershell
+    Import-Module -Name AzureRM
+    ````
+
+1. Once the Azure PowerShell tools are installed, login to Azure
+
+    ````powershell
+    Login-AzureRMAccount
+    ````
+
 1. Create a Rule on your NSG to allow remote management of docker on your host vm.
 
     ```powershell
-    $rgName = "<resource group name>"
-    $nsgName = "<nsg name>"
+    $rgName = "<YOUR RESOURCE GROUP NAME>"
+    $nsgName = "<NSG NAME>"
     Get-AzureRmNetworkSecurityGroup -Name  $nsgName -ResourceGroupName $rgName | Add-AzureRmNetworkSecurityRuleConfig -Name docker-rule -Description "Docker Rule" -Access Allow -Protocol Tcp -Direction Inbound -Priority 200 -SourceAddressPrefix Internet -SourcePortRange * -DestinationAddressPrefix * -DestinationPortRange 2375 |  Set-AzureRmNetworkSecurityGroup
     ```
 
 1. Obtain the public IP address from your Azure VM. This can be done from the portal. Or you can run the following powershell
 
     ```powershell
-    $rgName = "<resource group name>"
-    $pipName = "<pip name>"
+    $rgName = "<YOUR RESOURCE GROUP NAME>"
+    $pipName = "<YOUR PIP NAME>"
     $pip = Get-AzureRmPublicIpAddress -Name $pipName -ResourceGroupName $rgName
     Write-Host "IP Address is: " $pip.IpAddress
     ```
@@ -108,8 +152,8 @@ This hands-on-lab has the following exercises:
 1. Create the AD Group. On the Domain Controller execute the following. Replace with values specific to your enviroment:
 
     ```powershell
-    $groupName = "<group name e.g. 'hosts'>"
-    $containerHostName = "<Windows Container Host Name e.g. host1>"
+    $groupName = "<YOUR GROUP NAME E.G. 'HOSTS'>"
+    $containerHostName = "<YOUR WINDOWS CONTAINER HOST NAME E.G. HOST1>"
     New-ADGroup -GroupCategory Security -DisplayName "Windows Container Hosts" -Name $groupName -GroupScope Universal
     Add-ADGroupMember -Members (Get-ADComputer -Identity $containerHostName) -Identity $groupName
     #Validate that they were indeed created
@@ -123,35 +167,35 @@ This hands-on-lab has the following exercises:
 
     ```powershell
     Import-module ActiveDirectory
-    Add-KdsRootKey –EffectiveTime ((get-date).addhours(-10));
+    Add-KdsRootKey -EffectiveTime ((get-date).addhours(-10));
     ```
 
 1. On the DC, create a gMSA Account, make sure to set it for constrained delegation.
 
-    ```powershell
+    ````powershell
     #Assuming your Windows Container Host anem is host1.contoso.com
 
     New-ADServiceAccount -Name host -DNSHostName "host1.contoso.com" `
     -PrincipalsAllowedToRetrieveManagedPassword  "Domain Controllers", "domain admins", "CN=hosts,CN=Users,DC=contoso,DC=com" `
     -KerberosEncryptionType RC4, AES128, AES256 `
     -ServicePrincipalNames HTTP/host1, HTTP/host1.contoso.com
-    ```
+    ````
 
 1. Configure the gMSA accout for constrained delegation, for example if you need to delegate to a SQL server named `sql.contoso.com`
     
-    ```powershell
-    Set-ADServiceAccount –Identity host -add @{"msDS-AllowedToDelegateTo"="MSSQLSvc/sql:1433","MSSQLSvc/sql.contoso.com:1433"}
-    ```
+    ````powershell
+    Set-ADServiceAccount ï¿½Identity host -add @{"msDS-AllowedToDelegateTo"="MSSQLSvc/sql:1433","MSSQLSvc/sql.contoso.com:1433"}
+    ````
 
 1. Configure the Windows Container host for constrained delegation, again, assuming your Windows container host is name `host1.contoso.com`
     
-    ```powershell
+    ````powershell
     Set-ADComputer -Identity host1 -add @{"msDS-AllowedToDelegateTo"="MSSQLSvc/sql:1433","MSSQLSvc/sql.contoso.com:1433"}
-    ```
+    ````
 
 1. On the Windows Container host (e.g. host1) add the gMSA account by executing the following
 
-    ```powershell
+    ````powershell
     Enable-WindowsOptionalFeature -FeatureName ActiveDirectory-Powershell -online -all
     Get-ADServiceAccount -Identity host 
     Install-ADServiceAccount -Identity host
@@ -173,12 +217,12 @@ This hands-on-lab has the following exercises:
     Install-ADServiceAccount -Identity host
     Test-AdServiceAccount -Identity host
     True
-    ```
+    ````
     
     >
     > In a multi-domain environment, You may see an error like this:
 
-    ```powershell
+    ````powershell
     Install-ADServiceAccount : Cannot install service account. Error Message: '{Access Denied}
     A process has requested access to an object, but has not been granted those access rights.'.
     At line:1 char:1
@@ -187,13 +231,13 @@ This hands-on-lab has the following exercises:
         + CategoryInfo          : WriteError: (euhost:String) [Install-ADServiceAccount], ADException
         + FullyQualifiedErrorId : InstallADServiceAccount:PerformOperation:InstallServiceAcccountFailure,Microsoft.ActiveDirectory.Man 
     agement.Commands.InstallADServiceAccount
-    ```
+    ````
 
     > In this case, you can also add the gMSA account to the server like this
 
-    ```powershell
+    ````powershell
     Get-ADServiceAccount -Identity host | Set-ADServiceAccount -PrincipalsAllowedToRetrieveManagedPassword 'host$'
-    ```
+    ````
 
 ### Exercise 3: Deploy a containerized web app to validate configuration<a name="ex3"></a>
 
@@ -201,7 +245,7 @@ This hands-on-lab has the following exercises:
 
 1. On the host we need to create a credentials spec file for Docker
    
-     ```powershell
+     ````powershell
     #Assuming the gMSA Account name is 'host'
     Invoke-WebRequest "https://raw.githubusercontent.com/Microsoft/Virtualization-Documentation/live/windows-server-container-tools/ServiceAccounts/CredentialSpec.psm1" -UseBasicParsing -OutFile $env:TEMP\cred.psm1
     Import-Module $env:temp\cred.psm1
@@ -214,7 +258,7 @@ This hands-on-lab has the following exercises:
     Name Path
     ---- ----
     win  C:\ProgramData\docker\CredentialSpecs\win.json
-    ```
+    ````
 
 1. On the Windows Container host, create a docker image with the correct version of Windows and IIS and the sample application to validate that authentication is working. 
 
@@ -222,7 +266,7 @@ This hands-on-lab has the following exercises:
 
 1. Validate the docker file in the `site` folder
 
-    ```docker
+    ````docker
     FROM microsoft/iis:latest
     SHELL ["powershell"]
     RUN mkdir C:\site
@@ -241,24 +285,24 @@ This hands-on-lab has the following exercises:
 
     RUN  C:\windows\system32\inetsrv\appcmd.exe set config "Site" -section:system.webServer/security/authentication/windowsAuthentication /enabled:"True" /commit:apphost
     EXPOSE 80
-    ```
+    ````
 
 1. From `PowerShell` execute the following:
 
-    ```powershell
+    ````powershell
     cd c:\site
     docker build -t iis-site .
-    ```
+    ````
 
 1. Run a container in the background
     
-    ```powershell
+    ````powershell
     docker run -d -h host --security-opt "credentialspec=file://win.json" iis-site --name aspnet
-    ```
+    ````
     
 1. Validate that the container is running:
 
-    ```powershell
+    ````powershell
     docker ps -a
 
     ##if you see the that the container has exited, like below
@@ -272,7 +316,7 @@ This hands-on-lab has the following exercises:
     docker inspect -f "{{ .NetworkSettings.Networks.nat.IPAddress }}" determined_leavitt
 
     172.19.244.78
-    ```
+    ````
 
 1. In the host server open a browser and navigate to `http://172.19.244.78`, make sure to input your own IP address. You will then be prompted, enter valid credentials.
 
@@ -283,8 +327,6 @@ This hands-on-lab has the following exercises:
     ![image](./media/07a-2.PNG)
 
 ### Exercise 4: Advanced Troubleshooting<a name="ex4"></a>
-
----
 
 For this lab, follow the steps from [advanced-troubleshooting.md](./advanced-troubleshooting.md)
 
