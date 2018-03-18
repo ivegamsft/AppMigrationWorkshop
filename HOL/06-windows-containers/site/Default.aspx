@@ -18,9 +18,9 @@
         <div class="container">
             <div class="row">
                 <div class="jumbotron">
-                    <h1 class="display-4">Hello<b><%= Request.LogonUserIdentity.Name %></b></h1>
+                    <h1 class="display-4">Hello <b><%= Request.LogonUserIdentity.Name %></b></h1>
                     <p class="lead">
-                        You Authenticated on <b><%= Server.MachineName %></b> using AuthenticationType:<b><%= Request.LogonUserIdentity.AuthenticationType %></b> with impersonation level:<b><%= Request.LogonUserIdentity.ImpersonationLevel %></b>
+                        You Authenticated on: <b><%= Server.MachineName %></b> using AuthenticationType:<b><%= Request.LogonUserIdentity.AuthenticationType %></b> with impersonation level:<b><%= Request.LogonUserIdentity.ImpersonationLevel %></b>
                     </p>
                 </div>
             </div>
@@ -39,7 +39,7 @@
             </div>
             <div class="row">
                 <div class="col-md">
-                    <h2>Testing Principal Context</h2>
+                    <h2>Windows Principal Context</h2>
                 </div>
             </div>
             <div class="row">

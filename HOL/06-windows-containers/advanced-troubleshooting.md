@@ -80,9 +80,8 @@ These are only needed for accessing the IIS admin UI
     ![image](./media/07b-4.PNG)
 
 1. You should now have access to IIS running inside of your container.
-    
+
     ![image](./media/07b-5.PNG)
-        
 
 ### Exercise 2: Configure Kerberos Logging inside container<a name="ex2"></a>
 
@@ -137,8 +136,6 @@ These are only needed for accessing the IIS admin UI
 
 ### Exercise 3: Export event logs from container<a name="ex3"></a>
 
----
-
 1. If not already open, launch a PowerShell prompt in the container
 
 1. Connect interactively to the container
@@ -157,46 +154,43 @@ These are only needed for accessing the IIS admin UI
 
 1. Run the following commands:
 
-    ```powershell
+    ````powershell
     wevtutil epl Security c:\SecurityBackup.evtx
-    ```
+    ````
 
 1. Run the following to ensure that the log file was exported:
 
     ```powershell
-    cd\    
+    cd\
     dir
     ```
 
     You should see something like this with your `SecurityBackup.evtx` file
 
-    ```powershell
-    Directory: C:\
+    ![image](./media/2018-03-18_18-17-22.png)
 
-
-    Mode                LastWriteTime         Length Name
-    ----                -------------         ------ ----
-    d-----        2/22/2018  12:46 AM                inetpub
-    d-----        7/16/2016   1:18 PM                PerfLogs
-    d-r---        2/22/2018  12:33 AM                Program Files
-    d-----        2/22/2018  12:29 AM                Program Files (x86)
-    d-----        2/22/2018  12:47 AM                site
-    d-r---        2/22/2018  12:37 AM                Users
-    d-----        2/22/2018  12:39 AM                Windows
-    -a----        2/22/2018  12:51 AM          69632 SecurityBackup.evtx
-    -a----       11/22/2016  10:45 PM           1894 License.txt
-    -a----        12/8/2017   7:00 PM         126632 ServiceMonitor.exe
-    ```
-
-1. From the Windows Container Host we can copy the exported application log from inside the container to the host so that we can view it.
+1. From the Windows Container Host we can copy the exported application log from inside the container to the host so that we can view it. Replace the container name (in this example adoring_rosalind) with the proper value for your environment
 
     ```powershell
+    md c:\mylogs
     docker cp adoring_rosalind:/SecurityBackup.evtx c:\mylogs\SecurityBackup.evtx
     ```
 
-1. Open `Event Viewer` on the host machine and right click on `Even Viewer(local) > Open Saved Log`
+1. Open `Event Viewer` on the host machine
+
+    ![image](./media/2018-03-18_18-22-23.png)
+
+1. Right click on `Even Viewer(local) > Open Saved Log`
+
+    ![image](./media/2018-03-18_18-24-10.png)
 
 1. Navigate to the location you saved the exported log (in this example, `c:\mylogs\SecurityBackup.evtx`), and `Open`.
+
+    ![image](./media/2018-03-18_18-24-53.png)
+
+1. On the Open Saved Log dialog, click OK to accept the defaults
+
+    ![image](./media/2018-03-18_18-25-15.png)
 
 ### Exercise 4: Remote Debugging in the container<a name="ex4"></a>
 
