@@ -161,7 +161,7 @@ These configuration steps will be performed from the Jumpbox.
 
 ### Exercise 2: Configuration Steps on SQL Server<a name="ex2"></a>
 
-These configuration steps will be performed from the SQL server. You can access this machine from the JumpBox as the servers are not publically accessible.
+These configuration steps will be performed from the SQL server. You can access this machine from the JumpBox as the servers are not publicly accessible.
 
 1. In the Azure Portal, locate the machine name of the SQL server. The machine will suffixed with `-sql`. Copy the machine name to the clipboard.
 

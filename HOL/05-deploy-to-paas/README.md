@@ -36,25 +36,47 @@ This lab is done from the jump box
 
 1. RDP into the jump box
 
-1. Open a browser and download the Database Migration Assistant [here](https://www.microsoft.com/en-us/download/details.aspx?id=53595)
+1. Open a browser and download the Database Migration Assistant from [https://www.microsoft.com/en-us/download/details.aspx?id=53595](https://www.microsoft.com/en-us/download/details.aspx?id=53595)
 
-1. When prompted, click `Run > Next > Click the 'I Accept ...'` checkbox. 
+1. When prompted, click `Run` to run the installer. Click `Next`
 
-1.  Click `Next > Install > Finish` then Launch the Data Migration Assistant
+    ![image](./media/2018-03-18_5-08-37.png)
+
+1. Select the `I accept ...` checkbox and click `Next > Install`
+
+    ![image](./media/2018-03-18_5-10-55.png)
+
+1. Select the `Launch Microsoft Data Migration Assistant` and click finish
+
+    ![image](./media/2018-03-18_5-11-59.png)
 
 1. Click on the + Migration and name the Project `JobsDB`. Click `Create`
-    
+
     ![image](./media/06-01-a.png)
 
-1. Select the Source by entering your SQL server name `Server Name > Windows Authentication > Uncheck Encrypt connection` 
-
-1. Select the `JSSKDB`
+1. Select the Source by entering your SQL server name `appm[YOUR UNIQUE NAME]-sqlsvr`. When prompted, select `Server Name > Windows Authentication` and Uncheck `Encrypt connection` and select the `JOBS` database
 
     ![image](./media/06-01-b.png)
 
-1. Select `Target > Enter Authentication Credentials` and select the `jobsappsql[YOUR UNIQUE SUFFIX]` DB in the Azure subscription and resource group you have deployed the template from HOL 1.
+1. Navigate to the Azure Portal and find the name of your Azure SQL server Database. Click to view the properties
+
+    ![image](./media/2018-03-18_5-23-28.png)
+
+1. Find the Server name and copy it to the clipboard
+
+    ![image](./media/2018-03-18_5-39-16.png)
+
+1. Select `Target > Enter Authentication Credentials` and select the `JOBS` database in the Azure subscription and resource group you have deployed the template from HOL 1.
     
-    ![image](./media/06-01-c.png)
+    ![image](./media/2018-03-18_5-31-35.png)
+
+
+1. Select `SQL Server Authentication` and enter the user name and password
+
+    > Username: appmigadmin
+    >
+    > Password: @pp_M!gr@ti0n-2018
+    >
 
 1. Select `objects`.  Make note of any blocking issues and non-blocking issues that will need to be addressed 
 
@@ -62,7 +84,7 @@ This lab is done from the jump box
 
    ![image](./media/06-01-d.png)
 
-1. To script & deploy the Schema, click `Deploy schema`. 
+1. To script & deploy the Schema, click `Deploy schema`
 
    ![image](./media/06-01-e.png)
 
@@ -79,15 +101,22 @@ This lab is done from the jump box
 
 ---
 
-1. Make sure you have the Jobs Source Apps downloaded on your Dev VM. In this example they are located in the `c:\SourceApps\JSSKCS` folder
+1. Make sure you have the Jobs Source Apps downloaded on your Dev VM. In this example they are located in the `C:\AppMigrationWorkshop\Shared\SourceApps\Apps\Jobs` folder
 
     ![image](./media/06-02-a.png)
 
 1. Open Visual Studio 2017. Select `File > New Project > Visual C# > Web > Web Site` and choose `ASP.NET Empty Web Site` as the template. 
- 
+
 1. Name the project `JobsSite`.
 
     ![image](./media/06-02-b.png)
+
+    > Note: Depending on your VS 2017 update version, the dialog may appear slightly different.
+    >
+    > ![image](./media/2018-03-18_5-49-05.png)
+    > 
+    > ![image](./media/2018-03-18_5-50-48.png)
+    >
 
 1. You should now have an empty web site solution as a target to copy the Jobs source files. 
 
@@ -97,11 +126,15 @@ This lab is done from the jump box
 
     ![image](./media/06-02-c.png)
 
-1. Paste them into the Empty Visual Studio 2017 Solution
+1. Paste them into the Empty Visual Studio 2017 Solution.
 
     ![image](./media/06-02-d.png)
 
-1. Delete the `MyTemplate.vstemplate` and `ProjectName.webproj` files
+1. If prompted that files exist, select `Apply to all items` and `Yes`
+
+    ![image](./media/2018-03-18_5-55-25.png)
+
+1. Delete the `MyTemplate.vstemplate` and `ProjectName.webproj` files. These files were used with the older version of Visual Studio and are not longer needed.
 
     ![image](./media/06-02-f.png)
 
@@ -116,7 +149,7 @@ This lab is done from the jump box
 
 1. Create an Azure Web Application
 
-    ```powershell
+    ````powershell
     $webapp = "[A UNIQUE NAME]" # this should be a unique name
     $location = "[YOUR REGION]"
     $rgName = "[YOUR RESOURCE GROUP NAME]"
@@ -130,7 +163,7 @@ This lab is done from the jump box
     New-AzureRmAppServicePlan -Name $webapp -Location $location -ResourceGroupName $rgName -Tier Free
     #Create an empty web app to deploy to
     New-AzureRmWebApp -Name $webapp -Location $location -AppServicePlan $webapp -ResourceGroupName $rgName
-    ```
+    ````
 
 1. Open a browser and navigate to you VSTS Portal (https://<your tenant>.visualstudio.com/_projects)
 
