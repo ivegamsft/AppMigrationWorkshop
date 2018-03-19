@@ -207,11 +207,11 @@ These configuration steps will be performed from the SQL server. You can access 
 
 ### Exercise 3: Configuration Steps on Web Server<a name="ex3"></a>
 
-These configuration steps will be performed from the Web server. You can access this machine from the JumpBox as the servers are not publically accessible.
+These configuration steps will be performed from the Web server. You can access this machine from the JumpBox as the servers are not publicly accessible.
 
-1. In the Azure Portal, locate the machine name of the SQL server. The machine will suffixed with `-web`. Copy the machine name to the clipboard.
+1. In the Azure Portal, locate the machine name of the Web server. The machine will suffixed with `-web`. Copy the machine name to the clipboard.
 
-    ![image](./media/2018-03-13_8-20-02.png)
+    ![image](./media/2018-03-18_19-33-48.png)
 
 1. From the JumpBox, start a remote desktop connection to the `Web Server` machine
 
@@ -219,20 +219,17 @@ These configuration steps will be performed from the Web server. You can access 
 
 1. Enter the Web server VM name and click `Connect`. Enter the Administrator credentials and click `Ok`
 
-    ![image](./media/2018-03-13_8-26-05.png)
+    ![image](./media/2018-03-18_19-35-59.png)
 
-1. Once on the SQL server, open a PowerShell session and Issue the following commands to restore the databases
-1. Open a command prompt
+1. Once on the Web Server, open a PowerShell session
 
 1. Issue the following commands to configure the IIS Application Pools
-
 
     ````powershell
     c:\windows\system32\inetsrv\appcmd.exe add apppool /name:"TimeTrackerAppPool" /managedPipelineMode:"Integrated"
     c:\windows\system32\inetsrv\appcmd.exe add apppool /name:"ClassifiedsAppPool" /managedPipelineMode:"Classic"
     c:\windows\system32\inetsrv\appcmd.exe add apppool /name:"JobsAppPool" /managedPipelineMode:"Integrated"
     ````
-
 
 1. Grant the necessary permissions for the service account
 
@@ -265,7 +262,7 @@ These configuration steps will be performed from the Web server. You can access 
     c:\windows\system32\inetsrv\APPCMD set site Jobs "/[path='/'].applicationPool:JobsAppPool"
     ````
 
-1. Update the web.config files for the source apps to connect to the database. Replace with your SQL Server name
+1. On the file system, update the web.config files for the source apps to connect to the database. The files are located in the `C:\Apps` folder. Replace `[YOUR SQL SERVER NAME]` with your SQL Server VM name
 
     * Jobs
     ````xml
