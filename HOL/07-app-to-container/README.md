@@ -135,6 +135,19 @@ In this exercise we will containerize the applications that we deployed in HOL 2
     ConvertTo-Dockerfile -RemotePath \\[YOUR WEB SERVER IP ADDRESS]\c$ -OutputPath c:\dockerimages\classifieds -Artifact IIS -ArtifactParam Classifieds
     ````
 
+1. The timetracker app requires a classic app pool. Let's change the docker file. Change if from:
+
+    ````powershell
+    RUN New-Website -Name 'TimeTracker' -PhysicalPath 'C:\Apps\TimeTracker' -Port 80 -ApplicationPool '.NET v2.0' -Force;
+    ````
+
+    To:
+    ````powershell
+    RUN New-Website -Name 'TimeTracker' -PhysicalPath 'C:\Apps\TimeTracker' -Port 80 -ApplicationPool 'Classic .NET AppPool' -Force;
+    ````
+
+1. TODO: ADD CHANGE TO USE APP CREDENTIALS
+
 1. Build the Docker Images
 
     ````powershell
@@ -176,7 +189,26 @@ In this exercise we will containerize the applications that we deployed in HOL 2
     # You should see something like this
     172.19.249.182
     ```
-  
+
+1. On the SQL machine, add the gSMA account to the databases
+
+    ````sql
+    CREATE LOGIN [appmig\chost-gsma$] FROM WINDOWS
+    sp_addsrvRolemember "appmig\chost-gsma$", "sysadmin"
+    USE [Jobs]
+    GO
+    CREATE USER [appmig\chost-gsma$] FOR LOGIN [appmig\chost-gsma$] WITH DEFAULT_SCHEMA=[dbo]
+    GO
+    USE [Timetracker]
+    GO
+    CREATE USER [appmig\chost-gsma$] FOR LOGIN [appmig\chost-gsma$] WITH DEFAULT_SCHEMA=[dbo]
+    GO
+    USE [Classifieds]
+    GO
+    CREATE USER [appmig\chost-gsma$] FOR LOGIN [appmig\chost-gsma$] WITH DEFAULT_SCHEMA=[dbo]
+    GO
+    ````
+
 1. Now open a browser and navigate to http://[YOUR CONTAINER IP ADDRESS]. You should now see the `timetracker` Web site running inside the container.
 
     ![image](./media/07-a-2.PNG)
@@ -227,7 +259,7 @@ In this HOL we will go through pulling the solution into Visual Studio 2017 and 
 
 1. You can remove the uneeded files "ProjectName.webproj" and "MyTemplate.vstemplate"
 
-1. Add a blank text file to the Solition, Not the Web Site and rename it to Dockerfile, make sure to remove the ".txt" extension.
+1. Add a blank text file to the Solution, Not the Web Site and rename it to Dockerfile, make sure to remove the ".txt" extension.
 
     ![image](./media/hol7-4-e.PNG)
 
