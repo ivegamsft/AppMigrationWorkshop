@@ -146,6 +146,8 @@ In this exercise we will containerize the applications that we deployed in HOL 2
     RUN New-Website -Name 'TimeTracker' -PhysicalPath 'C:\Apps\TimeTracker' -Port 80 -ApplicationPool 'Classic .NET AppPool' -Force;
     ````
 
+1. TODO: ADD CHANGE TO USE APP CREDENTIALS
+
 1. Build the Docker Images
 
     ````powershell
@@ -188,14 +190,20 @@ In this exercise we will containerize the applications that we deployed in HOL 2
     172.19.249.182
     ```
 
-1. TODO: NEED TO ADD STEPS TO ALLOW THE GSMA TO ACCESS THE DB
-
 1. On the SQL machine, add the gSMA account to the databases
 
     ````sql
     CREATE LOGIN [appmig\chost-gsma$] FROM WINDOWS
     sp_addsrvRolemember "appmig\chost-gsma$", "sysadmin"
     USE [Jobs]
+    GO
+    CREATE USER [appmig\chost-gsma$] FOR LOGIN [appmig\chost-gsma$] WITH DEFAULT_SCHEMA=[dbo]
+    GO
+    USE [Timetracker]
+    GO
+    CREATE USER [appmig\chost-gsma$] FOR LOGIN [appmig\chost-gsma$] WITH DEFAULT_SCHEMA=[dbo]
+    GO
+    USE [Classifieds]
     GO
     CREATE USER [appmig\chost-gsma$] FOR LOGIN [appmig\chost-gsma$] WITH DEFAULT_SCHEMA=[dbo]
     GO
