@@ -176,7 +176,20 @@ In this exercise we will containerize the applications that we deployed in HOL 2
     # You should see something like this
     172.19.249.182
     ```
-  
+
+1. TODO: NEED TO ADD STEPS TO ALLOW THE GSMA TO ACCESS THE DB
+
+1. On the SQL machine, add the gSMA account to the databases
+
+    ````sql
+    CREATE LOGIN [appmig\chost-gsma$] FROM WINDOWS
+    sp_addsrvRolemember "appmig\chost-gsma$", "sysadmin"
+    USE [Jobs]
+    GO
+    CREATE USER [appmig\chost-gsma$] FOR LOGIN [appmig\chost-gsma$] WITH DEFAULT_SCHEMA=[dbo]
+    GO
+    ````
+
 1. Now open a browser and navigate to http://[YOUR CONTAINER IP ADDRESS]. You should now see the `timetracker` Web site running inside the container.
 
     ![image](./media/07-a-2.PNG)
@@ -227,7 +240,7 @@ In this HOL we will go through pulling the solution into Visual Studio 2017 and 
 
 1. You can remove the uneeded files "ProjectName.webproj" and "MyTemplate.vstemplate"
 
-1. Add a blank text file to the Solition, Not the Web Site and rename it to Dockerfile, make sure to remove the ".txt" extension.
+1. Add a blank text file to the Solution, Not the Web Site and rename it to Dockerfile, make sure to remove the ".txt" extension.
 
     ![image](./media/hol7-4-e.PNG)
 
