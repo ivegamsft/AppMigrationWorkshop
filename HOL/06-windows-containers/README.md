@@ -25,7 +25,7 @@ This hands-on-lab has the following exercises:
 
 1. [Exercise 1: Setup for Deployments](#ex1)
 1. [Exercise 2: Configure Windows Authentication and Delegation in the domain (Kerberos)](#ex2)
-1. [Exercise 3: Configure the Windows Container Host gSMA](#ex3)
+1. [Exercise 3: Configure the Windows Container Host gMSA](#ex3)
 1. [Exercise 4: Deploy a containerized web app to validate Configuration](#ex4)
 1. [Advanced troubleshooting](#ex5)
 
@@ -119,34 +119,12 @@ This hands-on-lab has the following exercises:
     ````powershell
     Login-AzureRMAccount
     ````
+1. You will need the private IP address of the Windows Container Host. 
 
-1. Create a Rule on your NSG to allow remote management of docker on your host vm. You can find your NSG name by searching for `-nsg` in the Azure portal for your resource group
-
-     ![image](./media/2018-03-18_15-07-17.png)
-
-    ```powershell
-    $rgName = "<YOUR RESOURCE GROUP NAME>"
-    $nsgName = "<NSG NAME>"
-    Get-AzureRmNetworkSecurityGroup -Name  $nsgName -ResourceGroupName $rgName | Add-AzureRmNetworkSecurityRuleConfig -Name docker-rule -Description "Docker Rule" -Access Allow -Protocol Tcp -Direction Inbound -Priority 200 -SourceAddressPrefix Internet -SourcePortRange * -DestinationAddressPrefix * -DestinationPortRange 2375 |  Set-AzureRmNetworkSecurityGroup
-    ```
-
-1. Obtain the public IP address from your Azure VM. This can be done from the portal or you can run the following PowerShell command
-
-    ![image](./media/2018-03-18_15-12-12.png)
-
-    ![image](./media/2018-03-18_15-13-08.png)
+1. Validate from your development/jump environment that you can connect to the host sever, assuming your public IP address is `[YOUR PRIVATE IP ADDRESS]`
 
     ````powershell
-    $rgName = "<YOUR RESOURCE GROUP NAME>"
-    $pipName = "<YOUR PIP NAME>"
-    $pip = Get-AzureRmPublicIpAddress -Name $pipName -ResourceGroupName $rgName
-    Write-Host "IP Address is: " $pip.IpAddress
-    ````
-
-1. Validate from your development environment that you can connect to the host sever, assuming your public IP address is `13.65.212.88`
-
-    ````powershell
-    docker --host tcp://13.65.212.88 images
+    docker --host tcp://[YOUR PRIVATE IP ADDRESS] images
     REPOSITORY                    TAG                 IMAGE ID            CREATED             SIZE
     microsoft/windowsservercore   ltsc2016            db8182d67b6c        6 weeks ago         10.4GB
     microsoft/nanoserver          sac2016             5a5dfd4deb23        6 weeks ago         1.1GB
