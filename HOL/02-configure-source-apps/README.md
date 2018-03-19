@@ -1,7 +1,7 @@
 # Setting up the source applications
 
 ## Overview
----
+
 In this lab, you will install three sample legacy applications. The sample legacy applications will be used as the source for migrating to Azure.
 
 Applications
@@ -10,12 +10,12 @@ Applications
 * Jobs
 
 ## Prerequisites
----
+
 * An active Azure Subscription
 * You have the working source environment deployed on [Lab 01](../01-setup/README.md)
 
 ## Excercises
----
+
 This hands-on-lab has the following excercises:
 
 1. [Exercise 1: Configuration Steps on Jumpbox VM](#ex1)
@@ -23,9 +23,9 @@ This hands-on-lab has the following excercises:
 1. [Exercise 3: Configuration Steps on Web Server](#ex3)
 1. [Exercise 4: Test the web applications](#ex4)
 
-### Exercise 1: Configuration Steps on Jumpbox VM<a name="ex1"></a>
+---
 
-----
+### Exercise 1: Configuration Steps on Jumpbox VM<a name="ex1"></a>
 
 These configuration steps will be performed from the Jumpbox.
 
@@ -89,8 +89,6 @@ These configuration steps will be performed from the Jumpbox.
 
 ##### Install Required PowerShell Modules
 
-----
-
 1. Open a PowerShell session
 
     ![image](./media/2018-03-12_22-51-28.png)
@@ -112,7 +110,7 @@ These configuration steps will be performed from the Jumpbox.
 ##### Add DNS records for each application
 
 1. Create DNS entries (A record) for each web site
-   ```powershell
+   ````powershell
     $dc = Get-ADDomainController
     
     Add-DnsServerPrimaryZone -NetworkID "10.0.0.0/16" -ReplicationScope "Forest" -ResponsiblePerson "appmigadmin@appmig.local" -DynamicUpdate Secure -ComputerName $dc.hostname -Verbose -ErrorAction SilentlyContinue
@@ -122,9 +120,7 @@ These configuration steps will be performed from the Jumpbox.
     Add-DnsServerResourceRecordA -Name timetracker -IPv4Address $webSrv.RecordData.IPv4Address.IPAddressToString -ZoneName $dc.Domain -CreatePtr -ComputerName $dc.HostName
     Add-DnsServerResourceRecordA -Name classifieds -IPv4Address $webSrv.RecordData.IPv4Address.IPAddressToString -ZoneName $dc.Domain -CreatePtr -ComputerName $dc.HostName
     Add-DnsServerResourceRecordA -Name jobs -IPv4Address $webSrv.RecordData.IPv4Address.IPAddressToString -ZoneName $dc.Domain -CreatePtr -ComputerName $dc.HostName
-    
-    ```
-
+    ````
 ##### Download, extract and copy workshop materials locally
 
 1. If not already in a session, open a `PowerShell window`
@@ -135,24 +131,14 @@ These configuration steps will be performed from the Jumpbox.
     cd\
     git clone https://github.com/AzureCAT-GSI/AppMigrationWorkshop.git
     ````
-
 1. Extract each application
 
     ````powershell
-<<<<<<< HEAD
     [System.Reflection.Assembly]::LoadWithPartialName('System.IO.Compression.FileSystem')
     Get-ChildItem "C:\AppMigrationWorkshop\Shared\SourceApps\Apps\" -Exclude "*.msi" `
         | % {  $dest = Join-Path $_.directoryname ([system.io.path]::GetFileNameWithoutExtension($_.name)); `
 		mkdir $dest -force; `[System.IO.Compression.ZipFile::ExtractToDirectory($_.fullname, $dest);}
-=======
-        Add-Type -Assembly System.IO.Compression.FileSystem;
-        Get-ChildItem "C:\AppMigrationWorkshop\Shared\SourceApps\Apps\" -Exclude "*.msi;*.zip" | `
-        % {$dest = Join-Path $_.directoryname ([system.IO.Path]::GetFileNameWithoutExtension($_.name)); `
-            write-host "Begin extraction to $dest"; `
-            mkdir $dest -Force; [IO.Compression.ZipFile]::ExtractToDirectory($_.fullname, $dest);}
->>>>>>> c6ffa48ff2138aa5fa3469cb55b3981fdbf7ece8
     ````
-
 1. Copying the database backup files to the SQL server
 
     ```powershell
@@ -164,7 +150,6 @@ These configuration steps will be performed from the Jumpbox.
     ```powershell
     copy-item "C:\AppMigrationWorkshop\Shared\SourceApps\Apps\" -Destination \\10.0.0.4\c$ -Recurse
     ```
-
 -----
 
 ### Exercise 2: Configuration Steps on SQL Server<a name="ex2"></a>
@@ -218,21 +203,7 @@ These configuration steps will be performed from the SQL server. You can access 
 
 ### Exercise 3: Configuration Steps on Web Server<a name="ex3"></a>
 
-<<<<<<< HEAD
 These configuration steps will be performed from the Web server. You can access this machine from the JumpBox as the servers are not publically accessible.
-=======
-1. In the Azure Portal, locate the machine name of the Web server. The machine will suffixed with `-web`. Copy the machine name to the clipboard.
-
-    ![image](./media/2018-03-18_19-33-48.png)
-
-1. From the JumpBox, start a remote desktop connection to the `Web Server` machine
-
-    ![image](./media/2018-03-13_8-15-41.png)
-
-1. Enter the Web Server VM name and click `Connect`. Enter the Administrator credentials and click `Ok`
-
-    ![image](./media/2018-03-18_19-35-59.png)
->>>>>>> c6ffa48ff2138aa5fa3469cb55b3981fdbf7ece8
 
 1. In the Azure Portal, locate the machine name of the SQL server. The machine will suffixed with `-web`. Copy the machine name to the clipboard.
 
@@ -290,32 +261,32 @@ These configuration steps will be performed from the Web server. You can access 
     c:\windows\system32\inetsrv\APPCMD set site Jobs "/[path='/'].applicationPool:JobsAppPool"
     ````
 
-1. Update the web.config files for the source apps to connect to the database
+1. Update the web.config files for the source apps to connect to the database. Replace with your SQL Server name
 
     * Jobs
     ````xml
     <connectionStrings>
-        <add name="connectionstring" connectionString="Persist Security Info=False;Integrated Security=true;Initial Catalog=jobs;Server=10.0.1.100,1433" providerName="System.Data.SqlClient" />
-        <add name="MyProviderConnectionString" connectionString="Persist Security Info=False;Integrated Security=true;Initial Catalog=jobs;Server=10.0.1.100,1433" providerName="System.Data.SqlClient" />
+        <add name="connectionstring" connectionString="Persist Security Info=False;Integrated Security=true;Initial Catalog=jobs;Server=[YOUR SQL SERVER NAME],1433" providerName="System.Data.SqlClient" />
+        <add name="MyProviderConnectionString" connectionString="Persist Security Info=False;Integrated Security=true;Initial Catalog=jobs;Server=[YOUR SQL SERVER NAME],1433" providerName="System.Data.SqlClient" />
       </connectionStrings>
     ````
 
     * Classifieds
     ````xml
         <connectionStrings>
-            <add name="classifiedsConnection" connectionString="Server=10.0.1.100,1433;Database=classifieds;Trusted_Connection=True;" />
+            <add name="classifiedsConnection" connectionString="Server=[YOUR SQL SERVER NAME],1433;Database=classifieds;Trusted_Connection=True;" />
         </connectionStrings>
     ````
 
     * TimeTracker
     ````xml
     <connectionStrings>
-        <add name="aspnet_staterKits_TimeTracker" connectionString="Server=10.0.1.100,1433;Database=timetracker;Trusted_Connection=True;" />
+        <add name="aspnet_staterKits_TimeTracker" connectionString="Server=[YOUR SQL SERVER NAME],1433;Database=timetracker;Trusted_Connection=True;" />
         <remove name="LocalSqlServer"/>
-        <add name="LocalSqlServer" connectionString="Server=10.0.1.100,1433;Database=timetracker;Trusted_Connection=True;" />
+        <add name="LocalSqlServer" connectionString="Server=[YOUR SQL SERVER NAME],1433;Database=timetracker;Trusted_Connection=True;" />
     </connectionStrings>
     ````
-
+----
 
 ### Exercise 4: Test the web applications<a name="ex4"></a>
 
