@@ -1,6 +1,7 @@
 # Migrate Source Apps to PAAS
 
 ## Overview
+
 In this lab, you will learn how to migrate legacy applications to PaaS. You will learn how to:
 
 * Migrate a database to Azure SQL PAAS using Azure SQL Migrate
@@ -67,9 +68,8 @@ This lab is done from the jump box
     ![image](./media/2018-03-18_5-39-16.png)
 
 1. Select `Target > Enter Authentication Credentials` and select the `JOBS` database in the Azure subscription and resource group you have deployed the template from HOL 1.
-    
-    ![image](./media/2018-03-18_5-31-35.png)
 
+    ![image](./media/2018-03-18_5-31-35.png)
 
 1. Select `SQL Server Authentication` and enter the user name and password
 
@@ -78,7 +78,7 @@ This lab is done from the jump box
     > Password: @pp_M!gr@ti0n-2018
     >
 
-1. Select `objects`.  Make note of any blocking issues and non-blocking issues that will need to be addressed 
+1. Select `objects`.  Make note of any blocking issues and non-blocking issues that will need to be addressed
 
 1. Click `Generate SQL script`
 
@@ -96,7 +96,6 @@ This lab is done from the jump box
 
    ![image](./media/06-01-g.png)
 
-
 ### Exercise 2: Create a Visual Studio Solution and Import the Source Apps<a name="ex2"></a>
 
 ---
@@ -105,7 +104,7 @@ This lab is done from the jump box
 
     ![image](./media/06-02-a.png)
 
-1. Open Visual Studio 2017. Select `File > New Project > Visual C# > Web > Web Site` and choose `ASP.NET Empty Web Site` as the template. 
+1. Open Visual Studio 2017. Select `File > New Project > Visual C# > Web > Web Site` and choose `ASP.NET Empty Web Site` as the template.
 
 1. Name the project `JobsSite`.
 
@@ -114,15 +113,15 @@ This lab is done from the jump box
     > Note: Depending on your VS 2017 update version, the dialog may appear slightly different.
     >
     > ![image](./media/2018-03-18_5-49-05.png)
-    > 
+    >
     > ![image](./media/2018-03-18_5-50-48.png)
     >
 
-1. You should now have an empty web site solution as a target to copy the Jobs source files. 
+1. You should now have an empty web site solution as a target to copy the Jobs source files.
 
 1. Open Windows Explorer and navigate to the folder where you have stored the Jobs Source Files
 
-1.  Select all and copy all the files to the clipboard.
+1. Select all and copy all the files to the clipboard.
 
     ![image](./media/06-02-c.png)
 
@@ -141,7 +140,6 @@ This lab is done from the jump box
 1. You now have a Visual Studio 2017 Web Site project that we can publish to Azure
 
     ![image](./media/06-02-e.png)
-
 
 ### Exercise 3: Create CI/CD Pipeline in VSTS<a name="ex3"></a>
 
@@ -183,7 +181,7 @@ This lab is done from the jump box
     ```
 
 1. Browse to the VSTS Portal and click `Code` in the navigation, you should see the files in the repo
-    
+
     ![image](./media/06-03-c.png)
 
 1. Now that we have our source files in VSTS, we can create a Build Definition. Click on `Build and Release` > `New definition`
@@ -232,7 +230,7 @@ This lab is done from the jump box
 
 1. Choose and authorize VSTS to access your subscription
 
-1.  Set the App type to `Web App` > Choose the 'myjobsapp123' > Validate that the Package or folder is set to $(System.DefaultWorkingDirectory/**/*.zip) and click 'Save'
+1. Set the App type to `Web App` > Choose the 'myjobsapp123' > Validate that the Package or folder is set to $(System.DefaultWorkingDirectory/**/*.zip) and click 'Save'
 
     ![image](./media/06-04-c.png)
 
@@ -256,8 +254,8 @@ This lab is done from the jump box
 
     ![image](./media/06-04-h.png)
 
-
 ---
+
 ## Summary
 
 In this hands-on lab, you learned how to:
@@ -271,5 +269,3 @@ In this hands-on lab, you learned how to:
 
 ---
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
-
-

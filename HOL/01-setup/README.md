@@ -5,12 +5,14 @@
 In this lab, you will deploy a pre-built environment that you will use for the labs. The automated template will create 3 environments. Here is what is deployed:
 
 Source environment
+
 * 1 Windows Server 2016 VM with Visual Studio 2017 that will act as the jump box to manage the environment
 * 1 Windows Server 2016 VM that will act as the domain controller for the environment
 * 1 Windows Server 2008 machine that will act as the web server for the source applications
 * 1 Windows Server 2008 machine with SQL 2008 installed and configured
 
 Target environment
+
 * 1 Azure App Service plan with 3 web applications
 * 3 Azure SQL databases
 * 1 Windows Server 2016 that will act as the Docker container host
@@ -25,6 +27,7 @@ Target environment
 ## Exercises
 
 This hands-on-lab has the following exercises:
+
 1. [Exercise 1: Opening Cloud Shell for the first time](#ex1)
 1. [Exercise 2: Downloading the materials to the Cloud Shell environment](#ex2)
 1. [Exercise 3: Deployment of Azure resources](#ex3)
@@ -47,7 +50,6 @@ This hands-on-lab has the following exercises:
 
 1. If you have at least contributor rights at subscription level, please select which subscription you would like the initialization process create a storage account and click "Create storage" button.
     ![image](./media/pic2.jpg)
-    
 
 ### Exercise 2: Downloading the materials to the Cloud Shell environment<a name="ex2"></a>
 
@@ -94,8 +96,8 @@ In the automated deployment, we are using PowerShell Desired State Configuration
     ```powershell
     cd C:\Users\ContainerAdministrator\CloudDrive\AppMigrationWorkshopRepo\AppMigrationWorkshop\Shared\ARM-NewIaaS\dsc
     ```
-    
-1. Copy the following folders to the Cloud Shell PowerShell modules folder 
+
+1. Copy the following folders to the Cloud Shell PowerShell modules folder
 
     ```powershell
     copy-item cDisk -Destination C:\users\ContainerAdministrator\CloudDrive\.pscloudshell\WindowsPowerShell\Modules -Recurse -Force
@@ -111,43 +113,42 @@ In the automated deployment, we are using PowerShell Desired State Configuration
     cd ..
     ````
 
-
 1. This solution was created using Visual Studio 2017 and it provides automatically a deployment script, please execute it by replacing some of the values as follows:
 
-    ```powershell
+    ````powershell
     .\Deploy-AzureResourceGroup.ps1 -ResourceGroupLocation <deployment location> `
                                         -ResourceGroupName <resource group name> `
                                         -UploadArtifacts `
                                         -TemplateFile .\azuredeploy.json `
                                         -TemplateParametersFile .\azuredeploy.parameters.json
 
-    ``` 
+    ````
 
     Where:
 
-    ```xml
+    ````xml
     <deployment location> - Azure Location the template will for the location property of all resources
     <resource group name> - Name of the resource group where all resources will be created
-    ```
+    ````
 
     Example:
 
-    ```powershell
+    ````powershell
     .\Deploy-AzureResourceGroup.ps1 -ResourceGroupLocation westus `
                                     -ResourceGroupName AppModernization-RG `
                                     -UploadArtifacts `
                                     -TemplateFile .\azuredeploy.json `
                                     -TemplateParametersFile `
                                     .\azuredeploy.parameters.json
-    ```
+    ````
 
 ## Summary
 
 In this hands-on lab, you learned how to:
+
 * Use the Azure Cloud Shell
 * Deploy Azure resources from an automated template
 
 ----
 
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
-

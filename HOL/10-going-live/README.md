@@ -25,8 +25,7 @@ Ensure you have completed the previous labs where the following is already confi
 Monitor Azure DNS
 https://docs.microsoft.com/en-us/azure/log-analytics/log-analytics-dns
 
-
-1. resolve names from the container to check that it's working
+1. Resolve names from the container to check that it's working
 
 1. Now that we have an application up and running in a container on our Container host, the last step is you to finalize the migration. We will do that by simply cutting over the routing and DNS information
 
@@ -83,7 +82,7 @@ External endpoints are used for services hosted outside Azure, either on-premise
 
 ### Exercise 5: Verify the whole setup<a name="ex5"></a>
 
----
+Let's verify the changes
 
 #### Assumptions
 
@@ -91,15 +90,14 @@ External endpoints are used for services hosted outside Azure, either on-premise
 1. Test the website
 1. Monitor the new resources through the dashboard
 
-
 ## Summary
 
 In this hands-on lab, you learned how to:
+
 * Configure internal DNS
 * Configure Azure DNS
 * Cutover live traffic using Azure services
 
-----
+---
 
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
-

@@ -28,7 +28,7 @@ Azure Container Registry will serve as a place to save your container images, wh
 
 1. Click on create a new resource and type in Azure Container Registry. Click Create.
 
-	![HOL9-2](./media/hol9-1.PNG =250x)
+    ![HOL9-2](./media/hol9-1.PNG =250x)
 
 1. Create a unique registry name and deploy to the existing `AppModernization` Resource Group
 

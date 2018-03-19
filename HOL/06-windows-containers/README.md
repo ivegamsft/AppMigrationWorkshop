@@ -119,7 +119,8 @@ This hands-on-lab has the following exercises:
     ````powershell
     Login-AzureRMAccount
     ````
-1. You will need the private IP address of the Windows Container Host. 
+
+1. You will need the private IP address of the Windows Container Host.
 
 1. Validate from your development/jump environment that you can connect to the host sever, assuming your public IP address is `[YOUR PRIVATE IP ADDRESS]`
 
@@ -165,8 +166,7 @@ This configuration will be done from on the domain controller.
     Import-module ActiveDirectory
     Add-KdsRootKey -EffectiveTime ((get-date).addhours(-10));
     ```
-
-1. Create a gMSA Account and set it for constrained delegation. Replace the values with your particular VM names. 
+1. Create a gMSA Account and set it for constrained delegation. Replace the values with your particular VM names.
 
     > Note: The name of the AD Service account is hard-coded in the examples to `chost-gsma`. This can be any valid sAMAccountName name.
 
@@ -209,7 +209,7 @@ The following commands are run from the Windows Container host machine
     You should see output something like this:
 
     ````powershell
-    Get-ADServiceAccount -Identity 
+    Get-ADServiceAccount -Identity
     DistinguishedName : CN=chost-gsma,CN=Managed Service Accounts,DC=appmig,DC=local
     Enabled           : True
     Name              : chost-gsma
@@ -217,14 +217,13 @@ The following commands are run from the Windows Container host machine
     ObjectGUID        : fff6c1c6-c3f0-4b0c-a34c-682708270f80
     SamAccountName    : chost-gsma$
     SID               : S-1-5-21-5555555-222222222-945891031-1107
-    UserPrincipalName : 
+    UserPrincipalName :
 
     Install-ADServiceAccount -Identity chost-gsma
-    Test-AdServiceAccount -Identity chost-gsma 
+    Test-AdServiceAccount -Identity chost-gsma
     True
     ````
     > Note: If you receive the message `Install-ADServiceAccount : Cannot Install service account.  Error Message: ‘{Access Denied}`, reboot the Windows Container Host to update the AD group membership
-
     >
     > In a multi-domain environment, You may see an error like this:
 
@@ -283,9 +282,9 @@ The following commands are run from the Windows Container host machine
     SHELL ["powershell"]
     RUN mkdir C:\site
     ADD . /site
-    RUN Install-WindowsFeature NET-Framework-45-ASPNET ; \  
+    RUN Install-WindowsFeature NET-Framework-45-ASPNET ; \
         Install-WindowsFeature Web-Asp-Net45
-    RUN Remove-WebSite -Name 'Default Web Site' 
+    RUN Remove-WebSite -Name 'Default Web Site'
     RUN Install-WindowsFeature Web-Windows-Auth
     #These are only needed for accessing the IIS admin UI
 
@@ -356,6 +355,6 @@ In this hands-on lab, you learned how to:
 * Configure and test a Windows Container gSMA Account
 * Test Kerberos configuration with delegation
 
----
-Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
+----
 
+Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.

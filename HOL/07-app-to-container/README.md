@@ -51,7 +51,7 @@ This hands-on-lab has the following exercises:
 1. While on the web app host, identify the IP address of the current server, we will need that for image2docker.
 
     ```powershell
-    ipconfig      
+    ipconfig
 
     Windows IP Configuration
     Ethernet adapter Local Area Connection:
@@ -231,7 +231,8 @@ Now that we have an application up and running in a container on our Container h
 
 ### Exercise 4: Add Docker support to an existing application<a name="ex4"></a>
 
-In this HOL we will go through pulling the solution into Visual Studio 2017 and add support for Docker Containers. In this lab we will focus on the Jobs source application, but the treatment will be similar for each source application
+In this HOL we will go through creating the solution into Visual Studio 2017 and adding support for Docker Containers. We need to do this becuase the applicaiton was written in an over version of Visual Studio and we need to update it.
+The `Jobs` application is used as the source, but the treatment will be similar for each source application
 
 #### Assumptions
 
@@ -253,13 +254,13 @@ In this HOL we will go through pulling the solution into Visual Studio 2017 and 
 
     ![image](./media/hol7-4-c.PNG)
 
-1. All the files should now be in the solution/project. 
+1. All the files should now be in the solution/project.
 
     ![image](./media/hol7-4-d.PNG)
 
 1. You can remove the uneeded files "ProjectName.webproj" and "MyTemplate.vstemplate"
 
-1. Add a blank text file to the Solution, Not the Web Site and rename it to Dockerfile, make sure to remove the ".txt" extension.
+1. Add a blank text file to the Solution, Not the Web Site and rename it to `Dockerfile`, make sure to remove the ".txt" extension.
 
     ![image](./media/hol7-4-e.PNG)
 
@@ -275,9 +276,9 @@ In this HOL we will go through pulling the solution into Visual Studio 2017 and 
     RUN Remove-Website 'Default Web Site';
 
     # Set up website: Jobs
-    RUN New-Item -Path 'C:\inetpub\wwwroot\Jobs' -Type Directory -Force; 
+    RUN New-Item -Path 'C:\inetpub\wwwroot\Jobs' -Type Directory -Force;
 
-    RUN New-Website -Name 'JobsWebSite' -PhysicalPath 'C:\inetpub\wwwroot\Jobs' -Port 80 -ApplicationPool '.NET v2.0' -Force; 
+    RUN New-Website -Name 'JobsWebSite' -PhysicalPath 'C:\inetpub\wwwroot\Jobs' -Port 80 -ApplicationPool '.NET v2.0' -Force;
 
     EXPOSE 80
 
@@ -298,7 +299,7 @@ In this HOL we will go through pulling the solution into Visual Studio 2017 and 
 
 1. Now run a container using the image
     ````powershell
-        docker run -d -p 80:80 jobswebsite
+    docker run -d -p 80:80 jobswebsite
     ````
 
 ## References
@@ -315,5 +316,3 @@ In this hands-on lab, you learned how to:
 
 ----
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
-
-

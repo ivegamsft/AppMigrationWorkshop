@@ -5,6 +5,7 @@
 In this lab, you will install three sample legacy applications. The sample legacy applications will be used as the source for migrating to Azure.
 
 Applications
+
 * Timetracker
 * Classifieds
 * Jobs
@@ -39,10 +40,10 @@ These configuration steps will be performed from the Jumpbox.
 
     ![image](./media/02-01-b.png)
 
-1. In the portal, in the left navigation pane, click `Resource Groups` 
+1. In the portal, in the left navigation pane, click `Resource Groups`
 
     ![image](./media/02-01-c.png)
- 
+
 1. From the Resource Group list, select the one deployed in HOL 1 (e.g. AppModernization-RG)
 
     ![image](./media/02-01-d.png)
@@ -94,7 +95,8 @@ These configuration steps will be performed from the Jumpbox.
     ![image](./media/2018-03-12_22-51-28.png)
 
 1. Install Active Directory and DNS remote administration tools
-    ```
+
+    ```powershell
     Add-WindowsFeature -Name RSAT-AD-PowerShell
     Add-WindowsFeature -Name RSAT-DNS-Server
     ```
@@ -110,9 +112,10 @@ These configuration steps will be performed from the Jumpbox.
 ##### Add DNS records for each application
 
 1. Create DNS entries (A record) for each web site
+
    ````powershell
     $dc = Get-ADDomainController
-    
+
     Add-DnsServerPrimaryZone -NetworkID "10.0.0.0/16" -ReplicationScope "Forest" -ResponsiblePerson "appmigadmin@appmig.local" -DynamicUpdate Secure -ComputerName $dc.hostname -Verbose -ErrorAction SilentlyContinue
 
     $webSrv = Get-DnsServerResourceRecord -ComputerName $dc.hostname -ZoneName $dc.domain | Where-Object {$_.hostname -like "*-web"}
@@ -121,6 +124,7 @@ These configuration steps will be performed from the Jumpbox.
     Add-DnsServerResourceRecordA -Name classifieds -IPv4Address $webSrv.RecordData.IPv4Address.IPAddressToString -ZoneName $dc.Domain -CreatePtr -ComputerName $dc.HostName
     Add-DnsServerResourceRecordA -Name jobs -IPv4Address $webSrv.RecordData.IPv4Address.IPAddressToString -ZoneName $dc.Domain -CreatePtr -ComputerName $dc.HostName
     ````
+
 ##### Download, extract and copy workshop materials locally
 
 1. If not already in a session, open a `PowerShell window`
@@ -137,7 +141,7 @@ These configuration steps will be performed from the Jumpbox.
     [System.Reflection.Assembly]::LoadWithPartialName('System.IO.Compression.FileSystem')
     Get-ChildItem "C:\AppMigrationWorkshop\Shared\SourceApps\Apps\" -Exclude "*.msi" `
         | % {  $dest = Join-Path $_.directoryname ([system.io.path]::GetFileNameWithoutExtension($_.name)); `
-		mkdir $dest -force; `[System.IO.Compression.ZipFile::ExtractToDirectory($_.fullname, $dest);}
+        mkdir $dest -force; `[System.IO.Compression.ZipFile::ExtractToDirectory($_.fullname, $dest);}
     ````
 1. Copying the database backup files to the SQL server
 
@@ -150,7 +154,7 @@ These configuration steps will be performed from the Jumpbox.
     ```powershell
     copy-item "C:\AppMigrationWorkshop\Shared\SourceApps\Apps\" -Destination \\10.0.0.4\c$ -Recurse
     ```
------
+---
 
 ### Exercise 2: Configuration Steps on SQL Server<a name="ex2"></a>
 
@@ -169,7 +173,7 @@ These configuration steps will be performed from the SQL server. You can access 
     ![image](./media/2018-03-13_8-26-05.png)
 
 1. Once on the SQL server, open a PowerShell session and Issue the following commands to restore the databases
-    
+
     ````powershell
     SQLCMD -E -S $($ENV:COMPUTERNAME) -Q "RESTORE DATABASE [TimeTracker] FROM DISK='C:\Databases\timetracker.bak' WITH MOVE 'tempname' TO 'C:\Databases\timetracker.mdf', MOVE 'TimeTracker_Log' TO 'C:\Databases\timetracker_log.ldf'"
     SQLCMD -E -S $($ENV:COMPUTERNAME) -Q "RESTORE DATABASE [Classifieds] FROM DISK='C:\Databases\classifieds.bak' WITH MOVE 'Database' TO 'C:\Databases\classifieds.mdf', MOVE 'Database_log' TO 'C:\Databases\classifieds_log.ldf'"
@@ -199,7 +203,7 @@ These configuration steps will be performed from the SQL server. You can access 
     SQLCMD -E -S $($ENV:COMPUTERNAME) -Q "USE jobs; EXEC sp_addrolemember 'db_owner', 'APPMIG\AppsSvcAcct'"
     ````
 
-----
+---
 
 ### Exercise 3: Configuration Steps on Web Server<a name="ex3"></a>
 
@@ -286,7 +290,7 @@ These configuration steps will be performed from the Web server. You can access 
         <add name="LocalSqlServer" connectionString="Server=[YOUR SQL SERVER NAME],1433;Database=timetracker;Trusted_Connection=True;" />
     </connectionStrings>
     ````
-----
+---
 
 ### Exercise 4: Test the web applications<a name="ex4"></a>
 
