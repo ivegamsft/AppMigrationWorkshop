@@ -199,7 +199,7 @@ These configuration steps will be performed from the SQL server. You can access 
     ````
 
 
- 1. Configure the user as db_owner
+1. Configure the user as db_owner
 
     ````powershell
     SQLCMD -E -S $($ENV:COMPUTERNAME) -Q "USE timetracker; EXEC sp_addrolemember 'db_owner', 'APPMIG\AppsSvcAcct'"
@@ -235,7 +235,7 @@ These configuration steps will be performed from the SQL server. You can access 
     ````
 
 
-1. Grane the necessary permissions for the service account
+1. Grant the necessary permissions for the service account
 
     ````powershell
     c:\Windows\Microsoft.NET\Framework\v2.0.50727\aspnet_regiis.exe -ga appmig\AppsSvcAcct
@@ -265,7 +265,34 @@ These configuration steps will be performed from the SQL server. You can access 
     c:\windows\system32\inetsrv\APPCMD add site /name:Jobs /id:3 /bindings:http://jobs:80 /physicalPath:C:\Apps\Jobs
     c:\windows\system32\inetsrv\APPCMD set site Jobs "/[path='/'].applicationPool:JobsAppPool"
     ````
-    
+
+1. Update the web.config files for the source apps to connect to the database
+
+    * Jobs
+    ````xml
+    <connectionStrings>
+        <add name="connectionstring" connectionString="Persist Security Info=False;Integrated Security=true;Initial Catalog=jobs;Server=10.0.1.100,1433" providerName="System.Data.SqlClient" />
+        <add name="MyProviderConnectionString" connectionString="Persist Security Info=False;Integrated Security=true;Initial Catalog=jobs;Server=10.0.1.100,1433" providerName="System.Data.SqlClient" />
+      </connectionStrings>
+    ````
+
+    * Classifieds
+    ````xml
+        <connectionStrings>
+            <add name="classifiedsConnection" connectionString="Server=10.0.1.100,1433;Database=classifieds;Trusted_Connection=True;" />
+        </connectionStrings>
+    ````
+
+    * TimeTracker
+    ````xml
+    <connectionStrings>
+        <add name="aspnet_staterKits_TimeTracker" connectionString="Server=10.0.1.100,1433;Database=timetracker;Trusted_Connection=True;" />
+        <remove name="LocalSqlServer"/>
+        <add name="LocalSqlServer" connectionString="Server=10.0.1.100,1433;Database=timetracker;Trusted_Connection=True;" />
+    </connectionStrings>
+    ````
+
+
 ### Exercise 4: Test the web applications<a name="ex4"></a>
 
 This configuration is performed from the Jump Box

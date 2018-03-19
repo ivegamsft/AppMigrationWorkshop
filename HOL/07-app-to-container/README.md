@@ -135,6 +135,17 @@ In this exercise we will containerize the applications that we deployed in HOL 2
     ConvertTo-Dockerfile -RemotePath \\[YOUR WEB SERVER IP ADDRESS]\c$ -OutputPath c:\dockerimages\classifieds -Artifact IIS -ArtifactParam Classifieds
     ````
 
+1. The timetracker app requires a classic app pool. Let's change the docker file. Change if from:
+
+    ````powershell
+    RUN New-Website -Name 'TimeTracker' -PhysicalPath 'C:\Apps\TimeTracker' -Port 80 -ApplicationPool '.NET v2.0' -Force;
+    ````
+
+    To:
+    ````powershell
+    RUN New-Website -Name 'TimeTracker' -PhysicalPath 'C:\Apps\TimeTracker' -Port 80 -ApplicationPool 'Classic .NET AppPool' -Force;
+    ````
+
 1. Build the Docker Images
 
     ````powershell
