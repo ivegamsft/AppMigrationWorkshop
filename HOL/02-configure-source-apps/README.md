@@ -17,6 +17,7 @@ Applications
 ## Excercises
 ---
 This hands-on-lab has the following excercises:
+
 1. [Exercise 1: Configuration Steps on Jumpbox VM](#ex1)
 1. [Exercise 2: Configuration Steps on SQL Server](#ex2)
 1. [Exercise 3: Configuration Steps on Web Server](#ex3)
@@ -210,7 +211,17 @@ These configuration steps will be performed from the SQL server. You can access 
 
 ### Exercise 3: Configuration Steps on Web Server<a name="ex3"></a>
 
-1. Begin a remote session to the IIS Server
+1. In the Azure Portal, locate the machine name of the Web server. The machine will suffixed with `-web`. Copy the machine name to the clipboard.
+
+    ![image](./media/2018-03-18_19-33-48.png)
+
+1. From the JumpBox, start a remote desktop connection to the `Web Server` machine
+
+    ![image](./media/2018-03-13_8-15-41.png)
+
+1. Enter the Web Server VM name and click `Connect`. Enter the Administrator credentials and click `Ok`
+
+    ![image](./media/2018-03-18_19-35-59.png)
 
 1. Open a command prompt
 
