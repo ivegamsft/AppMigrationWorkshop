@@ -17,6 +17,7 @@ Applications
 ## Excercises
 ---
 This hands-on-lab has the following excercises:
+
 1. [Exercise 1: Configuration Steps on Jumpbox VM](#ex1)
 1. [Exercise 2: Configuration Steps on SQL Server](#ex2)
 1. [Exercise 3: Configuration Steps on Web Server](#ex3)
@@ -126,7 +127,7 @@ These configuration steps will be performed from the Jumpbox.
 
 ##### Download, extract and copy workshop materials locally
 
-1. If not already in a sesssion, open a `PowerShell window`
+1. If not already in a session, open a `PowerShell window`
 
 1. Clone the GitHub repository to the root
 
@@ -138,29 +139,37 @@ These configuration steps will be performed from the Jumpbox.
 1. Extract each application
 
     ````powershell
+<<<<<<< HEAD
     [System.Reflection.Assembly]::LoadWithPartialName('System.IO.Compression.FileSystem')
     Get-ChildItem "C:\AppMigrationWorkshop\Shared\SourceApps\Apps\" -Exclude "*.msi" `
         | % {  $dest = Join-Path $_.directoryname ([system.io.path]::GetFileNameWithoutExtension($_.name)); `
 		mkdir $dest -force; `[System.IO.Compression.ZipFile::ExtractToDirectory($_.fullname, $dest);}
+=======
+        Add-Type -Assembly System.IO.Compression.FileSystem;
+        Get-ChildItem "C:\AppMigrationWorkshop\Shared\SourceApps\Apps\" -Exclude "*.msi;*.zip" | `
+        % {$dest = Join-Path $_.directoryname ([system.IO.Path]::GetFileNameWithoutExtension($_.name)); `
+            write-host "Begin extraction to $dest"; `
+            mkdir $dest -Force; [IO.Compression.ZipFile]::ExtractToDirectory($_.fullname, $dest);}
+>>>>>>> c6ffa48ff2138aa5fa3469cb55b3981fdbf7ece8
     ````
 
 1. Copying the database backup files to the SQL server
 
     ```powershell
-    copy-item "C:\AppMigrationWorkshop\Shared\SourceApps\Databases\" \\10.0.1.100\c$ -Recurse
+    copy-item "C:\AppMigrationWorkshop\Shared\SourceApps\Databases\" -Destination \\10.0.1.100\c$ -Recurse
     ```
 
 1. Copying the application source files to the IIS server
 
     ```powershell
-    copy-item "C:\AppMigrationWorkshop\Shared\SourceApps\Apps\" \\10.0.0.4\c$ -Recurse
+    copy-item "C:\AppMigrationWorkshop\Shared\SourceApps\Apps\" -Destination \\10.0.0.4\c$ -Recurse
     ```
 
 -----
 
 ### Exercise 2: Configuration Steps on SQL Server<a name="ex2"></a>
 
-These configuration steps will be performed from the SQL server. You can access this machine from the JumpBox as the servers are not publically accessible.
+These configuration steps will be performed from the SQL server. You can access this machine from the JumpBox as the servers are not publicly accessible.
 
 1. In the Azure Portal, locate the machine name of the SQL server. The machine will suffixed with `-sql`. Copy the machine name to the clipboard.
 
@@ -197,7 +206,7 @@ These configuration steps will be performed from the SQL server. You can access 
     ````
 
 
- 1. Configure the user as db_owner
+1. Configure the user as db_owner
 
     ````powershell
     SQLCMD -E -S $($ENV:COMPUTERNAME) -Q "USE timetracker; EXEC sp_addrolemember 'db_owner', 'APPMIG\AppsSvcAcct'"
@@ -209,7 +218,21 @@ These configuration steps will be performed from the SQL server. You can access 
 
 ### Exercise 3: Configuration Steps on Web Server<a name="ex3"></a>
 
+<<<<<<< HEAD
 These configuration steps will be performed from the Web server. You can access this machine from the JumpBox as the servers are not publically accessible.
+=======
+1. In the Azure Portal, locate the machine name of the Web server. The machine will suffixed with `-web`. Copy the machine name to the clipboard.
+
+    ![image](./media/2018-03-18_19-33-48.png)
+
+1. From the JumpBox, start a remote desktop connection to the `Web Server` machine
+
+    ![image](./media/2018-03-13_8-15-41.png)
+
+1. Enter the Web Server VM name and click `Connect`. Enter the Administrator credentials and click `Ok`
+
+    ![image](./media/2018-03-18_19-35-59.png)
+>>>>>>> c6ffa48ff2138aa5fa3469cb55b3981fdbf7ece8
 
 1. In the Azure Portal, locate the machine name of the SQL server. The machine will suffixed with `-web`. Copy the machine name to the clipboard.
 
@@ -236,7 +259,7 @@ These configuration steps will be performed from the Web server. You can access 
     ````
 
 
-1. Grane the necessary permissions for the service account
+1. Grant the necessary permissions for the service account
 
     ````powershell
     c:\Windows\Microsoft.NET\Framework\v2.0.50727\aspnet_regiis.exe -ga appmig\AppsSvcAcct
@@ -245,9 +268,9 @@ These configuration steps will be performed from the Web server. You can access 
 1. Configure Application Pools to use the service account
 
     ````powershell
-    c:\windows\system32\inetsrv\appcmd set config /section:applicationPools /[name='TimeTrackerAppPool'].processModel.identityType:SpecificUser /[name='TimeTrackerAppPool'].processModel.userName:AppsSvcAcct /[name='TimeTrackerAppPool'].processModel.password:@pp_M!gr@ti0n-2018
-    c:\windows\system32\inetsrv\appcmd set config /section:applicationPools /[name='ClassifiedsAppPool'].processModel.identityType:SpecificUser /[name='ClassifiedsAppPool'].processModel.userName:AppsSvcAcct /[name='ClassifiedsAppPool'].processModel.password:@pp_M!gr@ti0n-2018
-    c:\windows\system32\inetsrv\appcmd set config /section:applicationPools /[name='JobsAppPool'].processModel.identityType:SpecificUser /[name='JobsAppPool'].processModel.userName:AppsSvcAcct /[name='JobsAppPool'].processModel.password:@pp_M!gr@ti0n-2018
+    c:\windows\system32\inetsrv\appcmd set config /section:applicationPools "/[name='TimeTrackerAppPool'].processModel.identityType:SpecificUser" "/[name='TimeTrackerAppPool'].processModel.userName:appmig\AppsSvcAcct" "/[name='TimeTrackerAppPool'].processModel.password:@pp_M!gr@ti0n-2018"
+    c:\windows\system32\inetsrv\appcmd set config /section:applicationPools "/[name='ClassifiedsAppPool'].processModel.identityType:SpecificUser" "/[name='ClassifiedsAppPool'].processModel.userName:appmig\AppsSvcAcct" "/[name='ClassifiedsAppPool'].processModel.password:@pp_M!gr@ti0n-2018"
+    c:\windows\system32\inetsrv\appcmd set config /section:applicationPools "/[name='JobsAppPool'].processModel.identityType:SpecificUser" "/[name='JobsAppPool'].processModel.userName:appmig\AppsSvcAcct" "/[name='JobsAppPool'].processModel.password:@pp_M!gr@ti0n-2018"
     ````
 
 1. Delete the default web site to avoid conflicts
@@ -259,21 +282,58 @@ These configuration steps will be performed from the Web server. You can access 
 1. Create the IIS web sites
 
     ````powershell
-    c:\windows\system32\inetsrv\APPCMD add site /name:TimeTracker /id:1 /bindings:http://timetracker:80: /physicalPath:C:\Apps\TimeTracker
-    c:\windows\system32\inetsrv\APPCMD set site TimeTracker /[path='/'].applicationPool:"TimeTrackerAppPool"
-
-    c:\windows\system32\inetsrv\APPCMD add site /name:Classifieds /id:2 /bindings:http://classifieds:80: /physicalPath:C:\Apps\Classifieds
-    c:\windows\system32\inetsrv\APPCMD set site Classifieds /[path='/'].applicationPool:"ClassifiedsAppPool"
-
-    c:\windows\system32\inetsrv\APPCMD add site /name:Jobs /id:3 /bindings:http://jobs:80: /physicalPath:C:\Apps\Jobs
-    c:\windows\system32\inetsrv\APPCMD set site Jobs /[path='/'].applicationPool:"JobsAppPool"
+    c:\windows\system32\inetsrv\APPCMD add site /name:TimeTracker /id:1 /bindings:http://timetracker:80 /physicalPath:C:\Apps\TimeTracker
+    c:\windows\system32\inetsrv\APPCMD set site TimeTracker "/[path='/'].applicationPool:TimeTrackerAppPool"
+    c:\windows\system32\inetsrv\APPCMD add site /name:Classifieds /id:2 /bindings:http://classifieds:80 /physicalPath:C:\Apps\Classifieds
+    c:\windows\system32\inetsrv\APPCMD set site Classifieds "/[path='/'].applicationPool:ClassifiedsAppPool"
+    c:\windows\system32\inetsrv\APPCMD add site /name:Jobs /id:3 /bindings:http://jobs:80 /physicalPath:C:\Apps\Jobs
+    c:\windows\system32\inetsrv\APPCMD set site Jobs "/[path='/'].applicationPool:JobsAppPool"
     ````
-    
+
+1. Update the web.config files for the source apps to connect to the database
+
+    * Jobs
+    ````xml
+    <connectionStrings>
+        <add name="connectionstring" connectionString="Persist Security Info=False;Integrated Security=true;Initial Catalog=jobs;Server=10.0.1.100,1433" providerName="System.Data.SqlClient" />
+        <add name="MyProviderConnectionString" connectionString="Persist Security Info=False;Integrated Security=true;Initial Catalog=jobs;Server=10.0.1.100,1433" providerName="System.Data.SqlClient" />
+      </connectionStrings>
+    ````
+
+    * Classifieds
+    ````xml
+        <connectionStrings>
+            <add name="classifiedsConnection" connectionString="Server=10.0.1.100,1433;Database=classifieds;Trusted_Connection=True;" />
+        </connectionStrings>
+    ````
+
+    * TimeTracker
+    ````xml
+    <connectionStrings>
+        <add name="aspnet_staterKits_TimeTracker" connectionString="Server=10.0.1.100,1433;Database=timetracker;Trusted_Connection=True;" />
+        <remove name="LocalSqlServer"/>
+        <add name="LocalSqlServer" connectionString="Server=10.0.1.100,1433;Database=timetracker;Trusted_Connection=True;" />
+    </connectionStrings>
+    ````
+
+
 ### Exercise 4: Test the web applications<a name="ex4"></a>
 
-1. From the Jumpbox, open a browser
+This configuration is performed from the Jump Box
 
-1. Navigate to the following URLs:
+1. Disable the IE Enhanced Security Configuration to allow local browsing from the web server. Click `Server Manager`
+
+    ![image](./media/2018-03-18_1-43-14.png)
+
+1. Locate the Security Information section and click `Configure IE ESC`
+
+    ![image](./media/2018-03-18_1-43-44.png)
+
+1. Under Administrators, select `Off` then `Ok`
+
+    ![image](./media/2018-03-18_1-44-06.png)
+
+1. Open the browser and navigate to the following URLs to ensure the sites are functioning:
 
     * http://timetracker
     * http://classifieds
