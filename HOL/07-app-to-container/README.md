@@ -359,6 +359,10 @@ The `Jobs` application is used as the source, but the treatment will be similar 
 
     ![image](./media/2018-03-20_2-01-05.png)
 
+1. Build the solution
+
+    ![image](./media/2018-03-20_2-03-48.png)
+
 1. Copy the solution from your Dev VM to the Windows Container Host. In this case it has been copied to `C:\upgrades\JobsWebSite`
 
 1. Open a command prompt or Powershell and run the following command:
@@ -388,7 +392,6 @@ The `Jobs` application is used as the source, but the treatment will be similar 
     # You should see something like this
     172.19.110.229
     ```
-
 
 ## References
 
