@@ -176,21 +176,30 @@ In this exercise we will containerize the applications that we deployed in HOL 2
     microsoft/aspnet    3.5-windowsservercore-10.0.14393.1715   b2a36e946a02        5 months ago        14.1GB
     ```
 
-1. Let's run a container for TimeTracker
+1. Let's run a container for TimeTracker. Remember that the container is now running as the gSMA so we need to start it with the credential spec file.
 
-    ```powershell
-    docker run -d -p 80:80 timetracker-site
+    ````powershell
+    docker run -d -p 80:80 timetracker-site -h timetrackersite --security-opt "credentialspec=file://win.json" timetracker-site
+    ````
+
+    Verify that the container is running
+
+    ````powershell
     docker ps
-    # You should see something like this. Make note of the name
-    CONTAINER ID        IMAGE               COMMAND                   CREATED              STATUS              PORTS                NAMES
-    5ff3a058f09f        timetracker-site        "C:\\ServiceMonitor..."   About a minute ago   Up About a minute   0.0.0.0:80->80/tcp   happy_poincare
 
-    docker inspect -f "{{ .NetworkSettings.Networks.nat.IPAddress }}" happy_poincare
+    # You should see something like this. Make note of the container name
+    CONTAINER ID        IMAGE               COMMAND                   CREATED              STATUS              PORTS                NAMES
+    5ff3a058f09f        timetracker-site        "C:\\ServiceMonitor..."   About a minute ago   Up About a minute   0.0.0.0:80->80/tcp [YOUR CONTAINER NAME]
+    ````
+
+    ````powershell
+    docker inspect -f "{{ .NetworkSettings.Networks.nat.IPAddress }}" [YOUR CONTAINER NAME]
+
     # You should see something like this
     172.19.249.182
     ```
 
-1. On the SQL machine, add the gSMA account to the databases
+1. RDP to the SQL machine and add the gSMA account to the databases
 
     ````sql
     CREATE LOGIN [appmig\chost-gsma$] FROM WINDOWS
@@ -209,7 +218,7 @@ In this exercise we will containerize the applications that we deployed in HOL 2
     GO
     ````
 
-1. Now open a browser and navigate to http://[YOUR CONTAINER IP ADDRESS]. You should now see the `timetracker` Web site running inside the container.
+1. Go back to the container host, open a browser and navigate to `http://[YOUR CONTAINER IP ADDRESS]`. You should now see the `timetracker` Web site running inside the container.
 
     ![image](./media/07-a-2.PNG)
 
@@ -217,17 +226,37 @@ In this exercise we will containerize the applications that we deployed in HOL 2
 
 Now that we have an application up and running in a container on our Container host, the last step is you to finalize the migration. We will do that by simply cutting over the routing and DNS information
 
-1. Update the DNS records by RDP-ing into the DNS/AD Server, in this case the server is 'dc1.contoso.com' and open DNS. Here we can see that the `timetracker` dns record is a cname pointing to 'XXXXXXXXXX'
+1. Update the DNS records by RDP-ing into the DNS/AD Server
+
+1. Once on the server, launch `DNS manager`
+
+    ![image](./media/2018-03-20_0-32-01.png)
+
+1. Here we can see that the `timetracker` dns record is a A NAME record pointing to '10.0.0.4', the address of the current web server
 
     ![image](./media/07-a-3.PNG)
 
-1. Update the record to point to the Windows Container host, in this case 'XXXXXXXXXX'
+1. Select and delete the current A Name record
 
-    ![image](./media/07-a-4.PNG)
+    ![image](./media/2018-03-20_0-36-38.png)
 
-1. Open a browser to verify that you can indeed get to the site.
+1. Create a new CNAME record to point to the Windows Container host, in this case ''. `Right-click` and select `New Alias (CNAME)`
 
-    ![image](./media/07-a-5.PNG)
+    ![image](./media/2018-03-20_0-37-41.png)
+
+1. Add `timetracker` as the name, select `Browse` and navigate to the container host. Select the record and click `Ok` and `Ok` to save
+
+    ![image](./media/07-a-4.png)
+
+1. Open a powershell command prompt and flush the DNS records
+
+    ````powershell
+    ipconfig /flushdns
+    ````
+
+1. Open a browser to verify that you can get to the site using the name.
+
+    ![image](./media/2018-03-20_0-39-46.png)
 
 ### Exercise 4: Add Docker support to an existing application<a name="ex4"></a>
 
@@ -237,30 +266,59 @@ The `Jobs` application is used as the source, but the treatment will be similar 
 #### Assumptions
 
 * You have Visual Studio 2017 Installed or are accessing the application from the jump box
-* You have the source solution downloaded from the Repo
+* You have the source solution downloaded from the repo
 * You have .NET 3.5 Installed
 
-1. Open Visual Studio 2017
+1. Make sure you have the Jobs Source Apps downloaded on your Dev VM. In this example they are located in the `C:\AppMigrationWorkshop\Shared\SourceApps\Apps\Jobs` folder
 
-1. Create an Empty Web Site by File > New > Project > Visual C# > Web > Web Site > ASP.NET Empty Web Site. Name the project JobWebSite.
+    ![image](./media/06-02-a.png)
 
-    ![image](./media/hol7-4-a.PNG)
+1. Open Visual Studio 2017. Select `File > New Project > Visual C# > Web > Web Site` and choose `ASP.NET Empty Web Site` as the template. Choose a new location (in this example `c:\apps`)
 
-1. Open Windows Explorer and copy the Jobs Web Site Files
+    ![image](./media/2018-03-20_1-02-05.png)
 
-    ![image](./media/hol7-4-b.PNG)
+1. Name the project `JobsSite`.
 
-1. Paste the files into the JobWebSite project in Visual Studio 2017
+    ![image](./media/06-02-b.png)
 
-    ![image](./media/hol7-4-c.PNG)
+    > Note: Depending on your VS 2017 update version, the dialog may appear slightly different.
+    >
+    > ![image](./media/2018-03-18_5-49-05.png)
+    >
+    > ![image](./media/2018-03-18_5-50-48.png)
+    >
+    > OR
+    >
+    > ![image](./media/2018-03-20_0-58-45.png)
+    >
+
+1. You should now have an empty web site solution as a target to copy the Jobs source files.
+
+1. Open Windows Explorer and navigate to the folder where you have stored the Jobs Source Files
+
+1. Select all and copy all the files to the clipboard.
+
+    ![image](./media/06-02-c.png)
+
+1. Paste them into the Empty Visual Studio 2017 Solution.
+
+    ![image](./media/06-02-d.png)
+
+1. If prompted that files exist, select `Apply to all items` and `Yes`
+
+    ![image](./media/2018-03-18_5-55-25.png)
+
+1. Delete the `MyTemplate.vstemplate` and `ProjectName.webproj` files. These files were used with the older version of Visual Studio and are not longer needed.
+
+    ![image](./media/06-02-f.png)
 
 1. All the files should now be in the solution/project.
 
     ![image](./media/hol7-4-d.PNG)
 
-1. You can remove the uneeded files "ProjectName.webproj" and "MyTemplate.vstemplate"
+1. Remove the files "ProjectName.webproj" and "MyTemplate.vstemplate". These file types are no longer supported in VS 2017
 
-1. Add a blank text file to the Solution, Not the Web Site and rename it to `Dockerfile`, make sure to remove the ".txt" extension.
+1. Add a blank text file to the Solution (not the Web Site) and rename it to `Dockerfile`, make sure to remove the ".txt" extension.
 
     ![image](./media/hol7-4-e.PNG)
 
@@ -282,7 +340,7 @@ The `Jobs` application is used as the source, but the treatment will be similar 
 
     EXPOSE 80
 
-    COPY ["JobsWebSite", "/inetpub/wwwroot/Jobs"]
+    COPY ["jobssite", "/inetpub/wwwroot/Jobs"]
 
     RUN $path='C:\inetpub\wwwroot\Jobs'; `
         $acl = Get-Acl $path; `
@@ -291,16 +349,46 @@ The `Jobs` application is used as the source, but the treatment will be similar 
         dir -r $path | Set-Acl -aclobject  $acl
     ````
 
-1. Copy the solution from your Dev VM to the Windows Container Host. In this case it has been copied to 'C:\upgrades\JobsWebSite'. Open a command prompt or Powershell and run the following command:
+1. Since this is an older site, .NET 2.0 did not support Roslyn. Right-click on the web project and select `Manage Nuget Packages`
+
+    ![image](./media/2018-03-20_1-59-06.png)
+
+1. If you see any of the following, uninstall them.
+
+    ![image](./media/2018-03-20_2-00-44.png)
+
+    ![image](./media/2018-03-20_2-01-05.png)
+
+1. Copy the solution from your Dev VM to the Windows Container Host. In this case it has been copied to `C:\upgrades\JobsWebSite`
+
+1. Open a command prompt or Powershell and run the following command:
 
     ````powershell
+    cd\upgrades\jobswebsite
     docker build -t jobswebsite ./
     ````
 
 1. Now run a container using the image
     ````powershell
-    docker run -d -p 80:80 jobswebsite
+    docker run -d -p 80:80 jobswebsite -h jobswebsite --security-opt "credentialspec=file://win.json" jobswebsite
     ````
+
+    > Note: If there is still a container running on port 80, you will need to stop it.
+
+1. Verify the container is running
+
+    ````powershell
+        PS C:\upgrades\jobswebsite> docker ps
+        CONTAINER ID        IMAGE               COMMAND                   CREATED             STATUS              PORTS                NAMES
+        f6b419093d17        jobswebsite         "C:\\ServiceMonitor..."   6 seconds ago       Up 2 seconds        0.0.0.0:80->80/tcp   brave_clarke
+    ````
+    ````powershell
+    docker inspect -f "{{ .NetworkSettings.Networks.nat.IPAddress }}" [YOUR CONTAINER NAME]
+
+    # You should see something like this
+    172.19.110.229
+    ```
+
 
 ## References
 
