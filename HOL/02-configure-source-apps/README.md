@@ -15,9 +15,9 @@ Applications
 * An active Azure Subscription
 * You have the working source environment deployed on [Lab 01](../01-setup/README.md)
 
-## Excercises
+## Exercises
 
-This hands-on-lab has the following excercises:
+This hands-on-lab has the following exercises:
 
 1. [Exercise 1: Configuration Steps on Jumpbox VM](#ex1)
 1. [Exercise 2: Configuration Steps on SQL Server](#ex2)
@@ -48,7 +48,7 @@ These configuration steps will be performed from the Jumpbox.
 
     ![image](./media/02-01-d.png)
 
-1. Locate the `Jumpbox` Virtual Machine by searching for `jmp` in the resource name field. The Jumpbox will be suffixed with **-jmp** (i.e apmqy63-jmp)
+1. Locate the `Jumpbox` Virtual Machine by searching for `jmp` in the resource name field. The Jumpbox will be suffixed with **-jmp** (i.e. apmqy63-jmp)
 
     ![image](./media/02-01-e.png)
 
@@ -68,7 +68,7 @@ These configuration steps will be performed from the Jumpbox.
 
     ![image](./media/2018-03-12_22-44-04.png)
 
-1. Enter the adminstrator credentials as follows:
+1. Enter the administrator credentials as follows:
 
     > User name: **appmig\appmigadmin**
     >
@@ -99,6 +99,7 @@ These configuration steps will be performed from the Jumpbox.
     ```powershell
     Add-WindowsFeature -Name RSAT-AD-PowerShell
     Add-WindowsFeature -Name RSAT-DNS-Server
+
     ```
 
 ##### Creating Service Account (used in the application pools later)
@@ -107,6 +108,7 @@ These configuration steps will be performed from the Jumpbox.
 
     ```powershell
     New-ADUser -SamAccountName AppsSvcAcct -Name "AppsSvcAcct" -UserPrincipalName AppsSvcAcct@appmig.local -AccountPassword (ConvertTo-SecureString -AsPlainText "@pp_M!gr@ti0n-2018" -Force) -Enabled $true -PasswordNeverExpires $true
+
     ```
 
 ##### Add DNS records for each application
@@ -123,6 +125,7 @@ These configuration steps will be performed from the Jumpbox.
     Add-DnsServerResourceRecordA -Name timetracker -IPv4Address $webSrv.RecordData.IPv4Address.IPAddressToString -ZoneName $dc.Domain -CreatePtr -ComputerName $dc.HostName
     Add-DnsServerResourceRecordA -Name classifieds -IPv4Address $webSrv.RecordData.IPv4Address.IPAddressToString -ZoneName $dc.Domain -CreatePtr -ComputerName $dc.HostName
     Add-DnsServerResourceRecordA -Name jobs -IPv4Address $webSrv.RecordData.IPv4Address.IPAddressToString -ZoneName $dc.Domain -CreatePtr -ComputerName $dc.HostName
+
     ````
 
 ##### Download, extract and copy workshop materials locally
@@ -134,25 +137,30 @@ These configuration steps will be performed from the Jumpbox.
     ````powershell
     cd\
     git clone https://github.com/AzureCAT-GSI/AppMigrationWorkshop.git
+
     ````
 1. Extract each application
 
     ````powershell
     [System.Reflection.Assembly]::LoadWithPartialName('System.IO.Compression.FileSystem')
-    Get-ChildItem "C:\AppMigrationWorkshop\Shared\SourceApps\Apps\" -Exclude "*.msi" `
-        | % {  $dest = Join-Path $_.directoryname ([system.io.path]::GetFileNameWithoutExtension($_.name)); `
-        mkdir $dest -force; `[System.IO.Compression.ZipFile::ExtractToDirectory($_.fullname, $dest);}
+
+    Get-ChildItem "C:\AppMigrationWorkshop\Shared\SourceApps\Apps\" -Exclude "petshop" | `
+            % { $dest = Join-Path $_.directoryname ([system.io.path]::GetFileNameWithoutExtension($_.name)); `
+                mkdir $dest -force; [System.IO.Compression.ZipFile]::ExtractToDirectory($_.fullname, $dest)}
+
     ````
 1. Copying the database backup files to the SQL server
 
     ```powershell
     copy-item "C:\AppMigrationWorkshop\Shared\SourceApps\Databases\" -Destination \\10.0.1.100\c$ -Recurse
+
     ```
 
 1. Copying the application source files to the IIS server
 
     ```powershell
     copy-item "C:\AppMigrationWorkshop\Shared\SourceApps\Apps\" -Destination \\10.0.0.4\c$ -Recurse
+
     ```
 ---
 
@@ -160,7 +168,7 @@ These configuration steps will be performed from the Jumpbox.
 
 These configuration steps will be performed from the SQL server. You can access this machine from the JumpBox as the servers are not publicly accessible.
 
-1. In the Azure Portal, locate the machine name of the SQL server. The machine will suffixed with `-sql`. Copy the machine name to the clipboard.
+1. In the Azure Portal, locate the machine name of the SQL server. The machine will suffixed with `-sql`. **Copy the machine name to the clipboard**.
 
     ![image](./media/2018-03-13_8-20-02.png)
 
@@ -168,7 +176,9 @@ These configuration steps will be performed from the SQL server. You can access 
 
     ![image](./media/2018-03-13_8-15-41.png)
 
-1. Enter the SQL server VM name and click `Connect`. Enter the Administrator credentials and click `Ok`
+1. Enter the SQL server VM (**paste from the previous copy since the names will all be different in each deployment**) name and click `Connect`. Enter the Administrator credentials and click `Ok`
+
+    > Note: **User name here MUST have the domain name**, otherwise these steps will fail. E.g. `APPMIG\appmigadmin`
 
     ![image](./media/2018-03-13_8-26-05.png)
 
@@ -178,12 +188,14 @@ These configuration steps will be performed from the SQL server. You can access 
     SQLCMD -E -S $($ENV:COMPUTERNAME) -Q "RESTORE DATABASE [TimeTracker] FROM DISK='C:\Databases\timetracker.bak' WITH MOVE 'tempname' TO 'C:\Databases\timetracker.mdf', MOVE 'TimeTracker_Log' TO 'C:\Databases\timetracker_log.ldf'"
     SQLCMD -E -S $($ENV:COMPUTERNAME) -Q "RESTORE DATABASE [Classifieds] FROM DISK='C:\Databases\classifieds.bak' WITH MOVE 'Database' TO 'C:\Databases\classifieds.mdf', MOVE 'Database_log' TO 'C:\Databases\classifieds_log.ldf'"
     SQLCMD -E -S $($ENV:COMPUTERNAME) -Q "RESTORE DATABASE [Jobs] FROM DISK='C:\Databases\jobs.bak' WITH MOVE 'EmptyDatabase' TO 'C:\Databases\jobs.mdf', MOVE 'EmptyDatabase_log' TO 'C:\Databases\jobs_log.ldf'"
+
     ````
 
 1. Creating the SQL logins
 
     ````powershell
     SQLCMD -E -S $($ENV:COMPUTERNAME) -Q "CREATE LOGIN [APPMIG\AppsSvcAcct] FROM WINDOWS"
+
     ````
 
 1. Create users in the database
@@ -192,8 +204,8 @@ These configuration steps will be performed from the SQL server. You can access 
     SQLCMD -E -S $($ENV:COMPUTERNAME) -Q "USE timetracker; CREATE USER [APPMIG\AppsSvcAcct];"
     SQLCMD -E -S $($ENV:COMPUTERNAME) -Q "USE classifieds; CREATE USER [APPMIG\AppsSvcAcct];"
     SQLCMD -E -S $($ENV:COMPUTERNAME) -Q "USE jobs; CREATE USER [APPMIG\AppsSvcAcct];"
-    ````
 
+    ````
 
 1. Configure the user as db_owner
 
@@ -201,6 +213,7 @@ These configuration steps will be performed from the SQL server. You can access 
     SQLCMD -E -S $($ENV:COMPUTERNAME) -Q "USE timetracker; EXEC sp_addrolemember 'db_owner', 'APPMIG\AppsSvcAcct'"
     SQLCMD -E -S $($ENV:COMPUTERNAME) -Q "USE classifieds; EXEC sp_addrolemember 'db_owner', 'APPMIG\AppsSvcAcct'"
     SQLCMD -E -S $($ENV:COMPUTERNAME) -Q "USE jobs; EXEC sp_addrolemember 'db_owner', 'APPMIG\AppsSvcAcct'"
+
     ````
 
 ---
@@ -217,7 +230,7 @@ These configuration steps will be performed from the Web server. You can access 
 
     ![image](./media/2018-03-13_8-15-41.png)
 
-1. Enter the Web server VM name and click `Connect`. Enter the Administrator credentials and click `Ok`
+1. Enter the Web server VM name and click `Connect`. Enter the Administrator credentials and click `Ok`. Please notice that this is the same case of all other VMs, you must precede the username with the domain name APPMIG.
 
     ![image](./media/2018-03-18_19-35-59.png)
 
@@ -229,12 +242,14 @@ These configuration steps will be performed from the Web server. You can access 
     c:\windows\system32\inetsrv\appcmd.exe add apppool /name:"TimeTrackerAppPool" /managedPipelineMode:"Integrated"
     c:\windows\system32\inetsrv\appcmd.exe add apppool /name:"ClassifiedsAppPool" /managedPipelineMode:"Classic"
     c:\windows\system32\inetsrv\appcmd.exe add apppool /name:"JobsAppPool" /managedPipelineMode:"Integrated"
+
     ````
 
 1. Grant the necessary permissions for the service account
 
     ````powershell
     c:\Windows\Microsoft.NET\Framework\v2.0.50727\aspnet_regiis.exe -ga appmig\AppsSvcAcct
+
     ````
 
 1. Configure Application Pools to use the service account
@@ -243,12 +258,14 @@ These configuration steps will be performed from the Web server. You can access 
     c:\windows\system32\inetsrv\appcmd set config /section:applicationPools "/[name='TimeTrackerAppPool'].processModel.identityType:SpecificUser" "/[name='TimeTrackerAppPool'].processModel.userName:appmig\AppsSvcAcct" "/[name='TimeTrackerAppPool'].processModel.password:@pp_M!gr@ti0n-2018"
     c:\windows\system32\inetsrv\appcmd set config /section:applicationPools "/[name='ClassifiedsAppPool'].processModel.identityType:SpecificUser" "/[name='ClassifiedsAppPool'].processModel.userName:appmig\AppsSvcAcct" "/[name='ClassifiedsAppPool'].processModel.password:@pp_M!gr@ti0n-2018"
     c:\windows\system32\inetsrv\appcmd set config /section:applicationPools "/[name='JobsAppPool'].processModel.identityType:SpecificUser" "/[name='JobsAppPool'].processModel.userName:appmig\AppsSvcAcct" "/[name='JobsAppPool'].processModel.password:@pp_M!gr@ti0n-2018"
+
     ````
 
 1. Delete the default web site to avoid conflicts
 
     ````powershell
     c:\windows\system32\inetsrv\appcmd delete site "Default Web Site"
+    
     `````
 
 1. Create the IIS web sites
@@ -260,33 +277,15 @@ These configuration steps will be performed from the Web server. You can access 
     c:\windows\system32\inetsrv\APPCMD set site Classifieds "/[path='/'].applicationPool:ClassifiedsAppPool"
     c:\windows\system32\inetsrv\APPCMD add site /name:Jobs /id:3 /bindings:http://jobs:80 /physicalPath:C:\Apps\Jobs
     c:\windows\system32\inetsrv\APPCMD set site Jobs "/[path='/'].applicationPool:JobsAppPool"
+
     ````
 
-1. On the file system, update the web.config files for the source apps to connect to the database. The files are located in the `C:\Apps` folder. Replace `[YOUR SQL SERVER NAME]` with your SQL Server VM name
+1. On the file system, update the web.config files for each source apps to connect to the database. The files are in the `C:\Apps` folder. Replace all occurrences of `<sqlServerName>` with your SQL Server VM name
 
-    * Jobs
-    ````xml
-    <connectionStrings>
-        <add name="connectionstring" connectionString="Persist Security Info=False;Integrated Security=true;Initial Catalog=jobs;Server=[YOUR SQL SERVER NAME],1433" providerName="System.Data.SqlClient" />
-        <add name="MyProviderConnectionString" connectionString="Persist Security Info=False;Integrated Security=true;Initial Catalog=jobs;Server=[YOUR SQL SERVER NAME],1433" providerName="System.Data.SqlClient" />
-      </connectionStrings>
-    ````
+    * C:\Apps\Jobs\Web.Config
+    * C:\Apps\Classifieds\Web.Config
+    * c:\Apps\TimeTracker\Web.Config
 
-    * Classifieds
-    ````xml
-        <connectionStrings>
-            <add name="classifiedsConnection" connectionString="Server=[YOUR SQL SERVER NAME],1433;Database=classifieds;Trusted_Connection=True;" />
-        </connectionStrings>
-    ````
-
-    * TimeTracker
-    ````xml
-    <connectionStrings>
-        <add name="aspnet_staterKits_TimeTracker" connectionString="Server=[YOUR SQL SERVER NAME],1433;Database=timetracker;Trusted_Connection=True;" />
-        <remove name="LocalSqlServer"/>
-        <add name="LocalSqlServer" connectionString="Server=[YOUR SQL SERVER NAME],1433;Database=timetracker;Trusted_Connection=True;" />
-    </connectionStrings>
-    ````
 ---
 
 ### Exercise 4: Test the web applications<a name="ex4"></a>
@@ -319,3 +318,4 @@ In this hands-on lab, you learned how to:
 
 ---
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
+
