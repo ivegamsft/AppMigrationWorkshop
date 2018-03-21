@@ -61,4 +61,4 @@ typings/
 .next
 /.vs
 
-Shared/ARM-NewIaaS/dsc/*.zip
+/Shared/ARM-NewIaaS/dsc/*.zip
