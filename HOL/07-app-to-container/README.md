@@ -390,8 +390,12 @@ The `Jobs` application is used as the source, but the treatment will be similar 
     docker inspect -f "{{ .NetworkSettings.Networks.nat.IPAddress }}" [YOUR CONTAINER NAME]
 
     # You should see something like this
-    172.19.110.229
+    172.19.102.214
     ```
+
+1. Open a browser and navigate to the IP address of the container to browse the site
+
+    ![image](./media/2018-03-21_0-39-06.png)
 
 ## References
 
