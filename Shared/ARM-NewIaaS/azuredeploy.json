@@ -16,7 +16,6 @@
     }
   },
   "variables": {
-    // Variables related to LBD
     "deploymentUniqueString": "[uniqueString(concat(deployment().name,resourceGroup().id))]",
     "libraryBaseUrl": "https://raw.githubusercontent.com/AzureCAT-GSI/LBD/master/LibraryBasedDeployment/LBD",
     "baseUrl": "[parameters('_artifactsLocation')]",
@@ -28,8 +27,9 @@
     "updateVnetDnsUri": "[concat(variables('libraryBaseUrl'),'/library/other/updateVnetDnsSettings.json')]",
     "joinVmToDomainUri": "[concat(variables('libraryBaseUrl'),'/library/other/joinVmToDomain.json')]",
     "commonPassComponentsUri": "[concat(variables('baseUrl'),'/common/paasComponents.json',parameters('_artifactsLocationSasToken'))]",
+    "appGwUri": "[concat(variables('libraryBaseUrl'),'/library/Microsoft.Network/applicationGatewayNoSslDynamicIp.json')]",
+    "trafficManagerUri": "[concat(variables('libraryBaseUrl'),'/library/Microsoft.Network/trafficManager.json')]",
 
-    // Api versions
     "nicApiVersion": "2017-06-01",
     "deploymentApiVersion": "2017-05-10",
     "vmApiVersion": "2017-03-30",
@@ -37,17 +37,25 @@
     "vnetApiVersion": "2016-03-30",
     "nsgApiVersion": "2017-06-01",
     "vmExtensionApiVersion": "2015-06-15",
+    "appGWApiVersion": "2017-10-01",
+    "trafficManagerApiVersion": "2017-05-01",
 
-    // Variables related to the scenario
     "appmigrgid": "[concat('apm', variables('deploymentUniqueString'))]",
-    //"appmigrgid": "[concat('apm', 'v6wttest')]", // Used only while building the templates, for production, comment this line and uncomment the previous line so every deployment will produce unique names
     "location": "[resourceGroup().location]",
     "adminUsername": "appmigadmin",
     "adminPassword": "@pp_M!gr@ti0n-2018",
     "sqlServerServiceAccountUserName": "sqlservice",
     "sqlServerServiceAccountPassword": "@pp_M!gr@ti0n-2018",
 
-    // DC and Domain info
+    "appGwName":"AppGW",
+    "appGwSku":{
+        "capacity":  1,
+        "name":  "Standard_Small",
+        "tier":  "Standard"
+    },
+
+    "trafficManagerName":"[concat(variables('appmigrgid'),'-TM')]",
+
     "dcVmName": "[concat(substring(variables('appmigrgid'),0,7), '-dc')]",
     "dcVmSize": "Standard_D2_v2",
     "domainName": "appmig.local",
@@ -98,7 +106,6 @@
       }
     },
 
-    // JumpBox info
     "jmpVmName": "[concat(substring(variables('appmigrgid'),0,7), '-jmp')]",
     "jmpVmSize": "Standard_D2_v2",
     "jmpImageInfo": {
@@ -109,7 +116,6 @@
     },
     "jmpNicIPAddress": "10.0.0.250",
 
-    // Windows Container Host info
     "cntVmName": "[concat(substring(variables('appmigrgid'),0,7), '-cnt')]",
     "cntVmSize": "Standard_D2_v2",
     "cntImageInfo": {
@@ -120,7 +126,6 @@
     },
     "cntNicIPAddress": "10.0.0.5",
 
-    // Web Server info
     "webVmName": "[concat(substring(variables('appmigrgid'),0,7), '-web')]",
     "webVmSize": "Standard_D2_v2",
     "webImageInfo": {
@@ -140,7 +145,6 @@
       "configurationFunction": "[variables('iisConfigurationFunction')]"
     },
 
-    // SQL Server info
     "sqlVmName": "[concat(substring(variables('appmigrgid'),0,7), '-sql')]",
     "sqlVmSize": "Standard_DS2_v2",
     "sqlImageInfo": {
@@ -154,7 +158,6 @@
     "sqlConfigurationScript": "[concat(variables('baseUrl'),'/scripts/ConfigureSQL.ps1', parameters('_artifactsLocationSasToken'))]",
     "sqlConfigurationScript1": "[concat(variables('baseUrl'),'/scripts/StartConfigureSQL.ps1', parameters('_artifactsLocationSasToken'))]",
 
-    // Clean up settings for CustomScript
     "sqlSettings01": {
       "fileUris": []
     },
@@ -162,7 +165,6 @@
       "commandToExecute": "powershell -command {cls}"
     },
 
-    // Final custom script configuration
     "sqlSettings02": {
       "fileUris": [
         "[variables('sqlConfigurationScript')]",
@@ -173,22 +175,21 @@
       "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ./scripts/StartConfigureSQL.ps1 -adminUsername ',variables('adminUsername'),' -adminPassword ',variables('adminPassword'))]"
     },
 
-    // Vnet info
     "vnetName": "[concat(substring(variables('appmigrgid'),0,7), '-vnet')]",
-    //"vnetName": "apm7lxo-vnet", // Same case, this is for testing
     "vnetsubnet1Name": "FE-Subnet",
     "vnetsubnet2Name": "BE-Subnet",
+    "vnetsubnet3Name": "AppGw-Subnet",
     "vnetId": "[resourceId('Microsoft.Network/virtualNetworks',variables('vnetName'))]",
     "vnetSubnet1Id": "[concat(variables('vnetId'),'/subnets/',variables('vnetsubnet1Name'))]",
     "vnetSubnet2Id": "[concat(variables('vnetId'),'/subnets/',variables('vnetsubnet2Name'))]",
+    "vnetSubnet3Id": "[concat(variables('vnetId'),'/subnets/',variables('vnetsubnet3Name'))]",
     "vnetIpAddressSpace": "10.0.0.0/22",
     "vnetSubnet1AddressRange": "10.0.0.0/24",
     "vnetSubnet2AddressRange": "10.0.1.0/24",
+    "vnetSubnet3AddressRange": "10.0.2.0/24",
     "dcNicIPAddress": "10.0.1.4",
 
-    // NSG info
     "nsgName": "[concat(substring(variables('appmigrgid'),0,7), '-nsg')]",
-    //"nsgName": "apm7lxo-nsg", // Same case, this is for testing
     "nsgId": "[resourceId('Microsoft.Network/networkSecurityGroups',variables('nsgName'))]",
     "nsgSecurityRules": [
       {
@@ -207,7 +208,6 @@
       }
     ],
 
-    // VMs to Domain Join at the same time
     "vmList": [
       "[variables('jmpVmName')]",
       "[variables('webVmName')]",
@@ -218,7 +218,6 @@
   },
   "resources": [
 
-    // Common PaaS Components Deployment
     {
       "condition": true,
       "comments": "PaaS Components",
@@ -243,7 +242,6 @@
       }
     },
 
-    // Network Security Group
     {
       "condition": true,
       "comments": "Network Security Group that enables RDP to the Jumpbox",
@@ -277,7 +275,6 @@
       }
     },
 
-    // Virtual Network
     {
       "condition": true,
       "comments": "Virtual Network with two subnets (FE and BE)",
@@ -327,6 +324,12 @@
                 "properties": {
                   "addressPrefix": "[variables('vnetSubnet2AddressRange')]"
                 }
+              },
+              {
+                "name": "[variables('vnetsubnet3Name')]",
+                "properties": {
+                  "addressPrefix": "[variables('vnetSubnet3AddressRange')]"
+                }
               }
             ]
           }
@@ -334,7 +337,78 @@
       }
     },
 
-    // Domain Controller VM deployment
+    {
+      "condition": true,
+      "comments": "Application Gateway Deployment",
+      "name": "[concat(variables('deploymentUniqueString'),'-',variables('appGwName'),'appGwDeployment')]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "[variables('deploymentApiVersion')]",
+      "dependsOn": [
+        "[concat(variables('deploymentUniqueString'),'-',variables('vnetName'),'vNetDeployment')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('appGwUri')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "apiVersion": {
+            "value": "[variables('appGWApiVersion')]"
+          },
+          "deploymentUniqueString": {
+            "value": "[variables('deploymentUniqueString')]"
+          },
+          "location": {
+            "value": "[variables('location')]"
+          },
+          "appGwName": {
+            "value": "[variables('appGwName')]"
+          },
+          "sku": {
+            "value": "[variables('appGwSku')]"
+          },
+          "subnetId": {
+            "value": "[variables('vnetSubnet3Id')]"
+          }
+        }
+      }
+    },
+
+    {
+      "condition": true,
+      "comments": "Traffic Manager Deployment",
+      "name": "[concat(variables('deploymentUniqueString'),'-',variables('trafficManagerName'),'tmDeployment')]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "[variables('deploymentApiVersion')]",
+      "dependsOn": [],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('trafficManagerUri')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "apiVersion": {
+            "value": "[variables('trafficManagerApiVersion')]"
+          },
+          "deploymentUniqueString": {
+            "value": "[variables('deploymentUniqueString')]"
+          },
+          "name": {
+            "value": "[variables('trafficManagerName')]"
+          },
+          "relativeName": {
+            "value": "[variables('trafficManagerName')]"
+          },
+          "trafficRoutingMethod": {
+            "value": "Performance"
+          }
+        }
+      }
+    },
+
+
     {
       "condition": true,
       "comments": "Virtual Machine - Domain Controller with provided name, 1 data disk, no public IP, no avset, no LB Rule, no LB NAT Rule, no NSG, no DNS settings, and static IP address",
@@ -504,7 +578,6 @@
       }
     },
 
-    // Jumpbox VM deployment
     {
       "condition": true,
       "comments": "Virtual Machine - Jumpbox VM with provided name, no data disk, with public IP, no avset, no LB Rule, no LB NAT Rule, no NSG, no DNS settings, and dynamic IP address",
@@ -597,7 +670,6 @@
       }
     },
 
-    // Windows Container VM deployment
     {
       "condition": true,
       "comments": "Virtual Machine - Windows Server 2016 with Containers with provided name, no data disk, no public IP, no avset, no LB Rule, no LB NAT Rule, no NSG, no DNS settings, and dynamic IP address",
@@ -684,7 +756,6 @@
       }
     },
 
-    // WebServer VM deployment
     {
       "condition": true,
       "comments": "Virtual Machine - Web Server VM with provided name, no data disk, with no public IP, no avset, no LB Rule, no LB NAT Rule, no NSG, no DNS settings, and dynamic IP address",
@@ -808,7 +879,6 @@
       }
     },
 
-    // SQL Server VM
     {
       "condition": true,
       "comments": "Virtual Machine - SQL VM with provided name, 2 data disks, no public IP, no avset, no LB Rule, no LB NAT Rule, no NSG, with DNS settings, and dynamic IP address",
@@ -909,7 +979,6 @@
       }
     },
 
-    // Updating DNS settings on VMs
     {
       "condition": true,
       "comments": "Updating DNS Settings of VMs that will need to be domain joined",
@@ -961,7 +1030,6 @@
       }
     },
 
-    // Updating Vnet DNS settings
     {
       "condition": true,
       "comments": "Virtual Networks - Updating existing vNet with DNS",
@@ -1002,7 +1070,6 @@
       }
     },
 
-    // Domain joining VMs
     {
       "condition": true,
       "comments": "DOMAIN JOIN - Domain joining VMs",
@@ -1041,7 +1108,6 @@
       }
     },
 
-    // Complete SQL Configuration
     {
       "condition": true,
       "comments": "Custom Script - Reset Custom Script",

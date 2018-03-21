@@ -21,7 +21,6 @@ https://docs.microsoft.com/en-us/azure/log-analytics/log-analytics-data-sources-
 AppInsights level
 https://docs.microsoft.com/en-us/azure/application-insights/app-insights-monitor-performance-live-website-now
 
-
 //windows containers - web
 //PaaS - web/database
 //Hybrid/IaaS - database
@@ -42,8 +41,6 @@ https://docs.microsoft.com/en-us/azure/application-insights/app-insights-monitor
 
 ---
 
-
-
 include steps on how to setup traffic manager here
 https://docs.microsoft.com/en-us/azure/traffic-manager/traffic-manager-monitoring
 
@@ -53,6 +50,6 @@ In this hands-on lab, you learned how to:
 
 * Set up monitoring using Azure services
 
-----
+---
 
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.

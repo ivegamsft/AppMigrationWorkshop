@@ -51,11 +51,11 @@ For the purpose of this lab, we are going to create a .NET Core application.
 
 Now that we have an app we need to get the supporting infrastructure in Azure to support it. We will be using a CI/CD pipeline and want to deploy the infrastructure as part of that pipeline. This will be done via an Azure Resource Manager templates. A wealth of Resource Manager templates can be found on the [Azure GitHub repo](https://github.com/Azure/azure-quickstart-templates).
 
-For this HoL, we are going to use the template for [Deploying a Web App with custom deployment slots](https://github.com/Azure/azure-quickstart-templates/tree/master/101-webapp-custom-deployment-slots). 
+For this HoL, we are going to use the template for [Deploying a Web App with custom deployment slots](https://github.com/Azure/azure-quickstart-templates/tree/master/101-webapp-custom-deployment-slots).
 
-> Note: While this template has a _"Deploy to Azure"_ button, we will be using it in our CI/CD pipeline. 
+> Note: While this template has a _"Deploy to Azure"_ button, we will be using it in our CI/CD pipeline.
 
-1. Download the _azuredeploy.json_ and _azuredeploy.paramaters.json_ file to your local directory. 
+1. Download the _azuredeploy.json_ and _azuredeploy.paramaters.json_ file to your local directory.
 
 1. Your local directory should look like the screenshot below.
 
@@ -90,7 +90,7 @@ Before adding new files, we will define files that we don't want to track in the
 
 ----
 
-With the code in VSTS, the CI/CD pipeline needs to be configured. 
+With the code in VSTS, the CI/CD pipeline needs to be configured.
 
 1. From the build screen, create a new build definition.
 
@@ -110,7 +110,7 @@ With the code in VSTS, the CI/CD pipeline needs to be configured.
     * The build command task
     * The publish command task
 
-1. Add `app/*.csproj` in the Path to project(s) section of the restore and build commands. 
+1. Add `app/*.csproj` in the Path to project(s) section of the restore and build commands.
 
 1. Add the following to the _Arguments_ section of the publish task
 
@@ -124,15 +124,15 @@ With the code in VSTS, the CI/CD pipeline needs to be configured.
 
     ![Publish Artifact][5]
 
-1. Before we can run a build with this pipeline, a `BuildConfiguration` variable needs to be configured. Click on the Variables tab, and add a variable `BuildConfiguration` with a value of `release`. 
+1. Before we can run a build with this pipeline, a `BuildConfiguration` variable needs to be configured. Click on the Variables tab, and add a variable `BuildConfiguration` with a value of `release`.
 
 1. Click `Save and Queue`
 
 1. The last thing we are going to do is package up our environment to consume in our deployment phase. Navigate to the `Tasks` tab
 
-1. Add an agent phase by clicking on the _"..."_ in the Process bar above the tasks. 
+1. Add an agent phase by clicking on the _"..."_ in the Process bar above the tasks.
 
-1. Add an agent phase and then a `Publish Artifacts` task. 
+1. Add an agent phase and then a `Publish Artifacts` task.
 
 1. Select `env` as the path to publish, `envdrop` as the _Artifact Name_, and _Visual Studio Team Services/TFS_ as the publish location. The Build Definition will look like the image below with all the tasks set up.
 
@@ -154,7 +154,7 @@ Now that we have our Build definition set up, we need to create our release pipe
 
     ![New Release Pipeline][6]
 
-1. Name the environment _Development_ and then click on _Add_ above artifacts to pull the build into the release definition. 
+1. Name the environment _Development_ and then click on _Add_ above artifacts to pull the build into the release definition.
 
 1. Select the build drop down from the menu and accept the defaults that auto populate.
 
@@ -191,7 +191,7 @@ Now that we have our Build definition set up, we need to create our release pipe
 
 With the CI and CD configured it is time to deploy the application in an automated pipeline.
 
-1. From inside the release definition, open the _Pipeline_ tab. 
+1. From inside the release definition, open the _Pipeline_ tab.
 
 1. Click on the lightning bolt in the artifacts object and enable the _Continuous deployment trigger_.
 
@@ -227,5 +227,6 @@ In this hands-on lab, you learned how to:
 * Configure source control integration for continuous integration
 * Create a release pipeline
 
----
+----
+
 Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
