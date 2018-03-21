@@ -13,7 +13,7 @@ In this lab you will create the environment that will be used as the source for 
 * Deploy the source environemnt to Azure
 * Inspect the source system
 
-### View instructions for [HOL 1](HOL/01-setup/README.MD)
+### View instructions for [HOL 1](./01-setup/README.md)
 
 ---
 
@@ -27,7 +27,7 @@ Applications
 * Classifieds
 * Jobs
 
-### View instructions for [HOL 2](HOL/02-configure-source-apps/README.MD)
+### View instructions for [HOL 2](./02-configure-source-apps/README.md)
 
 ---
 
