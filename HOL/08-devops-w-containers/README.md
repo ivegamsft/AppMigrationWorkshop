@@ -131,7 +131,7 @@ Azure Container Registry will serve as a place to save your container images, wh
 
 1. Click `Create`
 
-    ![image](./media/hol9-1.PNG =250x)
+    ![image](./media/hol9-1.png)
 
 1. Create a unique registry name and deploy to the existing resource group you have set up for this lab (in this example `AppMigrationACR`)
 
@@ -157,11 +157,11 @@ Azure Container Registry will serve as a place to save your container images, wh
 
 1. Click on Create New Service Endpoint. Choose Azure Resource Manager.
 
-    ![HOL9-3](./media/hol9-3.PNG =160x)
+    ![image](./media/hol9-3.png)
 
 1. Select the right subscription and the App Migration Resource Group. Click `OK`.
 
-    ![image](./media/hol9-4.PNG)
+    ![image](./media/hol9-4.png)
 
 1. From the main menu, click on `Builds and Releases > Build`
 
@@ -169,23 +169,23 @@ Azure Container Registry will serve as a place to save your container images, wh
 
 1. Click on `New definition`
 
-    ![image](./media/hol9-5.PNG)
+    ![image](./media/hol9-5.png)
 
 1. Pick the current VSTS repo as a source.
 
-    ![image](./media/hol9-6.PNG =320x)
+    ![image](./media/hol9-6.png)
 
 1. Click on `Start with an Empty Process`.
 
-    ![image](./media/hol9-7.PNG =320x)
+    ![image](./media/hol9-7.png)
 
 1. Click `Add a task to the phase`.
 
-    ![image](./media/hol9-8.PNG =320x)
+    ![image](./media/hol9-8.png)
 
 1. Search for `Docker`. Select the Docker result and click `Add`.
 
-    ![image](./media/hol9-9.PNG =800x)
+    ![image](./media/hol9-9.png)
 
 1. Select the `Build an image` task
 
@@ -195,11 +195,11 @@ Azure Container Registry will serve as a place to save your container images, wh
 
     ![images](./media/2018-03-21_3-06-37.png)
 
-    ![images](./media/hol9-10.PNG =640x)
+    ![images](./media/hol9-10.png)
 
 1. Add a second Docker task. This time configure action to `Push an image`. Again, make sure to include the Source tags and Latest tag.
 
-    ![images](./media/hol9-11.PNG =800x)
+    ![images](./media/hol9-11.png)
 
 1. Click on `Save and queue > Save`. Queue a build.
 
@@ -211,19 +211,19 @@ Azure Container Registry will serve as a place to save your container images, wh
 
 1. Once the build is complete click on `Release`.
 
-    ![image](./media/hol9-12.PNG =640x)
+    ![image](./media/hol9-12.png)
 
 1. Click on `Start with an empty process`.
 
-    ![image](./media/hol9-13.PNG =320x)
+    ![image](./media/hol9-13.png)
 
 1. Click on `View environment tasks`
 
-    ![image](./media/hol9-14.PNG =320x)
+    ![image](./media/hol9-14.png)
 
 1. Click `Add task` and search for Docker. Select the Docker result.
 
-    ![image](./media/hol9-15.PNG =640x)
+    ![image](./media/hol9-15.png)
 
 1. Configure the action to Run Docker command and add the following command. Replace the values with your Docker `Host VM name` and your `ACR name`.
 
