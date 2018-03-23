@@ -13,19 +13,21 @@ In this lab you will create the environment that will be used as the source for 
 * Deploy the source environemnt to Azure
 * Inspect the source system
 
-### View instructions for [HOL 1](01-setup/README.MD)
+### View instructions for [HOL 1](./01-setup/README.md)
 
 ---
 
 ## HOL 2: Configure source applications
 
-This lab will introduce you to ...
+In this lab, you will install three sample legacy applications. The sample legacy applications will be used as the source for migrating to Azure.
 
-* OBJECTIVE 1
-* OBJECTIVE 2
-* OBJECTIVE 2
+Applications
 
-### View instructions for [HOL 2](02-configure-source-apps/README.MD)
+* Timetracker
+* Classifieds
+* Jobs
+
+### View instructions for [HOL 2](./02-configure-source-apps/README.md)
 
 ---
 
