@@ -17,7 +17,6 @@
   },
   "variables": {
     "deploymentUniqueString": "[uniqueString(concat(deployment().name,resourceGroup().id))]",
-
     "libraryBaseUrl": "https://raw.githubusercontent.com/AzureCAT-GSI/LBD/master/LibraryBasedDeployment/LBD",
     "baseUrl": "[parameters('_artifactsLocation')]",
     "updateVmDnsUri": "[concat(variables('libraryBaseUrl'),'/library/other/updateVmDnsSettings.json')]",
@@ -30,7 +29,6 @@
     "commonPassComponentsUri": "[concat(variables('baseUrl'),'/common/paasComponents.json',parameters('_artifactsLocationSasToken'))]",
     "appGwUri": "[concat(variables('libraryBaseUrl'),'/library/Microsoft.Network/applicationGatewayNoSslDynamicIp.json')]",
     "trafficManagerUri": "[concat(variables('libraryBaseUrl'),'/library/Microsoft.Network/trafficManager.json')]",
-
     "nicApiVersion": "2017-06-01",
     "deploymentApiVersion": "2017-05-10",
     "vmApiVersion": "2017-03-30",
@@ -40,27 +38,19 @@
     "vmExtensionApiVersion": "2015-06-15",
     "appGWApiVersion": "2017-10-01",
     "trafficManagerApiVersion": "2017-05-01",
-    "availabilitySetApiVersion": "2017-03-30",
-    
     "appmigrgid": "[concat('apm', variables('deploymentUniqueString'))]",
-    
     "location": "[resourceGroup().location]",
-    
     "adminUsername": "appmigadmin",
     "adminPassword": "@pp_M!gr@ti0n-2018",
-    
     "sqlServerServiceAccountUserName": "sqlservice",
     "sqlServerServiceAccountPassword": "@pp_M!gr@ti0n-2018",
-    
     "appGwName": "AppGW",
     "appGwSku": {
       "capacity": 1,
       "name": "Standard_Small",
       "tier": "Standard"
     },
-    
     "trafficManagerName": "[concat(variables('appmigrgid'),'-TM')]",
-    
     "dcNicIPAddress": "10.0.1.4",
     "dcVmName": "[concat(substring(variables('appmigrgid'),0,7), '-dc')]",
     "dcVmSize": "Standard_D2_v2",
@@ -106,7 +96,6 @@
         "sqlServicePassword": "[variables('sqlServerServiceAccountPassword')]"
       }
     },
-
     "jmpVmName": "[concat(substring(variables('appmigrgid'),0,7), '-jmp')]",
     "jmpVmSize": "Standard_D2_v2",
     "jmpImageInfo": {
@@ -116,7 +105,6 @@
       "version": "latest"
     },
     "jmpNicIPAddress": "10.0.0.250",
-
     "cntVmName": "[concat(substring(variables('appmigrgid'),0,7), '-cnt')]",
     "cntVmSize": "Standard_D2_v2",
     "cntImageInfo": {
@@ -126,7 +114,6 @@
       "version": "latest"
     },
     "cntNicIPAddress": "10.0.0.5",
-
     "webVmName": "[concat(substring(variables('appmigrgid'),0,7), '-web')]",
     "webVmSize": "Standard_D2_v2",
     "webImageInfo": {
@@ -136,7 +123,6 @@
       "version": "latest"
     },
     "webNicIPAddress": "10.0.0.4",
-
     "iisInstallUrl": "[concat(variables('baseUrl'),'/dsc/IISInstall.zip')]",
     "iisConfigurationFunction": "IISInstall.ps1\\IISInstall",
     "iisSettings": {
@@ -145,35 +131,24 @@
       "wmfVersion": "5.0",
       "configurationFunction": "[variables('iisConfigurationFunction')]"
     },
-
     "sqlVmName": "[concat(substring(variables('appmigrgid'),0,7), '-sql')]",
     "sqlVmSize": "Standard_DS2_v2",
     "sqlImageInfo": {
-      "publisher": "MicrosoftSQLServer",
-      "offer": "SQL2008R2SP3-WS2008R2SP1",
-      "sku": "Express",
+      "publisher": "MicrosoftWindowsServer",
+      "offer": "WindowsServer",
+      "sku": "2008-R2-SP1",
       "version": "latest"
     },
     "sqlNicIPAddress": "10.0.1.100",
-    "sqlConfigurationScript": "[concat(variables('baseUrl'),'/scripts/ConfigureSQL.ps1', parameters('_artifactsLocationSasToken'))]",
-    "sqlConfigurationScript1": "[concat(variables('baseUrl'),'/scripts/StartConfigureSQL.ps1', parameters('_artifactsLocationSasToken'))]",
+    "sqlDownload":"https://download.microsoft.com/download/0/4/B/04BE03CD-EAF3-4797-9D8D-2E08E316C998/SQLEXPRADV_x64_ENU.exe",
+    "sqlConfigurationScript1": "[concat(variables('baseUrl'),'/scripts/InstallSQL.ps1', parameters('_artifactsLocationSasToken'))]",
+
     "sqlSettings01": {
       "fileUris": [
-        "[variables('sqlConfigurationScript')]",
+        "[variables('sqlDownload')]",
         "[variables('sqlConfigurationScript1')]"
-      ]
-    },
-    "sqlProtectedSettings01": {
-      "commandToExecute": "powershell -command {cls}"
-    },
-    "sqlSettings02": {
-      "fileUris": [
-        "[variables('sqlConfigurationScript')]",
-        "[variables('sqlConfigurationScript1')]"
-      ]
-    },
-    "sqlProtectedSettings02": {
-      "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ./scripts/StartConfigureSQL.ps1 -adminUsername ',variables('adminUsername'),' -adminPassword ',variables('adminPassword'))]"
+      ],
+      "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File ./scripts/InstallSQL.ps1"
     },
 
     "vnetName": "[concat(substring(variables('appmigrgid'),0,7), '-vnet')]",
@@ -188,8 +163,6 @@
     "vnetSubnet1AddressRange": "10.0.0.0/24",
     "vnetSubnet2AddressRange": "10.0.1.0/24",
     "vnetSubnet3AddressRange": "10.0.2.0/24",
-
-
     "nsgName": "[concat(substring(variables('appmigrgid'),0,7), '-nsg')]",
     "nsgId": "[resourceId('Microsoft.Network/networkSecurityGroups',variables('nsgName'))]",
     "nsgSecurityRules": [
@@ -244,7 +217,6 @@
         }
       }
     },
-
     {
       "condition": true,
       "comments": "Network Security Group that enables RDP to the Jumpbox",
@@ -277,7 +249,6 @@
         }
       }
     },
-
     {
       "condition": true,
       "comments": "Virtual Network with two subnets (FE and BE)",
@@ -339,7 +310,6 @@
         }
       }
     },
-
     {
       "condition": true,
       "comments": "Application Gateway Deployment",
@@ -377,7 +347,6 @@
         }
       }
     },
-
     {
       "condition": true,
       "comments": "Traffic Manager Deployment",
@@ -410,7 +379,6 @@
         }
       }
     },
-
     {
       "condition": true,
       "comments": "Virtual Machine - Domain Controller with provided name, 1 data disk, no public IP, no avset, no LB Rule, no LB NAT Rule, no NSG, no DNS settings, and static IP address",
@@ -579,7 +547,6 @@
         }
       }
     },
-
     {
       "condition": true,
       "comments": "Virtual Machine - Jumpbox VM with provided name, no data disk, with public IP, no avset, no LB Rule, no LB NAT Rule, no NSG, no DNS settings, and dynamic IP address",
@@ -671,7 +638,6 @@
         }
       }
     },
-
     {
       "condition": true,
       "comments": "Virtual Machine - Windows Server 2016 with Containers with provided name, no data disk, no public IP, no avset, no LB Rule, no LB NAT Rule, no NSG, no DNS settings, and dynamic IP address",
@@ -757,7 +723,6 @@
         }
       }
     },
-
     {
       "condition": true,
       "comments": "Virtual Machine - Web Server VM with provided name, no data disk, with no public IP, no avset, no LB Rule, no LB NAT Rule, no NSG, no DNS settings, and dynamic IP address",
@@ -882,172 +847,148 @@
     },
 
     {
-      "condition":true,
-      "comments": "SQL NIC",
-      "name": "[concat(variables('sqlVmName'),'-NIC')]",
-      "type": "Microsoft.Network/networkInterfaces",
-      "location": "[variables('location')]",
-      "apiVersion": "[variables('nicApiVersion')]",
+      "condition": true,
+      "comments": "Virtual Machine - SQL VM with provided name, 2 data disks, no public IP, no avset, no LB Rule, no LB NAT Rule, no NSG, with DNS settings, and dynamic IP address",
+      "name": "[concat(variables('deploymentUniqueString'),'-',variables('sqlVmName'),'-vmDeployment')]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "[variables('deploymentApiVersion')]",
       "dependsOn": [
         "[concat(variables('deploymentUniqueString'),'-',variables('vnetName'),'vNetDeployment')]"
       ],
       "properties": {
-        "ipConfigurations": [
-          {
-            "name": "ipconfig1",
-            "properties": {
-              "privateIPAllocationMethod": "Static",
-              "privateIPAddress": "[variables('sqlNicIPAddress')]",
-              "subnet": {
-                "id": "[variables('vnetSubnet2Id')]"
-              }
-            }
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('vmBuildingBlockUri')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "vmApiVersion": {
+            "value": "[variables('vmApiVersion')]"
+          },
+          "nicApiVersion": {
+            "value": "[variables('nicApiVersion')]"
+          },
+          "publicIpApiVersion": {
+            "value": "[variables('publicIpApiVersion')]"
+          },
+          "deploymentUniqueString": {
+            "value": "[variables('deploymentUniqueString')]"
+          },
+          "location": {
+            "value": "[variables('location')]"
+          },
+          "completeVmNameProvided": {
+            "value": "yes"
+          },
+          "vmNamePrefix": {
+            "value": "[variables('sqlVmName')]"
+          },
+          "vmSize": {
+            "value": "[variables('sqlVmSize')]"
+          },
+          "adminUserName": {
+            "value": "[variables('adminUserName')]"
+          },
+          "adminPassword": {
+            "value": "[variables('adminPassword')]"
+          },
+          "vmCount": {
+            "value": 1
+          },
+          "imageInfo": {
+            "value": "[variables('sqlImageInfo')]"
+          },
+          "sasToken": {
+            "value": "[parameters('_artifactsLocationSasToken')]"
+          },
+          "attachDataDisks": {
+            "value": "yes"
+          },
+          "dataDiskCount": {
+            "value": 2
+          },
+          "dataDiskSizeGb": {
+            "value": 256
+          },
+          "useAvailabilitySet": {
+            "value": "no"
+          },
+          "subnetId": {
+            "value": "[variables('vnetSubnet2Id')]"
+          },
+          "usePublicIpAddress": {
+            "value": "no"
+          },
+          "privateIpAddressType": {
+            "value": "Static"
+          },
+          "privateIpAddress": {
+            "value": "[variables('sqlNicIPAddress')]"
+          },
+          "includeVmInLoadBalancerBe": {
+            "value": "no"
+          },
+          "assignVmsToLoadBalancerNatRule": {
+            "value": "no"
+          },
+          "attachNsg": {
+            "value": "no"
+          },
+          "configureDnsServers": {
+            "value": "yes"
+          },
+          "dnsServers": {
+            "value": [
+              "[variables('dcNicIPAddress')]"
+            ]
           }
-        ],
-        "dnsSettings":{
-          "dnsServers":[
-            "[variables('dcNicIPAddress')]"
-          ]
         }
       }
     },
     {
       "condition": true,
-      "comments": "Virtual Machine - SQL VM ",
-      "name": "[concat(variables('deploymentUniqueString'),'-SqlDeplmt01')]",
+      "comments": "Custom Script - Install SQL",
+      "name": "[concat(variables('deploymentUniqueString'),'-',variables('sqlVmName'),'customscript01')]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "[variables('deploymentApiVersion')]",
       "dependsOn": [
-        "[concat(variables('sqlVmName'),'-NIC')]",
-        "[concat(variables('deploymentUniqueString'),'-',variables('dcVmName'),'dsc2')]"
+        "[concat(variables('deploymentUniqueString'),'-',variables('sqlVmName'),'-vmDeployment')]"
       ],
       "properties": {
         "mode": "Incremental",
-        "template": {
-          "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-          "contentVersion": "1.0.0.0",
-          "resources": [
-            {
-              "apiVersion": "[variables('vmApiVersion')]",
-              "type": "Microsoft.Compute/virtualMachines",
-              "name": "[variables('sqlVmName')]",
-              "location": "[variables('location')]",
-              "properties": {
-                "hardwareProfile": {
-                  "vmSize": "[variables('sqlVmSize')]"
-                },
-                "osProfile": {
-                  "computerName": "[variables('sqlVmName')]",
-                  "adminUsername": "[variables('adminUsername')]",
-                  "adminPassword": "[variables('adminPassword')]"
-                },
-                "storageProfile": {
-                  "imageReference": "[variables('sqlImageInfo')]",
-                  "osDisk": {
-                    "name": "[concat(variables('sqlVmName'),'-osdisk')]",
-                    "caching": "ReadWrite",
-                    "createOption": "FromImage",
-                    "managedDisk": {
-                      "storageAccountType": "Standard_LRS"
-                    }
-                  }
-                },
-                "networkProfile": {
-                  "networkInterfaces": [
-                    {
-                      "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(variables('sqlVmName'),'-NIC'))]"
-                    }
-                  ]
-                }
-              },
-              "resources": [
-                {
-                  "type": "Microsoft.Compute/virtualMachines/extensions",
-                  "name": "[concat(variables('sqlVmName'),'/sqlconfig')]",
-                  "apiVersion": "[variables('vmExtensionApiVersion')]",
-                  "location": "[variables('location')]",
-                  "dependsOn": [
-                    "[variables('sqlVmName')]"
-                  ],
-                  "properties": {
-                    "publisher": "Microsoft.Compute",
-                    "type": "CustomScriptExtension",
-                    "typeHandlerVersion": "1.9",
-                    "autoUpgradeMinorVersion": true,
-                    "settings": "[variables('sqlSettings01')]",
-                    "protectedSettings": "[variables('sqlProtectedSettings01')]"
-                  }
-                }
-              ]
-            }
-          ]
+        "templateLink": {
+          "uri": "[variables('vmExtensionBuildingBlockUri')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "apiVersion": {
+            "value": "[variables('vmExtensionApiVersion')]"
+          },
+          "location": {
+            "value": "[variables('location')]"
+          },
+          "vmName": {
+            "value": "[variables('sqlVmName')]"
+          },
+          "extensionFriendlyName": {
+            "value": "sqlconfig"
+          },
+          "extensionType": {
+            "value": "customScriptExtension"
+          },
+          "settings": {
+            "value": "[variables('sqlSettings01')]"
+          },
+          "autoUpgradeMinorVersion": {
+            "value": true
+          },
+          "customScriptExtensionTypeHandlerVersion": {
+            "value": "1.9"
+          }
         }
       }
     },
-    {
-      "condition": true,
-      "comments": "Virtual Machine - SQL VM - Cleaning up Custom Script Extension",
-      "name": "[concat(variables('deploymentUniqueString'),'-SqlCleanupExtensionUpDeployment')]",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "[variables('deploymentApiVersion')]",
-      "dependsOn": [
-        "[concat(variables('deploymentUniqueString'),'-SqlDeplmt01')]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "template": {
-          "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-          "contentVersion": "1.0.0.0",
-          "resources": [
-            {
-              "apiVersion": "[variables('vmApiVersion')]",
-              "type": "Microsoft.Compute/virtualMachines",
-              "name": "[variables('sqlVmName')]",
-              "location": "[variables('location')]",
-              "properties": {
-                "hardwareProfile": {
-                  "vmSize": "[variables('sqlVmSize')]"
-                },
-                "osProfile": {
-                  "computerName": "[variables('sqlVmName')]",
-                  "adminUsername": "[variables('adminUsername')]",
-                  "adminPassword": "[variables('adminPassword')]"
-                },
-                "storageProfile": {
-                  "imageReference": "[variables('sqlImageInfo')]",
-                  "osDisk": {
-                    "name": "[concat(variables('sqlVmName'),'-osdisk')]",
-                    "caching": "ReadWrite",
-                    "createOption": "FromImage",
-                    "managedDisk": {
-                      "storageAccountType": "Standard_LRS"
-                    }
-                  },
-                  "dataDisks": [
-                    {
-                      "lun": 0,
-                      "createOption": "Empty",
-                      "diskSizeGB": 128,
-                      "managedDisk": {
-                        "storageAccountType": "Standard_LRS"
-                      }
-                    }
-                  ]
-                },
-                "networkProfile": {
-                  "networkInterfaces": [
-                    {
-                      "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(variables('sqlVmName'),'-NIC'))]"
-                    }
-                  ]
-                }
-              },
-              "resources": []
-            }
-          ]
-        }
-      }
-    },
+
 
     {
       "condition": true,
@@ -1059,7 +1000,8 @@
         "[concat(variables('deploymentUniqueString'),'-',variables('dcVmName'),'dsc2')]",
         "[concat(variables('deploymentUniqueString'),'-',variables('jmpVmName'),'-vmDeployment')]",
         "[concat(variables('deploymentUniqueString'),'-',variables('webVmName'),'dsc')]",
-        "[concat(variables('deploymentUniqueString'),'-',variables('cntVmName'),'-vmDeployment')]"
+        "[concat(variables('deploymentUniqueString'),'-',variables('cntVmName'),'-vmDeployment')]",
+        "[concat(variables('deploymentUniqueString'),'-',variables('sqlVmName'),'customscript01')]"
       ],
       "copy": {
         "name": "dnsUpdateCopy",
@@ -1098,7 +1040,6 @@
         }
       }
     },
-
     {
       "condition": true,
       "comments": "Virtual Networks - Updating existing vNet with DNS",
@@ -1138,7 +1079,6 @@
         }
       }
     },
-
     {
       "condition": true,
       "comments": "DOMAIN JOIN - Domain joining VMs",
@@ -1174,26 +1114,6 @@
             "value": "[variables('domainName')]"
           }
         }
-      }
-    },
-
-    {
-      "condition": true,
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(variables('sqlVmName'),'/sqlconfig')]",
-      "apiVersion": "[variables('vmExtensionApiVersion')]",
-      "location": "[variables('location')]",
-      "dependsOn": [
-        "[concat(variables('deploymentUniqueString'),'-SqlCleanupExtensionUpDeployment')]",
-        "[concat(variables('deploymentUniqueString'),'domainJoiningVms')]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Compute",
-        "type": "CustomScriptExtension",
-        "typeHandlerVersion": "1.9",
-        "autoUpgradeMinorVersion": true,
-        "settings": "[variables('sqlSettings02')]",
-        "protectedSettings": "[variables('sqlProtectedSettings02')]"
       }
     }
   ],
