@@ -80,9 +80,8 @@ This exercise should be done from the Container host machine
     docker run -it minigitwin powershell
     ````
 
-1. From the Visual Studio online portal, generate temporary credentials for Git. We need these to clone the repository
-
-1. Add an alias and a password and click `Save Git Credentials`
+1. From the Visual Studio online portal, generate temporary credentials for Git. We need these to clone the repository. Add an alias and a password and click `Save Git Credentials`
+    > You can also create a personal access token (PAT)
 
     ![image](./media/2018-03-21_2-15-36.png)
 
@@ -97,12 +96,6 @@ This exercise should be done from the Container host machine
     Password for 'https://[YOUR GIT ALIAS]@YOUR VSO ACCOUNT].visualstudio.com':[YOUR GENERATED GIT CREDENTIALS]
 
     cd [YOUR REPO NAME]
-    ````
-
-1. Copy the source files into this directory
-
-    ````powershell
-    xcopy C:\jobswebsite\*.* . /s
     ````
 
 1. Configure Git, add the source files and push them to the remote repo
@@ -201,15 +194,15 @@ Azure Container Registry will serve as a place to save your container images, wh
 
     ![images](./media/hol9-11.png)
 
-1. Click on `Save and queue > Save`. Queue a build.
+1. Click on `Save and queue > Save & Queue` to create a build.
 
     ![image](./media/2018-03-21_1-14-48.png)
 
-1. View the logs for the build and ensure the container is built and pushed to ACR (this may take > 10 mins)
+1. View the logs for the build and ensure the container is built and pushed to ACR (this may take > 10 mins or more)
 
 ### Exercise 4 - Create a Release definition<a name="ex4"></a>
 
-1. Once the build is complete click on `Release`.
+1. Once the build is complete click on `Releases`.
 
     ![image](./media/hol9-12.png)
 
