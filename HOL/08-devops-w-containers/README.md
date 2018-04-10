@@ -13,27 +13,28 @@ In this lab, you will create a VSTS CI/CD pipeline that will deploy one of the a
 ## Exercises
 
 This hands-on-lab has the following exercises:
-1. [Exercise 1: Setup Network Security Groups and Firewall Ports](#ex1)
+1. [Exercise 1: Setup Network Security Groups, Firewall Ports, and Puplic IP for Container Host](#ex1)
 1. [Exercise 2: Push code to VSO](#ex2)
 1. [Exercise 3: Create an Azure Container Registry](#ex3)
 1. [Exercise 4: Create a Build definitions](#ex4)
 1. [Exercise 5: Create a Release definition](#ex5)
 
-### Exercise 1 - Exercise 1: Setup Network Security Groups and Firewall Ports<a name="ex1"></a>
-
+### Exercise 1 - Setup Network Security Groups, Firewall Ports, and Puplic IP for Container Host<a name="ex1"></a>
+1. Login to https://shell.azure.com
+    ```powershell
+    Select-AzureRmSubscription -Subscription "<your subscription name>"
+    ```
 1. Create a public IP in Azure and add it to your Windows Container Host
     ```powershell
-    #Login to Azure and select your subscription
-    Login-AzureRmAccount
-    Select-AzureRmSubscription -Subscription "<your subscription name>"
     #set your vairable nems for resource group, location, the Windows container host VM's NIC, and new PIP name
     $rgName = "<your resource group name>"
     $location = "<your deployment location>"
     $nicName = "<your container host vm name>-cnt-NIC-001"
+    $dnsLabel = "<your container host vm name>"
     $pipName = "<your container host vm name>-cnt-NIC-001-PIP"
 
     #Deploy the new PIP
-    $pip = New-AzureRmPublicIpAddress -ResourceGroupName $rgName -Name $pipName -Location $location -AllocationMethod Dynamic
+    $pip = New-AzureRmPublicIpAddress -ResourceGroupName $rgName -Name $pipName -Location $location -AllocationMethod Dynamic -DomainNameLabel $dnsLabel
 
     #Bind the new PIP to the Windows Container Host VM's NIC
     $nic = Get-AzureRmNetworkInterface -Name $nicName -ResourceGroupName $rgName
@@ -43,7 +44,7 @@ This hands-on-lab has the following exercises:
     #Validate that a Public IP Address has been assigned
     (Get-AzureRmPublicIpAddress -Name $pipName -ResourceGroupName $rgName).IpAddress
     ```
-1. Login to the Windows Container Host and open the needed firewall ports.
+1. RDP/Login to the Windows Container Host and open the needed firewall ports. Open a cmd or powershell prompt.
     ```powershell
     netsh advfirewall firewall add rule name="Docker Rule" dir=in action=allow protocol=TCP localport=2375
 1. Create a Rule on your NSG to allow remote management of docker on your host vm.
@@ -60,8 +61,9 @@ This hands-on-lab has the following exercises:
 
 1. Validate from your development environment that you can connect to the host sever.
     ```powershell
-    #Get your Publick IP Address
+    #Get your Publick IP Address and the DNS Lable
     (Get-AzureRmPublicIpAddress -Name $pipName -ResourceGroupName $rgName).IpAddress
+    (Get-AzureRmPublicIpAddress -Name $pipName -ResourceGroupName $rgName).DnsSettingsText
 
     docker --host tcp://<your Windows Contianer Host Public IP address> info
     PS C:\WINDOWS\system32> docker --host tcp://13.66.48.150 info
