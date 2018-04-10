@@ -13,13 +13,93 @@ In this lab, you will create a VSTS CI/CD pipeline that will deploy one of the a
 ## Exercises
 
 This hands-on-lab has the following exercises:
+1. [Exercise 1: Setup Network Security Groups and Firewall Ports](#ex1)
+1. [Exercise 2: Push code to VSO](#ex2)
+1. [Exercise 3: Create an Azure Container Registry](#ex3)
+1. [Exercise 4: Create a Build definitions](#ex4)
+1. [Exercise 5: Create a Release definition](#ex5)
 
-1. [Exercise 1: Push code to VSO](#ex1)
-1. [Exercise 2: Create an Azure Container Registry](#ex2)
-1. [Exercise 3: Create a Build definitions](#ex3)
-1. [Exercise 4: Create a Release definition](#ex4)
+### Exercise 1 - Exercise 1: Setup Network Security Groups and Firewall Ports<a name="ex1"></a>
 
-### Exercise 1 - Push your application VSO<a name="ex2"></a>
+1. Create a public IP in Azure and add it to your Windows Container Host
+    ```powershell
+    #Login to Azure and select your subscription
+    Login-AzureRmAccount
+    Select-AzureRmSubscription -Subscription "<your subscription name>"
+    #set your vairable nems for resource group, location, the Windows container host VM's NIC, and new PIP name
+    $rgName = "<your resource group name>"
+    $location = "<your deployment location>"
+    $nicName = "<your container host vm name>-cnt-NIC-001"
+    $pipName = "<your container host vm name>-cnt-NIC-001-PIP"
+
+    #Deploy the new PIP
+    $pip = New-AzureRmPublicIpAddress -ResourceGroupName $rgName -Name $pipName -Location $location -AllocationMethod Dynamic
+
+    #Bind the new PIP to the Windows Container Host VM's NIC
+    $nic = Get-AzureRmNetworkInterface -Name $nicName -ResourceGroupName $rgName
+    $nic.IpConfigurations[0].PublicIpAddress = $pip 
+    Set-AzureRmNetworkInterface -NetworkInterface $nic
+
+    #Validate that a Public IP Address has been assigned
+    (Get-AzureRmPublicIpAddress -Name $pipName -ResourceGroupName $rgName).IpAddress
+    ```
+1. Login to the Windows Container Host and open the needed firewall ports.
+    ```powershell
+    netsh advfirewall firewall add rule name="Docker Rule" dir=in action=allow protocol=TCP localport=2375
+1. Create a Rule on your NSG to allow remote management of docker on your host vm.
+    ```powershell
+    $rgName = "<your resource group name>"
+    $nsgName = "<your NSG name>"
+    
+    #Add a rule for docker deployments to your existing NSG
+    $nsg = Get-AzureRmNetworkSecurityGroup -Name  $nsgName -ResourceGroupName $rgName `
+        | Add-AzureRmNetworkSecurityRuleConfig -Name docker-rule -Description "Docker Rule" -Access Allow `
+        -Protocol Tcp -Direction Inbound -Priority 200 -SourceAddressPrefix Internet -SourcePortRange * `
+        -DestinationAddressPrefix 10.0.0.5  -DestinationPortRange 2375 |  Set-AzureRmNetworkSecurityGroup
+    ```
+
+1. Validate from your development environment that you can connect to the host sever.
+    ```powershell
+    #Get your Publick IP Address
+    (Get-AzureRmPublicIpAddress -Name $pipName -ResourceGroupName $rgName).IpAddress
+
+    docker --host tcp://<your Windows Contianer Host Public IP address> info
+    PS C:\WINDOWS\system32> docker --host tcp://13.66.48.150 info
+        Containers: 0
+        Running: 0
+        Paused: 0
+        Stopped: 0
+        Images: 2
+        Server Version: 17.06.2-ee-6
+        Storage Driver: windowsfilter
+        Windows: 
+        Logging Driver: json-file
+        Plugins:
+        Volume: local
+        Network: l2bridge l2tunnel nat null overlay transparent
+        Log: awslogs etwlogs fluentd json-file logentries splunk syslog
+        Swarm: inactive
+        Default Isolation: process
+        Kernel Version: 10.0 14393 (14393.2068.amd64fre.rs1_release.180209-1727)
+        Operating System: Windows Server 2016 Datacenter
+        OSType: windows
+        Architecture: x86_64
+        CPUs: 2
+        Total Memory: 7GiB
+        Name: apm3pjq-cnt
+        ID: KUHW:KYVP:OMYO:XW5A:DKIR:QDAA:2X7Z:NRZV:JYNQ:5ZF3:FXQI:NDYW
+        Docker Root Dir: C:\ProgramData\docker
+        Debug Mode (client): false
+        Debug Mode (server): false
+        Registry: https://index.docker.io/v1/
+        Experimental: false
+        Insecure Registries:
+        127.0.0.0/8
+        Live Restore Enabled: false
+    ```
+
+
+### Exercise 2 - Push your application VSO<a name="ex2"></a>
 
 This exercise should be done from the Container host machine
 
@@ -112,7 +192,7 @@ This exercise should be done from the Container host machine
 
     ![image](./media/2018-03-21_2-56-53.png)
 
-### Exercise 1 - Create an Azure Container Registry<a name="ex1"></a>
+### Exercise 3 - Create an Azure Container Registry<a name="ex3"></a>
 
 Azure Container Registry will serve as a place to save your container images, which you can later pull and deploy to different environment. For more information on Azure container registry go to (link).
 
@@ -136,7 +216,7 @@ Azure Container Registry will serve as a place to save your container images, wh
 
     ![image](./media/2018-03-21_0-48-02.png)
 
-### Exercise 3 - Create a Build definition<a name="ex3"></a>
+### Exercise 4 - Create a Build definition<a name="ex4"></a>
 
 1. Log on to your Visual Studio Online account
 
@@ -200,7 +280,7 @@ Azure Container Registry will serve as a place to save your container images, wh
 
 1. View the logs for the build and ensure the container is built and pushed to ACR (this may take > 10 mins or more)
 
-### Exercise 4 - Create a Release definition<a name="ex4"></a>
+### Exercise 5 - Create a Release definition<a name="ex5"></a>
 
 1. Once the build is complete click on `Releases`.
 
