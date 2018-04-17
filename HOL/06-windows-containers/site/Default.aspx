@@ -95,7 +95,7 @@
                         {
                             Response.Write("================================================</br>");
                             Response.Write("Id: " + MyTblDataReader["Id"] + "</br>");
-                            Response.Write("Data: " + MyTblDataReader["Data"] + "</br>");
+                            Response.Write("Name: " + MyTblDataReader["Name"] + "</br>");
                         }
                     }
                     catch (Exception sqlex)
