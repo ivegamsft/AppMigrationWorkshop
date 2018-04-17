@@ -121,7 +121,7 @@ This hands-on-lab has the following exercises:
     ````
 
 1. You will need the private IP address of the Windows Container Host.
-
+1. Install docker on the development/jump environment. By navigating to https://docs.docker.com/docker-for-windows/install/ and install the Stable Channel.
 1. Validate from your development/jump environment that you can connect to the host sever, assuming your public IP address is `[YOUR PRIVATE IP ADDRESS]`
 
     ````powershell
@@ -168,10 +168,10 @@ This configuration will be done from on the domain controller.
     ```
 1. Create a gMSA Account and set it for constrained delegation. Replace the values with your particular VM names.
 
-    > Note: The name of the AD Service account is hard-coded in the examples to `chost-gsma`. This can be any valid sAMAccountName name.
+    > Note: The name of the AD Service account is hard-coded in the examples to `chost-gmsa`. This can be any valid sAMAccountName name.
 
     ````powershell
-    New-ADServiceAccount -Name "chost-gsma" -DNSHostName "[YOUR CONTAINER HOST NAME].appmig.local" `
+    New-ADServiceAccount -Name "chost-gmsa" -DNSHostName "[YOUR CONTAINER HOST NAME].appmig.local" `
     -PrincipalsAllowedToRetrieveManagedPassword  "Domain Controllers", "domain admins", "CN=container-hosts,CN=Users,DC=appmig,DC=local" `
     -KerberosEncryptionType RC4, AES128, AES256 `
     -ServicePrincipalNames HTTP/[YOUR CONTAINER HOST NAME], HTTP/[YOUR CONTAINER HOST NAME].appmig.local
@@ -180,7 +180,7 @@ This configuration will be done from on the domain controller.
 1. Configure the gMSA account for constrained delegation. Replace the values for your SQL server.
 
     ````powershell
-    Set-ADServiceAccount -Identity "chost-gsma" -add @{"msDS-AllowedToDelegateTo"="MSSQLSvc/[YOUR SQL SERVER NAME]:1433","MSSQLSvc/[YOUR SQL SERVER NAME].appmig.local:1433"}
+    Set-ADServiceAccount -Identity "chost-gmsa" -add @{"msDS-AllowedToDelegateTo"="MSSQLSvc/[YOUR SQL SERVER NAME]:1433","MSSQLSvc/[YOUR SQL SERVER NAME].appmig.local:1433"}
     ````
 
 1. Configure the Windows Container host for constrained delegation
@@ -197,30 +197,30 @@ The following commands are run from the Windows Container host machine
 
 1. Once the Windows Container host is restarted, add the gMSA account by executing the following command
 
-    > Note: The name of the AD Service account is hard-coded here to `chost-gsma`
+    > Note: The name of the AD Service account is hard-coded here to `chost-gmsa`
 
     ````powershell
     Enable-WindowsOptionalFeature -FeatureName ActiveDirectory-Powershell -online -all
-    Get-ADServiceAccount -Identity "chost-gsma"
-    Install-ADServiceAccount -Identity "chost-gsma"
-    Test-AdServiceAccount -Identity "chost-gsma"
+    Get-ADServiceAccount -Identity "chost-gmsa"
+    Install-ADServiceAccount -Identity "chost-gmsa"
+    Test-AdServiceAccount -Identity "chost-gmsa"
     ````
 
     You should see output something like this:
 
     ````powershell
     Get-ADServiceAccount -Identity
-    DistinguishedName : CN=chost-gsma,CN=Managed Service Accounts,DC=appmig,DC=local
+    DistinguishedName : CN=chost-gmsa,CN=Managed Service Accounts,DC=appmig,DC=local
     Enabled           : True
-    Name              : chost-gsma
+    Name              : chost-gmsa
     ObjectClass       : msDS-GroupManagedServiceAccount
     ObjectGUID        : fff6c1c6-c3f0-4b0c-a34c-682708270f80
-    SamAccountName    : chost-gsma$
+    SamAccountName    : chost-gmsa$
     SID               : S-1-5-21-5555555-222222222-945891031-1107
     UserPrincipalName :
 
-    Install-ADServiceAccount -Identity chost-gsma
-    Test-AdServiceAccount -Identity chost-gsma
+    Install-ADServiceAccount -Identity chost-gmsa
+    Test-AdServiceAccount -Identity chost-gmsa
     True
     ````
     > Note: If you receive the message `Install-ADServiceAccount : Cannot Install service account.  Error Message: ‘{Access Denied}`, reboot the Windows Container Host to update the AD group membership
@@ -240,19 +240,19 @@ The following commands are run from the Windows Container host machine
     > In this case, you can also add the gMSA account to the server like this
 
     ````powershell
-    Get-ADServiceAccount -Identity chost-gsma | Set-ADServiceAccount -PrincipalsAllowedToRetrieveManagedPassword 'chost-gsma$'
+    Get-ADServiceAccount -Identity chost-gmsa | Set-ADServiceAccount -PrincipalsAllowedToRetrieveManagedPassword 'chost-gmsa$'
     ````
 
 ### Exercise 4: Deploy a containerized web app to validate configuration<a name="ex4"></a>
 
 1. On the container host, we need to create a credentials spec file for Docker
 
-    > > Note: The name of the AD Service account is hard-coded in the examples to `chost-gsma`
+    > > Note: The name of the AD Service account is hard-coded in the examples to `chost-gmsa`
 
      ````powershell
     Invoke-WebRequest "https://raw.githubusercontent.com/Microsoft/Virtualization-Documentation/live/windows-server-container-tools/ServiceAccounts/CredentialSpec.psm1" -UseBasicParsing -OutFile $env:TEMP\cred.psm1
     Import-Module $env:temp\cred.psm1
-    New-CredentialSpec -Name win -AccountName chost-gsma
+    New-CredentialSpec -Name win -AccountName chost-gmsa
     ````
 
 1. Run the following command to return location and name of credential spec JSON file
@@ -297,7 +297,25 @@ The following commands are run from the Windows Container host machine
     RUN  C:\windows\system32\inetsrv\appcmd.exe set config "Site" -section:system.webServer/security/authentication/windowsAuthentication /enabled:"True" /commit:apphost
     EXPOSE 80
     ````
-
+1. Update the connection string in the web.config file. Replace the [YOUR SQL SERVER NAME] with the your SQL Server Host Name.
+    ```xml
+        <?xml version="1.0"?>
+        <!--
+        For more information on how to configure your ASP.NET application, please visit
+        https://go.microsoft.com/fwlink/?LinkId=169433
+        -->
+        <configuration>
+            <system.web>
+            <compilation debug="true" targetFramework="4.6.1"/>
+            <httpRuntime targetFramework="4.6.1"/>
+            </system.web>
+            <connectionStrings>
+                <remove name="RemoteSqlSever" />
+                <clear />
+                <add name="RemoteSqlServer" connectionString="Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=Classifieds;Data Source=[YOUR SQL SERVER NAME].appmig.local" providerName="System.Data.SqlClient" />
+            </connectionStrings>
+        </configuration>
+    ```
 1. From `PowerShell` execute the following:
 
     > Note: this may take up to 20 mins to download the images for the first time
@@ -312,7 +330,7 @@ The following commands are run from the Windows Container host machine
     > Note: In the example below, the host name is hard-coded to `chost`.
 
     ````powershell
-    docker run -d -h chost-gsma --security-opt "credentialspec=file://win.json" iis-site --name aspnet
+    docker run -d -h chost-gmsa --security-opt "credentialspec=file://win.json" iis-site --name aspnet
     ````
 
 1. Validate that the container is running:
