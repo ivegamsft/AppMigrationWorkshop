@@ -54,12 +54,14 @@ This hands-on-lab has the following exercises:
     > Note: If this is not the first time and it is the "Bash" shell that starts, please click in the dropdown box that shows "Bash" and select "PowerShell" instead.
 
 1. If you have at least contributor rights at subscription level, please select which subscription you would like the initialization process to create a storage account and click "Create storage" button.
+
     ![image](./media/pic2.jpg)
 
 1. You should see a command prompt like this one:
+
     ![image](./media/pic3.jpg)
 
-### Exercise 2: Downloading the materials to the Cloud Shell environment<a name="ex2"></a>
+### Exercise 2: Downloading artifacts to the Cloud Shell environment<a name="ex2"></a>
 
 ----
 
@@ -72,18 +74,7 @@ This hands-on-lab has the following exercises:
     ```
     > If you need to delete the directory and start over run the following:
     ```powershell
-    Remove-Item -Recurse -Force .\AppMigrationWorkshopRepo\
-    ```
-
-1. Create a folder called `AppMigrationWorkshopRepo`
-
-    ```powershell
-    md AppMigrationWorkshopRepo
-    ```
-1. Change folder to the newly create one
-
-    ```powershell
-    cd AppMigrationWorkshopRepo
+    Remove-Item .\AppMigrationWorkshop\ -Recurse -Force
     ```
 1. Clone the repository from its source
 
@@ -102,7 +93,7 @@ In the automated deployment, we are using PowerShell Desired State Configuration
 1. Change the current folder to the location of cloned files
 
     ```powershell
-    cd C:\Users\ContainerAdministrator\CloudDrive\AppMigrationWorkshopRepo\AppMigrationWorkshop\Shared\ARM-NewIaaS\dsc
+    cd C:\Users\ContainerAdministrator\CloudDrive\AppMigrationWorkshop\Shared\ARM-NewIaaS\dsc
     ```
 
 1. Copy the following folders to the Cloud Shell PowerShell modules folder
@@ -124,8 +115,8 @@ In the automated deployment, we are using PowerShell Desired State Configuration
 1. This solution was created using Visual Studio 2017 and it provides automatically a deployment script, please execute it by replacing some of the values as follows:
 
     ````powershell
-    .\Deploy-AzureResourceGroup.ps1 -ResourceGroupLocation <deployment location> `
-                                        -ResourceGroupName <resource group name> `
+    .\Deploy-AzureResourceGroup.ps1 -ResourceGroupLocation <DEPLOYMENT_LOCATION> `
+                                        -ResourceGroupName <RESOURCE_GROUP_NAME> `
                                         -UploadArtifacts `
                                         -TemplateFile .\azuredeploy.json `
                                         -TemplateParametersFile .\azuredeploy.parameters.json
@@ -135,8 +126,8 @@ In the automated deployment, we are using PowerShell Desired State Configuration
     Where:
 
     ````xml
-    <deployment location> - Azure Location the template will for the location property of all resources
-    <resource group name> - Name of the resource group where all resources will be created
+    <DEPLOYMENT_LOCATION> - Azure Location the template will for the location property of all resources
+    <RESOURCE_GROUP_NAME> - Name of the resource group where all resources will be created
     ````
 
     Example:
@@ -153,7 +144,9 @@ In the automated deployment, we are using PowerShell Desired State Configuration
 ### Exercise 4: Monitoring your deployment<a name="ex4"></a>
 
 ----
-Although you can monitor your deployment from a PowerShell command prompt without any issues, CloudShell has a fixed timeout of 20 minutes, if your deployment takes more than it to complete (our case, this deployment takes around 35) you will see the following message:
+Although you can monitor your deployment from a PowerShell command prompt without any issues, CloudShell has a fixed timeout of **20 minutes**, if your deployment takes more than it to complete (our case, this deployment takes approximately 35 minutes) 
+
+You will see the following message:
 
   ![image](./media/pic8.png)
 
@@ -163,7 +156,7 @@ As mentioned before, if your deployment was executed from a PowerShell command p
 
   ![image](./media/pic7.png)
 
-The idea of this exercise is to show the a to monitor your deployment that is independent from your deployment method (PowerShell command prompt, Azure CLI, Visual Studio, CloudShell, SDK, etc.), which is through the Resource Group's blade's Deployment property.
+The idea of this exercise is to show you how to monitor a deployment, that is independent from your deployment method (PowerShell command prompt, Azure CLI, Visual Studio, CloudShell, SDK, etc.). One method is through the Resource Group's blade's Deployment property.
 
 1. Go to the Azure Portal (http://portal.azure.com)
 
@@ -175,7 +168,7 @@ The idea of this exercise is to show the a to monitor your deployment that is in
 
     ![image](./media/02-01-d.png)
 
-1. From the Resource Group blade, there is a left menu item list, click on "Deployments"
+1. From the Resource Group blade, there is a left menu item list, click on `Deployments`
 
     ![image](./media/pic4.png)
 
@@ -183,15 +176,15 @@ The idea of this exercise is to show the a to monitor your deployment that is in
 
     ![image](./media/pic5.png)
 
-1. Your master deployment item is called azuredeploy-<MMDD>-<HHMM>, this is the main item to monitor, if you want more details about it (all other deployments being shown here are created by the main deployment). Click azuredeploy-<MMDD>-<HHMM>.
+1. Your master deployment item is called `azuredeploy-<MMDD>-<HHMM>`, this is the main item to monitor, if you want more details about it (all other deployments being shown here are created by the main deployment). Click `azuredeploy-<MMDD>-<HHMM>`.
 
     ![image](./media/pic6.png)
 
-1. This will show all deployments chained to the master deployment. If there is any issue or if you want to check more details you can click on "Operation Details" or "Related Events" link.
+1. This will show all deployments chained to the master deployment. If there is any issue or if you want to check more details you can click on `Operation Details` or `Related Events` link.
 
     ![image](./media/pic10.png)
 
-1. You will notice that your deployment is completed after status of azuredeploy-<MMDD>-<HHMM> deployment is Succeeded and it jumps to the top of the deployment list.
+1. You will notice that your deployment is completed after status of `azuredeploy-<MMDD>-<HHMM>` deployment is Succeeded and it jumps to the top of the deployment list.
 
     ![image](./media/pic11.png)
 

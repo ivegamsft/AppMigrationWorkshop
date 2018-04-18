@@ -69,7 +69,7 @@
                 <%
                     var connString = ConfigurationManager.ConnectionStrings["RemoteSqlServer"];
                     SqlConnection MyConnection = new SqlConnection(connString.ToString());
-                    SqlCommand MyTblCommand = new SqlCommand("SELECT TOP (10) [Id],[Data] FROM tbl_data", MyConnection);
+                    SqlCommand MyTblCommand = new SqlCommand("SELECT TOP 1000 [Id] ,[ParentCategoryId],[Path] ,[Name],[NumActiveAds] FROM [Classifieds].[dbo].[Categories]", MyConnection);
                     SqlCommand MyCommand = new SqlCommand("select suser_name() as username", MyConnection);
 
 
@@ -95,7 +95,7 @@
                         {
                             Response.Write("================================================</br>");
                             Response.Write("Id: " + MyTblDataReader["Id"] + "</br>");
-                            Response.Write("Data: " + MyTblDataReader["Data"] + "</br>");
+                            Response.Write("Name: " + MyTblDataReader["Name"] + "</br>");
                         }
                     }
                     catch (Exception sqlex)
