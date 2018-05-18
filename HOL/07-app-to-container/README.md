@@ -69,34 +69,6 @@ This hands-on-lab has the following exercises:
 
     ![image](./media/2018-03-18_6-20-25.png)
 
-1. The `Image2docker` tool for IIS and ASP.NET sites has 3 different Source Types that can be inspected. More details can be found at the [image2docker git hub repo](https://github.com/docker/communitytools-image2docker-win/blob/master/docs/IIS.md)
-
-    * Disk Images
-
-        ````powershell
-        ConvertTo-Dockerfile `
-        -ImagePath c:\iis.vhd `
-        -OutputPath c:\i2d2\iis `
-        -Artifact IIS
-        ````
-
-    * Local Machine
-
-        ````powershell
-        ConvertTo-Dockerfile `
-        -Local `
-        -OutputPath c:\i2d2\iis `
-        -Artifact IIS
-        ````
-
-    * Remote Machine
-
-        ````powershell
-            ConvertTo-Dockerfile `
-            -RemotePath \\192.168.1.11\c$ `
-            -OutputPath c:\i2d2\iis `
-            -Artifact IIS
-        ````
 
 1. Open `PowerShell`, and execute the following command
 
@@ -145,8 +117,6 @@ In this exercise we will containerize the applications that we deployed in HOL 2
     ````powershell
     RUN New-Website -Name 'TimeTracker' -PhysicalPath 'C:\Apps\TimeTracker' -Port 80 -ApplicationPool 'Classic .NET AppPool' -Force;
     ````
-
-1. TODO: ADD CHANGE TO USE APP CREDENTIALS
 
 1. Build the Docker Images
 
@@ -199,22 +169,22 @@ In this exercise we will containerize the applications that we deployed in HOL 2
     172.19.249.182
     ```
 
-1. RDP to the SQL machine and add the gSMA account to the databases
+1. RDP to the SQL machine and add the gSMA account to the databases. Open SQL Management Studio to preform the following query.
 
     ````sql
-    CREATE LOGIN [appmig\chost-gsma$] FROM WINDOWS
-    sp_addsrvRolemember "appmig\chost-gsma$", "sysadmin"
+    CREATE LOGIN [appmig\chost-gmsa$] FROM WINDOWS
+    sp_addsrvRolemember "appmig\chost-gmsa$", "sysadmin"
     USE [Jobs]
     GO
-    CREATE USER [appmig\chost-gsma$] FOR LOGIN [appmig\chost-gsma$] WITH DEFAULT_SCHEMA=[dbo]
+    CREATE USER [appmig\chost-gmsa$] FOR LOGIN [appmig\chost-gmsa$] WITH DEFAULT_SCHEMA=[dbo]
     GO
     USE [Timetracker]
     GO
-    CREATE USER [appmig\chost-gsma$] FOR LOGIN [appmig\chost-gsma$] WITH DEFAULT_SCHEMA=[dbo]
+    CREATE USER [appmig\chost-gmsa$] FOR LOGIN [appmig\chost-gmsa$] WITH DEFAULT_SCHEMA=[dbo]
     GO
     USE [Classifieds]
     GO
-    CREATE USER [appmig\chost-gsma$] FOR LOGIN [appmig\chost-gsma$] WITH DEFAULT_SCHEMA=[dbo]
+    CREATE USER [appmig\chost-gmsa$] FOR LOGIN [appmig\chost-gmsa$] WITH DEFAULT_SCHEMA=[dbo]
     GO
     ````
 
@@ -246,7 +216,7 @@ Now that we have an application up and running in a container on our Container h
 
 1. Add `timetracker` as the name, select `Browse` and navigate to the container host. Select the record and click `Ok` and `Ok` to save
 
-    ![image](./media/07-a-4.png)
+    ![image](./media/07-a-4.PNG)
 
 1. Open a powershell command prompt and flush the DNS records
 
@@ -269,29 +239,16 @@ The `Jobs` application is used as the source, but the treatment will be similar 
 * You have the source solution downloaded from the repo
 * You have .NET 3.5 Installed
 
-1. Make sure you have the Jobs Source Apps downloaded on your Dev VM. In this example they are located in the `C:\AppMigrationWorkshop\Shared\SourceApps\Apps\Jobs` folder
+1. Make sure you have the Jobs Source Apps downloaded on your Jump Box. In this example they are located in the `C:\AppMigrationWorkshop\Shared\SourceApps\Apps\Jobs` folder
 
     ![image](./media/06-02-a.png)
 
-1. Open Visual Studio 2017. Select `File > New Project > Visual C# > Web > Web Site` and choose `ASP.NET Empty Web Site` as the template. Choose a new location (in this example `c:\apps`)
+1. Open Visual Studio 2017. Select `File > New Website` and choose `ASP.NET Empty Web Site` as the template. Choose a new location (in this example `c:\apps`) and Name the WebSite `JobsSite`
 
-    ![image](./media/2018-03-20_1-02-05.png)
+    ![image](./media/hol7-4-step2.PNG)
 
-1. Name the project `JobsSite`.
 
-    ![image](./media/06-02-b.png)
-
-    > Note: Depending on your VS 2017 update version, the dialog may appear slightly different.
-    >
-    > ![image](./media/2018-03-18_5-49-05.png)
-    >
-    > ![image](./media/2018-03-18_5-50-48.png)
-    >
-    > OR
-    >
-    > ![image](./media/2018-03-20_0-58-45.png)
-    >
-
+    
 1. You should now have an empty web site solution as a target to copy the Jobs source files.
 
 1. Open Windows Explorer and navigate to the folder where you have stored the Jobs Source Files
@@ -317,12 +274,15 @@ The `Jobs` application is used as the source, but the treatment will be similar 
     ![image](./media/hol7-4-d.PNG)
 
 1. Remove the files "ProjectName.webproj" and "MyTemplate.vstemplate". These file types are no longer supported in VS 2017
-
-1. Add a blank text file to the Solution (not the Web Site) and rename it to `Dockerfile`, make sure to remove the ".txt" extension.
-
-    ![image](./media/hol7-4-e.PNG)
-
-    ![image](./media/hol7-4-f.PNG)
+1. Open PowerShell on the Jump Box and navigate to the project folder for the website you created
+	`Note: if you didnt update the path earlier and kept the default all projects are stored under C:\users\appmigadmin\documents\Visual Studio 2017\Projects`
+1. Open PowerShell on the Jump Box and navigate to the project folder for the website you created
+	`Note: if you didnt update the path earlier and kept the default all projects are stored under C:\users\appmigadmin\documents\Visual Studio 2017\Projects`
+1. Create a Dockerfile as follows
+	```powershell
+	new-item -type file -path .\Dockerfile
+	```
+1. Add an Existing item to the solution (not the web site) and navigate to where you created the dockerfile in the previous step
 
 1. Add the following to the Dockerfile
 
@@ -349,6 +309,7 @@ The `Jobs` application is used as the source, but the treatment will be similar 
         dir -r $path | Set-Acl -aclobject  $acl
     ````
 
+
 1. Since this is an older site, .NET 2.0 did not support Roslyn. Right-click on the web project and select `Manage Nuget Packages`
 
     ![image](./media/2018-03-20_1-59-06.png)
@@ -363,7 +324,10 @@ The `Jobs` application is used as the source, but the treatment will be similar 
 
     ![image](./media/2018-03-20_2-03-48.png)
 
-1. Copy the solution from your Dev VM to the Windows Container Host. In this case it has been copied to `C:\upgrades\JobsWebSite`
+1. Copy the solution from your Jump VM to the Windows Container Host. In this case it has been copied to `C:\upgrades\JobsWebSite`
+	The Solution on the jump box may be in two parts depending on how it is saves. Be sure to copy the website and the solution folder.
+	For Example if you choose the defaults when creating the project and adding the website, you will find the solution under c:\users\appmigadmin\documents\visual studio 2017\projects and the websites under c:\users\appmigadmin\documents\visual studio 2017\websites
+	Copy the solution over first, and copy the website over inside the solution folder
 
 1. Open a command prompt or Powershell and run the following command:
 
@@ -374,10 +338,10 @@ The `Jobs` application is used as the source, but the treatment will be similar 
 
 1. Now run a container using the image
     ````powershell
-    docker run -d -p 80:80 jobswebsite -h jobswebsite --security-opt "credentialspec=file://win.json" jobswebsite
+    docker run -d -p 80:80 -h chost-gmsa --security-opt "credentialspec=file://win.json" jobswebsite --name jobswebsite
     ````
 
-    > Note: If there is still a container running on port 80, you will need to stop it.
+    > Note: If there is still a container running on port 80, you will need to stop it using docker stop <containername> check using docker ps and look at what is running and the ports it is using
 
 1. Verify the container is running
 

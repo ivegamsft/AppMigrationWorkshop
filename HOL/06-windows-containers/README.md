@@ -57,21 +57,21 @@ This hands-on-lab has the following exercises:
     microsoft/nanoserver          sac2016             5a5dfd4deb23        6 weeks ago         1.1GB
     ````
 
-1. Configure the Docker daemon to open a tcp port for remote access. Open or create the daemon.json file in `C:\ProgramData\docker\config` folder with the following :
+1. Configure the Docker daemon to open a tcp port for remote access. Open or create the daemon.json file in `C:\ProgramData\docker\config` folder from PowerShell with the following :
 
+	```powershell
+	notepad c:\PropgramData\docker\config\daemon.json
+	```
     > [!WARNING]
     > This is not a secure port. For a reference how how to use a secure port go to the [eShop Modernizing Repo](https://github.com/dotnet-architecture/eShopModernizing/wiki/03.-How-to-deploy-your-Windows-Containers-based-app-into-Azure-VMs-(Including-CI-CD))
-
+	Copy the following code in and Save the file
     ```json
     { "hosts": ["tcp://0.0.0.0:2375","npipe://"] }
     ```
 
     ![image](./media/2018-03-18_6-27-42.png)
 
-    > Note: Ensure the JSON file has a .json extentsion. If you see the following, enable `File name extensions` and rename the `.txt` file to a `.json` file
-    >
-    > ![image](./media/2018-03-18_6-27-04.png)
-    >
+   
 
 1. Restart the Docker service
 
@@ -119,9 +119,10 @@ This hands-on-lab has the following exercises:
     ````powershell
     Login-AzureRMAccount
     ````
+	`NOTE: You may need to run Select-AzureRMSubscription to select the appropriate subscription if you have access to multiple with the account you have used to login`
 
 1. You will need the private IP address of the Windows Container Host.
-1. Install docker on the development/jump environment. By navigating to https://docs.docker.com/docker-for-windows/install/ and install the Stable Channel.
+1. Install docker on the development/jump environment. By downloading the installfrom from https://download.docker.com/win/stable/Docker%20for%20Windows%20Installer.exe and executing it following the default installation prompts.
 1. Validate from your development/jump environment that you can connect to the host sever, assuming your public IP address is `[YOUR PRIVATE IP ADDRESS]`
 
     ````powershell
@@ -274,6 +275,9 @@ The following commands are run from the Windows Container host machine
 1. Copy the sample site located in the `site` folder in the repo to a folder onto the Container host (in this example, `C:\site`).
 
     ![image](./media/2018-03-18_16-21-43.png)
+	
+	`NOTE: All Sources files were located on the jump box (name is unique per deployment) on the C Drive under AppMigrationWorkshop. You can access them from the containers box via a UNC path 
+	\\<containerhost>\c$\AppMigrationWorkShop. You will be required to disable the firewall on the jump box or open the relevant file sharing ports`
 
 1. Validate the docker file in the `site` folder
 

@@ -37,6 +37,24 @@ This lab is done from the jump box
 
 1. RDP into the jump box
 
+1. If this is the first time opening the browser on this machine, you may see the following:
+
+    ![image](./media/2018-05-18_15-51-13.png)
+
+    ![image](./media/2018-05-18_15-51-55.png)
+
+1. Disable the IE Enhanced Configuration setting by opening server manager
+
+    ![image](./media/2018-05-18_15-53-03.png)
+
+1. Locate the IE Enhanced Security Setting. Click the link
+
+    ![image](./media/2018-05-18_15-53-20.png)
+
+1. Select `Off`
+
+    ![image](./media/2018-05-18_15-53-35.png)
+
 1. Open a browser and download the Database Migration Assistant from [https://www.microsoft.com/en-us/download/details.aspx?id=53595](https://www.microsoft.com/en-us/download/details.aspx?id=53595)
 
 1. When prompted, click `Run` to run the installer. Click `Next`
@@ -55,7 +73,7 @@ This lab is done from the jump box
 
     ![image](./media/06-01-a.png)
 
-1. Select the Source by entering your SQL server name `appm[YOUR UNIQUE NAME]-sqlsvr`. When prompted, select `Server Name > Windows Authentication` and Uncheck `Encrypt connection` and select the `JOBS` database
+1. Select the Source by entering your SQL server name `appm[YOUR UNIQUE NAME]-sql`. When prompted, select `Server Name > Windows Authentication` and Uncheck `Encrypt connection` and select the `JOBS` database
 
     ![image](./media/06-01-b.png)
 
@@ -100,7 +118,7 @@ This lab is done from the jump box
 
 ---
 
-1. Make sure you have the Jobs Source Apps downloaded on your Dev VM. In this example they are located in the `C:\AppMigrationWorkshop\Shared\SourceApps\Apps\Jobs` folder
+1. Make sure you have the Jobs Source Apps downloaded on your jump box. In this example they are located in the `C:\AppMigrationWorkshop\Shared\SourceApps\Apps\Jobs` folder
 
     ![image](./media/06-02-a.png)
 
