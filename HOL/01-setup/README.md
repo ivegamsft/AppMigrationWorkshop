@@ -32,6 +32,7 @@ This hands-on-lab has the following exercises:
 1. [Exercise 2: Downloading the materials to the Cloud Shell environment](#ex2)
 1. [Exercise 3: Deployment of Azure resources](#ex3)
 1. [Exercise 4: Monitoring your deployment](#ex4)
+1. [Exercise 5: Set up your Visual Studio online account](#ex5)
 
 ### Exercise 1: Opening Cloud Shell for the first time<a name="ex1"></a>
 
@@ -187,6 +188,55 @@ The idea of this exercise is to show you how to monitor a deployment, that is in
 1. You will notice that your deployment is completed after status of `azuredeploy-<MMDD>-<HHMM>` deployment is Succeeded and it jumps to the top of the deployment list.
 
     ![image](./media/pic11.png)
+
+### Exercise 5: Set up your Visual Studio Online Account<a name="ex5"></a>
+
+----
+
+1. Open a browser and navigate to https://my.visualstudio.com
+
+1. Sign in with your Microsoft Account or create a new one. If prompted, choose the correct account type
+
+    ![image](./media/2018-05-18_18-15-50.png)
+
+1. If this is the first time, wait for your account to be created.
+
+    ![image](./media/2018-05-18_18-17-57.png)
+
+1. From the menu, click on `Get started` for Visual Studio Team Services
+
+    ![image](./media/2018-05-18_18-18-42.png)
+
+1. Enter a name for your Visual Studio Online account. Choose `git` as the Repository type
+
+    ![image](./media/2018-05-18_18-20-28.png)
+
+1. Choose Change Details and change the name of your project
+
+    ![image](./media/2018-05-18_19-48-33.png)
+
+1. Once your account is created, your first project will be initialized.
+
+1. If you did not name your first project, or want to can change it, select the Gear icon from main menu
+
+    ![image](./media/2018-05-18_19-27-15.png)
+
+1. Find the project, click on the ellipsis and choose `Rename`
+
+    ![image](./media/2018-05-18_19-27-40.png)
+
+1. Enter `ApplicationMigrationVSO` and click `Ok`
+
+    ![image](./media/2018-05-18_19-28-20.png)
+
+1. You wll prompted with a warning after renaming your project. Check `I understand...` and click `Rename Project`
+
+    ![image](./media/2018-05-18_19-28-45.png)
+
+1. Your project is now renamed
+
+    ![image](./media/2018-05-18_19-29-14.png)
+
 
 ## Summary
 
