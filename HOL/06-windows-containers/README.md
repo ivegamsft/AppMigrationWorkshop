@@ -119,7 +119,7 @@ This hands-on-lab has the following exercises:
     ````powershell
     Login-AzureRMAccount
     ````
-	`NOTE: You may need to run Select-AzureRMSubscription to select the appropraite subscription if you have access to multiple with the account you have used to login`
+	`NOTE: You may need to run Select-AzureRMSubscription to select the appropriate subscription if you have access to multiple with the account you have used to login`
 
 1. You will need the private IP address of the Windows Container Host.
 1. Install docker on the development/jump environment. By downloading the installfrom from https://download.docker.com/win/stable/Docker%20for%20Windows%20Installer.exe and executing it following the default installation prompts.
