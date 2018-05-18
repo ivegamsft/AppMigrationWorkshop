@@ -142,12 +142,12 @@ https://docs.microsoft.com/en-us/azure/application-insights/app-insights-monitor
 	```
 1. Copy the PortalURL and open in browser. Logon with your Azure Credentials (if prompted) and if you have multiple workspaces choose the subscription and workspace name you have created in the previous steps
 1. The main dashboard should appear as show in the image. This is your basic dashboard with your imported solutions from the previous steps. In the top right hand corner, you will see a gear icon, click it to go into the settings
-	![image](./media/hol9_exercise_4_step4.png)
+	![image](./media/hol9_exercise_4_step4.PNG)
 1. In the settings click into Data --> Event Logs and observe that the previous event logs we have add are here. In the field "Enter the name of the event log to monitor" enter the name of an event log you are interested to collect for demo purposes.
-	![image](./media/hol9_exercise_4_step5.png)
+	![image](./media/hol9_exercise_4_step5.PNG)
 1. Click into Data --> Windows Performance Counters and validate the counters which we previously created are listed. Again add more counters by typing the name into the "Enter the name of a performance counter to monitor" box 
 1. Click on Connected Sources and Click Windows Servers. We should have a number of Windows Servers Connected, You can click on the X Windows Computer Connected and it will transport you to the log analytics search engine. First though observe the workspace ID and the workspace keys. If you want to do a manual install at a later date, you will need this information. Click on the X Windows Computer Connected
-	![image](./media/hol9_exercise_4_step7.png)
+	![image](./media/hol9_exercise_4_step7.PNG)
 1. Reveiw the search portal and the query window. Remove the query and it will drop a list of options for you to begin constructing your own query. Dont get hung up on this yet. Return to the main dashboard by pressing the home button in the top left hand corner.
 1. Review each solution deployed and the data collected. Drill into each dashboard and it will drive you back to the original query used to create the dashboard.
 
