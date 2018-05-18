@@ -155,8 +155,10 @@ https://docs.microsoft.com/en-us/azure/application-insights/app-insights-monitor
 ### Exercise 6 Deploy Application Insights <a name=ex6></a>
 1. Open http://portal.azure.com
 1. In the top left hand corner, click Create a Resource
+	![image](./media/hol9-6-1.PNG)
 1. In the "Search the Marketplace" type "Application Insights" and press enter
 1. Click Create on the bottom of the Application Insights Blade
+	![image](./media/hol9-6-2.PNG)
 1. Populate the fields as follows
 	```
 	Name: appInsights
@@ -166,14 +168,21 @@ https://docs.microsoft.com/en-us/azure/application-insights/app-insights-monitor
 	Location: <use the default>
 	```
 	Click Create to deploy the Application Insights Resource
+
+	>![image](./media/hol9-6-3.PNG)
+	
 1. On the left hand menu, Click Resource Groups
-1. Click the jobsApp resource group
+1. Click the jobsApp resource group 
+	>`NOTE: the name of the resource group may vary in your deployment choose where you deployed the jobsapp in previous labs`
 1. Locate the App Service use the type column to identify the resource. The App Service name is generated at deployment time. Click the App Service
+![image](./media/hol9-6-4.PNG)
 1. In the left hand menu for the App Service, click Application Insights
 1. Click Select Existing Resource and Select the Application Insights Resource you created in the previous steps. Click Ok to complete and Click Continue to verify. 
+![image](./media/hol9-6-5.PNG)
 1. In the left hand menu, click Resource Groups and Click the Application Migration Workshop Resource group (the name will vary based on your deployment)
 1. Locate the Application Insights Resource previously created and Click
 1. In the Overview window click Live Stream
+![image](./media/hol9-6-6.PNG)
 1. In a second windows open the URL to the JobsApp, click F5 repeatidly to simulate web traffic 
 1. Navigate between both windows for the live stream and refresh the page for jobs app to simulate web traffic
 1. Repeat the steps for other app services deployed in the subscription to tie to the application insights resource and navigate to the web pages to simulate traffic
