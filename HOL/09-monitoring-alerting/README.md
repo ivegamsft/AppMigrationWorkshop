@@ -167,11 +167,13 @@ https://docs.microsoft.com/en-us/azure/application-insights/app-insights-monitor
 	Resource Group: <select the app migration resource group>
 	Location: <use the default>
 	```
-	![image](./media/hol9-6-3.PNG)
 	Click Create to deploy the Application Insights Resource
+
+	>![image](./media/hol9-6-3.PNG)
+	
 1. On the left hand menu, Click Resource Groups
 1. Click the jobsApp resource group 
-`NOTE: the name of the resource group may vary in your deployment choose where you deployed the jobsapp in previous labs`
+	>`NOTE: the name of the resource group may vary in your deployment choose where you deployed the jobsapp in previous labs`
 1. Locate the App Service use the type column to identify the resource. The App Service name is generated at deployment time. Click the App Service
 ![image](./media/hol9-6-4.PNG)
 1. In the left hand menu for the App Service, click Application Insights
