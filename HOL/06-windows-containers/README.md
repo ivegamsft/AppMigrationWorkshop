@@ -276,7 +276,8 @@ The following commands are run from the Windows Container host machine
 
     ![image](./media/2018-03-18_16-21-43.png)
 	
-	`NOTE: All Sources files where located on the jump box (name is unique per deployment) on the C Drive under AppMigrationWorkshop. You can access them from the containers box via a UNC path \\<containerhost>\c$\AppMigrationWorkShop. You will be required to disable the firewall on the jump box or open the relevant file sharing ports`
+	`NOTE: All Sources files were located on the jump box (name is unique per deployment) on the C Drive under AppMigrationWorkshop. You can access them from the containers box via a UNC path 
+	\\<containerhost>\c$\AppMigrationWorkShop. You will be required to disable the firewall on the jump box or open the relevant file sharing ports`
 
 1. Validate the docker file in the `site` folder
 
