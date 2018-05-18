@@ -338,7 +338,7 @@ The `Jobs` application is used as the source, but the treatment will be similar 
 
 1. Now run a container using the image
     ````powershell
-    docker run -d -p 80:80 -h chost-gmsa --security-opt "credentialspec=file://win.json" jobswebsite --nampe jobswebsite
+    docker run -d -p 80:80 -h chost-gmsa --security-opt "credentialspec=file://win.json" jobswebsite --name jobswebsite
     ````
 
     > Note: If there is still a container running on port 80, you will need to stop it using docker stop <containername> check using docker ps and look at what is running and the ports it is using
