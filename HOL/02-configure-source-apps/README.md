@@ -265,7 +265,6 @@ These configuration steps will be performed from the Web server. You can access 
 
     ````powershell
     c:\windows\system32\inetsrv\appcmd delete site "Default Web Site"
-    
     `````
 
 1. Create the IIS web sites
