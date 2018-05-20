@@ -59,7 +59,7 @@ In this lab you will learn how to containerize legacy applications
 
 ---
 
-## HOL 8 - [DevOps with Containers](HOL/08-devops-w-containers/README.md)
+## HOL 8 - [DevOps with Containers](08-devops-w-containers/README.md)
 
 In this lab you will learn how to use CI/CD pipelines with Windows Containers
 
