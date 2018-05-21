@@ -33,9 +33,11 @@ This hands-on-lab has the following exercises:
 
 ---
 
-This lab is done from the jump box
+This lab is done from the jump box. Make sure you have cloned the repository as specified in [HOL 2](./HOL/02-configure-source-apps).
 
 1. RDP into the jump box
+
+1. Launch Internet Explorer
 
 1. If this is the first time opening the browser on this machine, you may see the following:
 
@@ -55,7 +57,7 @@ This lab is done from the jump box
 
     ![image](./media/2018-05-18_15-53-35.png)
 
-1. Open a browser and download the Database Migration Assistant from [https://www.microsoft.com/en-us/download/details.aspx?id=53595](https://www.microsoft.com/en-us/download/details.aspx?id=53595)
+1. Navigate to [https://www.microsoft.com/en-us/download/details.aspx?id=53595](https://www.microsoft.com/en-us/download/details.aspx?id=53595) and download the Database Migration Assistant
 
 1. When prompted, click `Run` to run the installer. Click `Next`
 
@@ -122,30 +124,27 @@ This lab is done from the jump box
 
     ![image](./media/06-02-a.png)
 
-1. Open Visual Studio 2017. Select `File > New Project > Visual C# > Web > Web Site` and choose `ASP.NET Empty Web Site` as the template.
+1. Open Visual Studio 2017. If this is the first time you are launching Visual Studio, you may be prompted to sign in. Use the same account you used for Visual Studio Online in HOL 1.
 
-1. Name the project `JobsSite`.
+    ![image](./media/2018-05-20_2-02-56.png)
 
-    ![image](./media/06-02-b.png)
+1. Select `File > New > Web Site` and choose `ASP.NET Empty Web Site` as the template.
 
-    > Note: Depending on your VS 2017 update version, the dialog may appear slightly different.
-    >
-    > ![image](./media/2018-03-18_5-49-05.png)
-    >
-    > ![image](./media/2018-03-18_5-50-48.png)
-    >
+    ![image](./media/2018-05-20_2-06-47.png)
 
-1. You should now have an empty web site solution as a target to copy the Jobs source files.
+1. Select Browse and create a folder to contain the source applications. Create a folder for the JobsWebSite.
+
+1. Name the project `JobsWebSite`.
+
+    ![image](./media/2018-05-20_2-11-54.png)
+
+1. You should now have an empty web site solution as a target to copy the Jobs source files
 
 1. Open Windows Explorer and navigate to the folder where you have stored the Jobs Source Files
 
-1. Select all and copy all the files to the clipboard.
+1. Select all, click and drag the files to copy them into the new project
 
-    ![image](./media/06-02-c.png)
-
-1. Paste them into the Empty Visual Studio 2017 Solution.
-
-    ![image](./media/06-02-d.png)
+    ![image](./media/2018-05-20_2-18-55.png)
 
 1. If prompted that files exist, select `Apply to all items` and `Yes`
 
@@ -159,18 +158,22 @@ This lab is done from the jump box
 
     ![image](./media/06-02-e.png)
 
+---
+
 ### Exercise 3: Create CI/CD Pipeline in VSTS<a name="ex3"></a>
 
-1. Create an Azure Web Application
+1. Login to the cloud shell by navigating to [https://shell.azure.com](https://shell.azure.com)
+
+1. Create a new Azure Web Application in a new resource group
 
     ````powershell
-    $webapp = "[A UNIQUE NAME]" # this should be a unique name
-    $location = "[YOUR REGION]"
+    $webapp = "[A UNIQUE NAME]" # this should be a unique name, for example jobswebsite[YOUR INITIALS][A NUMBER]
+    $location = "[A VALID AZURE REGION]" #List Valid regions using  Get-AzureRmLocation | ft Location, DisplayName
     $rgName = "[YOUR RESOURCE GROUP NAME]"
-    $subscription = "[YOUR SUBSCRIPTION ID]"
+    $subscription = "[YOUR SUBSCRIPTION ID]" # List using Get-AzureRMSubscription
 
     Login-AzureRmAccount
-    Select-AzureRmSubscription -Subscription $subscription
+    Select-AzureRmSubscription -SubscriptionID $subscription
     #Create the resource group
     New-AzureRmResourceGroup -Name $rgName -Location $location
     #Create the app service plan
@@ -185,16 +188,20 @@ This lab is done from the jump box
 
     ![image](./media/06-03-a.png)
 
-1. Name the project `MyJobsApp123`. For the version control type, choose `Git`. For the `Work item process` choose `Agile`
+1. Name the project `JobsWebSite`. For the version control type, choose `Git`. For the `Work item process` choose `Agile`
 
     ![image](./media/06-03-b.png)
 
-1. We now need to push the web site code to remote repo. On your DEV VM open `PowerShell` and navigate to your folder that has the Web Site Project
+    ![image](./media/2018-05-20_2-50-57.png)
+
+1. We now need to push the web site code to remote repo. On your DEV VM open `PowerShell` and navigate to your folder that has the Web Site Project. If prompted to login, use you Visual Studio Online credentials.
 
     ```powershell
-    cd c:\sourceapps\jobswebsite\jobssite
+    cd c:\sourceapps\jobswebsite\
     git init
-    git remote add origin https://<your tenant>.visualstudio.com/_git/MyJobsApp123
+    git remote add origin https://<your tenant>.visualstudio.com/_git/JobsWebSite
+    git add *
+    git commit -m "initial commit"
     git push --set-upstream origin master
     ```
 
@@ -205,6 +212,10 @@ This lab is done from the jump box
 1. Now that we have our source files in VSTS, we can create a Build Definition. Click on `Build and Release` > `New definition`
 
     ![image](./media/06-03-d.png)
+
+1. Select the VSTS Git Repo you just created and click `Continue`
+
+    ![image](./media/2018-05-20_3-03-26.png)
 
 1. Click `Empty Process`
 
@@ -220,7 +231,11 @@ This lab is done from the jump box
 
 1. Select the `Publish Artifact` task
 
-1. In the `Path to publish`, enter `$(build.artifactsstagingdirectory)` in the ' and Artifact name `drop` > the Artifact publish location `Visual Studio Team Service/TFS`
+1. In the `Path to publish`, enter `$(Build.ArtifactStagingDirectory)`
+
+1. Enter `drop` in the and Artifact name
+
+1. Select `Visual Studio Team Service/TFS` for the Artifact publish location
 
     ![image](./media/06-03-i.png)
 
@@ -234,7 +249,7 @@ This lab is done from the jump box
 
 1. Click on the Build # and you can verify in the Log that the Archive of the job site did indeed happen
 
-    ![image](./media/06-03-l.png)
+    ![image](./media/2018-05-20_3-17-43.png)
 
 1. Now that we have our source files, we can create a Release Definition to deploy our site
 
@@ -246,9 +261,21 @@ This lab is done from the jump box
 
     ![image](./media/06-04-b.png)
 
-1. Choose and authorize VSTS to access your subscription
+1. Select the phase and task for the environment you just created
 
-1. Set the App type to `Web App` > Choose the 'myjobsapp123' > Validate that the Package or folder is set to $(System.DefaultWorkingDirectory/**/*.zip) and click 'Save'
+    ![image](./media/2018-05-20_3-26-12.png)
+
+1. We need to provide Visual Studio Online access to manage resources in your Azure subscription. This is done by authorizing to the subscription or creating a new `Service Endpoint`.
+
+    ![image](./media/2018-05-20_3-35-53.png)
+
+    ![image](./media/2018-05-20_3-29-06.png)
+
+1. Select your subscription from the list. If it is not listed, follow the directions to `use the full version...` to register the Azure endpoint
+
+    ![image](./media/2018-05-20_3-32-39.png)
+
+1. Once you subscription is authorized, set the App type to `Web App` > Choose the 'jobswebsite[YOUR CUSTOM NAME]' > Validate that the Package or folder is set to `$(System.DefaultWorkingDirectory/**/*.zip)` and click 'Save'
 
     ![image](./media/06-04-c.png)
 
@@ -260,7 +287,7 @@ This lab is done from the jump box
 
     ![image](./media/06-04-e.png)
 
-1. Click on Create Release > Create
+1. Click `Save` to save the configuration. Then click `Release >  Create Release`
 
     ![image](./media/06-04-f.png)
 
@@ -286,4 +313,4 @@ In this hands-on lab, you learned how to:
 * Update the connection string in the APP Settings of the app service
 
 ---
-Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
+Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at [https://opensource.org/licenses/MIT](https://opensource.org/licenses/MIT).
