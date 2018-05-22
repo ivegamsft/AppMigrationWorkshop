@@ -15,7 +15,7 @@ In this lab, you will learn how to:
 
 * A VSTS and Azure Account are required for the completion of the lab.
 * Create a project in Visual Studio Team Services using the defaults with Git as the repo type.
-* .NET Core installed on your development machine. Use [https://www.microsoft.com/net/learn/get-started/](https://www.microsoft.com/net/learn/get-started/) to install.
+* .NET Core 2.0 installed on your development machine. Use [https://www.microsoft.com/net/download/windows](https://www.microsoft.com/net/download/windows) to install.
 
 ## Exercises
 
@@ -33,6 +33,8 @@ This hands-on-lab has the following exercises:
 For the purpose of this lab, we are going to create a .NET Core application. You will do this from the jump box.
 
 1. If not already connected, remote into the jump box. See [HOL 2](./02-configure-source-apps/)
+
+1. Ensure that you have downloaded .NET core on the machine [Download .NET core 2.0](https://www.microsoft.com/net/download/thank-you/dotnet-sdk-2.1.200-windows-x64-installer)
 
 1. Launch a PowerShell window
 
