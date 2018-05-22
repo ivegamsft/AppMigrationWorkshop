@@ -14,10 +14,9 @@ In this lab, you will create a VSTS CI/CD pipeline that will deploy one of the a
 
 This hands-on-lab has the following exercises:
 1. [Exercise 1: Setup Network Security Groups, Firewall Ports, and Puplic IP for Container Host](#ex1)
-1. [Exercise 2: Push code to VSO](#ex2)
-1. [Exercise 3: Create an Azure Container Registry](#ex3)
-1. [Exercise 4: Create a Build definitions](#ex4)
-1. [Exercise 5: Create a Release definition](#ex5)
+1. [Exercise 2: Create an Azure Container Registry](#ex2)
+1. [Exercise 3: Create a Build definitions](#ex3)
+1. [Exercise 4: Create a Release definition](#ex4)
 
 ### Exercise 1 - Setup Network Security Groups, Firewall Ports, and Puplic IP for Container Host<a name="ex1"></a>
 1. Login to https://shell.azure.com
@@ -100,101 +99,7 @@ This hands-on-lab has the following exercises:
         Live Restore Enabled: false
     ```
 
-
-### Exercise 2 - Push your application VSO<a name="ex2"></a>
-
-This exercise should be done from the Container host machine
-
-1. Open an browser and login to your Visual Studio Online account
-
-1. From the Visual Studio online main menu, click `Code`
-
-1. Click `Initialize`
-
-    ![image](./media/2018-03-21_1-18-31.png)
-
-1. Git is not installed on the container host so let's create a container that has Git so we can upload our source. Open a PowerShell session
-
-1. Create a folder for our new docker container, copy our jobs web site source and create a new docker file. We need to the jobs website source in the local folder so we can copy it into the container.
-
-    > Note: Assumes that the jobs web site source is in c:\jobswebsite
-
-    ````powershell
-    md c:\dockerimages
-    cd dockerimages
-    md gitcontainer
-    cd gitcontainer
-    md jobswebsite
-    xcopy C:\jobswebsite\*.* . /s
-    New-Item dockerfile -ItemType File
-    notepad.exe dockerfile
-    ````
-1. Paste the following into the new file and save
-
-    ````docker
-    FROM microsoft/windowsservercore:10.0.14393.2007
-
-    ENV GIT_VERSION 2.16.2
-    ENV GIT_PATCH_VERSION 1
-
-    RUN powershell -Command $ErrorActionPreference = 'Stop' ; \
-        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 ; \
-        Invoke-WebRequest $('https://github.com/git-for-windows/git/releases/download/v{0}.windows.{1}/MinGit-{0}-64-bit.zip' -f $env:GIT_VERSION, $env:GIT_PATCH_VERSION) -OutFile 'mingit.zip' -UseBasicParsing ; \
-        Expand-Archive mingit.zip -DestinationPath c:\mingit ; \
-        Remove-Item mingit.zip -Force ; \
-        setx /M PATH $('c:\mingit\cmd;{0}' -f $env:PATH)
-
-        COPY /jobswebsite c:\jobswebsite
-
-        ENTRYPOINT powershell.exe
-    ````
-
-1. Build the container
-
-    > Note: The container name used in the example is minigitwin.
-
-    ````powershell
-    docker build -t minigitwin .
-    ````
-1. Run the container in interactively
-
-    ````powershell
-    docker run -it minigitwin powershell
-    ````
-
-1. From the Visual Studio online portal, generate temporary credentials for Git. We need these to clone the repository. Add an alias and a password and click `Save Git Credentials`
-    > You can also create a personal access token (PAT)
-
-    ![image](./media/2018-03-21_2-15-36.png)
-
-1. From the container command line, clone the repository
-
-    ````powershell
-    cd\
-    git clone https://YOUR VSO ACCOUNT].visualstudio.com/_git/[YOUR REPO NAME]
-
-    Cloning into '[YOUR REPO NAME]'...
-    Username for 'https://[YOUR VSO ACCOUNT].visualstudio.com': [YOUR GIT ALIAS]
-    Password for 'https://[YOUR GIT ALIAS]@YOUR VSO ACCOUNT].visualstudio.com':[YOUR GENERATED GIT CREDENTIALS]
-
-    cd [YOUR REPO NAME]
-    ````
-
-1. Configure Git, add the source files and push them to the remote repo
-
-    ````powershell
-    git config --global user.email [YOUR EMAIL]
-    git config --global user.name [YOUR NAME]
-    git add *
-    git commit -m "adding source files"
-    git push
-    ````
-
-1. In Visual Studio online, verify that you were able to add the files
-
-    ![image](./media/2018-03-21_2-56-53.png)
-
-### Exercise 3 - Create an Azure Container Registry<a name="ex3"></a>
+### Exercise 2 - Create an Azure Container Registry<a name="ex2"></a>
 
 Azure Container Registry will serve as a place to save your container images, which you can later pull and deploy to different environment. For more information on Azure container registry go to (link).
 
@@ -218,13 +123,29 @@ Azure Container Registry will serve as a place to save your container images, wh
 
     ![image](./media/2018-03-21_0-48-02.png)
 
-### Exercise 4 - Create a Build definition<a name="ex4"></a>
+### Exercise 3 - Create a Build definition<a name="ex3"></a>
 
-1. Log on to your Visual Studio Online account
+This lab is completed from the JumpBox. 
 
-1. Create a new project (in this example `AppMigrationVSO`)
+1. Open a browser and create a new Visual Studio project in your Visual Studio online account.
+
+1. Create a new project (in this example AppMigrationVSO)
 
     ![image](./media/2018-03-21_0-52-22.png)
+
+1. On the jumpbox, open a powershell window and navigate to the source directory where the jobswebsite is stored (from HOL 7, they are in c:\apps\jobswebsite)
+
+1. Connect the source to the new repo and push your current changes to the solution to the new VSO repo.
+
+    ````powershell
+    cd \apps\jobswebsite
+    git init
+    git remote add origin <Your repo git url here>
+    git add *
+    git commit -m "initial commit"
+    git push -u origin --all
+    ````
+1. In the browser, navigate to the project that contains the JobWebSite (in this example `AppMigrationVSO`)
 
 1. Go to `settings > Services`
 
@@ -282,7 +203,7 @@ Azure Container Registry will serve as a place to save your container images, wh
 
 1. View the logs for the build and ensure the container is built and pushed to ACR (this may take > 10 mins or more)
 
-### Exercise 5 - Create a Release definition<a name="ex5"></a>
+### Exercise 4 - Create a Release definition<a name="ex4"></a>
 
 1. Once the build is complete click on `Releases`.
 
