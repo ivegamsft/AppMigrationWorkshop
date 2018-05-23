@@ -60,7 +60,7 @@ This hands-on-lab has the following exercises:
 1. Configure the Docker daemon to open a tcp port for remote access. Open or create the daemon.json file in `C:\ProgramData\docker\config` folder from PowerShell with the following :
 
 	```powershell
-	notepad c:\PropgramData\docker\config\daemon.json
+	notepad c:\ProgramData\docker\config\daemon.json
 	```
     > [!WARNING]
     > This is not a secure port. For a reference how how to use a secure port go to the [eShop Modernizing Repo](https://github.com/dotnet-architecture/eShopModernizing/wiki/03.-How-to-deploy-your-Windows-Containers-based-app-into-Azure-VMs-(Including-CI-CD))
