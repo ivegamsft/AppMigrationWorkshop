@@ -30,7 +30,6 @@ resource "azurerm_kubernetes_cluster" "aks" {
     dns_service_ip     = "192.168.100.10"
     docker_bridge_cidr = "172.17.0.1/16"
     # pod_cidr = "10.244.0.0/16" (needed with Kubenet)
-
     # load_balancer_profile {
     #     outbound_ip_address_ids = []
     # }
@@ -48,16 +47,27 @@ resource "azurerm_kubernetes_cluster" "aks" {
   #   ssh_key {
   #     key_data = "~/.ssh/id_rsa.pub"
   #   }
-
   # }
 
-  # windows_profile {
-  #   admin_username = "sysadmin"
-  #   admin_password = "P@ssw0rd12345!!"
-  # }
+  windows_profile {
+    admin_username = "sysadmin"
+    admin_password = "P@ssw0rd12345!!"
+  }
 
   private_cluster_enabled = var.private
 
+}
+
+resource "azurerm_kubernetes_cluster_node_pool" "windows" {
+  name                  = "windows"
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
+  vm_size               = "Standard_DS2_v2"
+  node_count            = 1
+  os_type = "Windows"
+
+  tags = {
+    Environment = "jcroth"
+  }
 }
 
 output "client_certificate" {
