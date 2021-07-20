@@ -39,6 +39,11 @@ resource "azurerm_network_interface" "compute" {
   }
 }
 
+output "nic_id" {
+  value = azurerm_network_interface.compute.id
+}
+
+
 
 variable "admin_username" {
   default = "sysadmin"

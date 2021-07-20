@@ -58,18 +58,6 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
 }
 
-resource "azurerm_kubernetes_cluster_node_pool" "windows" {
-  name                  = "windows"
-  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
-  vm_size               = "Standard_DS2_v2"
-  node_count            = 1
-  os_type = "Windows"
-
-  tags = {
-    Environment = "jcroth"
-  }
-}
-
 output "client_certificate" {
   value = azurerm_kubernetes_cluster.aks.addon_profile
 }
@@ -80,6 +68,10 @@ output "kube_config" {
 
 output "aks_name" {
   value = azurerm_kubernetes_cluster.aks.name
+}
+
+output "aks_id" {
+  value = azurerm_kubernetes_cluster.aks.id
 }
 
 output "aks_node_resource_group" {
